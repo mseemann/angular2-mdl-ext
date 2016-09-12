@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es6", "es2015", "dom"],
+    "mapRoot": "",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "outDir": "../../dist/@angular2-mdl-ext",
+    "rootDir": ".",
+    "sourceMap": true,
+    "target": "es5",
+    "inlineSources": true,
+    "stripInternal": true,
+    "baseUrl": "",
+    "paths": {
+      "@angular2-mdl-ext/*": [
+        "./*"
+      ]
+    },
+    "typeRoots": [
+      "../../node_modules/@types"
+    ],
+    "types": [
+      "jasmine"
+    ]
+  }
+}

@@ -1,11 +1,18 @@
-
-import { Component, ModuleWithProviders, NgModule, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+    Component,
+    ModuleWithProviders,
+    NgModule,
+    ViewEncapsulation,
+    ChangeDetectionStrategy
+} from '@angular/core';
 
 
 @Component({
     moduleId: module.id,
     selector: 'mdl-popover',
+    host: {
+        '[class.mdl-popover__container]': 'true'
+    },
     templateUrl: 'popover.html',
     styleUrls: ['popover.css'],
     encapsulation: ViewEncapsulation.None,
@@ -17,7 +24,7 @@ export class MdlPopoverComponent {
 
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [],
     exports: [MdlPopoverComponent],
     declarations: [MdlPopoverComponent],
 })
