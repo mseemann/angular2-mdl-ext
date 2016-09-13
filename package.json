@@ -5,7 +5,8 @@
   "scripts": {
     "test": "gulp test:single-run",
     "posttest": "remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t lcovonly -o coverage/lcov.info; remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t html -o coverage/coverage-remap",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "codeclimate": "CODECLIMATE_REPO_TOKEN=162088e65c68b91563b5ca8e31de5cd5706ae99f4b8c8e76ed0cf4357170bec1 codeclimate-test-reporter < coverage/lcov.info"
   },
   "repository": {
     "type": "git",
