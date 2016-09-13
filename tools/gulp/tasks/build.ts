@@ -38,7 +38,7 @@ gulp.task(':build:components:spec', () => {
     return gulpMerge([
         dts,
         pipe
-            .pipe(gulpSourcemaps.write('.'))
+            .pipe(gulpSourcemaps.write('.', {includeContent: false, sourceRoot: '../../../src/components'}))
             .pipe(gulp.dest(DIST_COMPONENTS_ROOT))
     ]);
 
