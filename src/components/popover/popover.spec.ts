@@ -11,7 +11,7 @@ describe('MdlPopover', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MdlPopoverModule],
+            imports: [MdlPopoverModule.forRoot()],
             declarations: [TestComponent],
         });
 

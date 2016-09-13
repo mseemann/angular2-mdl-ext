@@ -42,7 +42,7 @@ module.exports = function (config) {
       'dist/@angular2-mdl-ext/**/!(*spec|*vendor).js': ['coverage']
     },
     coverageReporter: {
-      dir : '../coverage/',
+      dir : 'coverage/',
       reporters: [
         { type: 'html' },
         { type: 'lcov' },

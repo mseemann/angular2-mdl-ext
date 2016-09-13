@@ -4,6 +4,7 @@
   "description": "Additional components for angular2-mdl that are not part of material design lite",
   "scripts": {
     "test": "gulp test:single-run",
+    "posttest": "remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t lcovonly -o coverage/lcov.info; remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t html -o coverage/coverage-remap",
     "gulp": "gulp"
   },
   "repository": {
@@ -28,6 +29,7 @@
     "@types/jasmine": "2.2.31",
     "@types/merge2": "0.0.28",
     "@types/node": "6.0.34",
+    "coveralls": "^2.11.12",
     "gulp": "3.9.1",
     "gulp-clean": "0.3.2",
     "gulp-print": "^2.0.1",
