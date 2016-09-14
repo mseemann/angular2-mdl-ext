@@ -1,7 +1,6 @@
 import * as gulp from 'gulp';
 import { SOURCE_ROOT, DIST_COMPONENTS_ROOT, PROJECT_ROOT } from '../constants';
 import * as path from 'path';
-import * as fs from 'fs';
 import * as gulpTs from 'gulp-typescript';
 import WritableStream = NodeJS.WritableStream;
 
@@ -56,4 +55,4 @@ gulp.task(':build:components:scss', () => {
         .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
         .pipe(gulpSourcemaps.write('.'))
         .pipe(gulp.dest(DIST_COMPONENTS_ROOT));
-})
+});
