@@ -11,19 +11,10 @@
     "noImplicitAny": true,
     "outDir": "../../dist/@angular2-mdl-ext",
     "rootDir": ".",
-    "sourceMap": true,
     "target": "es5",
     "inlineSources": true,
     "stripInternal": true,
     "baseUrl": "",
-    "paths": {
-      "@angular2-mdl-ext/*": [
-        "./*"
-      ]
-    },
-    "typeRoots": [
-      "../../node_modules/@types"
-    ],
     "types": [
       "jasmine"
     ]
