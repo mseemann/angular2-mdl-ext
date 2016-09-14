@@ -12,6 +12,13 @@ const gulpSass = require('gulp-sass');
 
 const componentsDir = path.join(SOURCE_ROOT, 'components');
 
+
+gulp.task(':watch:components:spec', () => {
+    gulp.watch(path.join(componentsDir, '**/*.ts'), [':build:components:spec']);
+    gulp.watch(path.join(componentsDir, '**/*.scss'), [':build:components:scss']);
+    gulp.watch(path.join(componentsDir, '**/*.html'), [':build:components:assets']);
+});
+
 gulp.task(':build:components:assets', () => {
 
     return gulp.src(path.join(componentsDir, '**/*.!(ts|spec.ts)'))

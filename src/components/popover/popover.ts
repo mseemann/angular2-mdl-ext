@@ -19,7 +19,6 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdlPopoverComponent {
-
 }
 
 

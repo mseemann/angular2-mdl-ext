@@ -17,22 +17,23 @@ module.exports = function (config) {
       }
     },
     files: [
-      {pattern: 'dist/vendor/core-js/client/core.js', included: true, watched: false},
-      {pattern: 'dist/vendor/systemjs/dist/system-polyfills.js', included: true, watched: false},
-      {pattern: 'dist/vendor/systemjs/dist/system.src.js', included: true, watched: false},
-      'dist/vendor/zone.js/dist/zone.js',
-      'dist/vendor/zone.js/dist/long-stack-trace-zone.js',
-      'dist/vendor/zone.js/dist/async-test.js',
-      'dist/vendor/zone.js/dist/fake-async-test.js',
-      'dist/vendor/zone.js/dist/sync-test.js',
-      'dist/vendor/zone.js/dist/proxy.js',
-      'dist/vendor/zone.js/dist/jasmine-patch.js',
+      { pattern: 'dist/vendor/core-js/client/core.js', included: true, watched: false},
+      { pattern: 'dist/vendor/systemjs/dist/system-polyfills.js', included: true, watched: false},
+      { pattern: 'dist/vendor/systemjs/dist/system.src.js', included: true, watched: false},
 
+      { pattern: 'dist/vendor/zone.js/dist/zone.js', included: true, watched: false},
+      { pattern: 'dist/vendor/zone.js/dist/long-stack-trace-zone.js', included: true, watched: false},
+      { pattern: 'dist/vendor/zone.js/dist/async-test.js', included: true, watched: false},
+      { pattern: 'dist/vendor/zone.js/dist/fake-async-test.js', included: true, watched: false},
+      { pattern: 'dist/vendor/zone.js/dist/sync-test.js', included: true, watched: false},
+      { pattern: 'dist/vendor/zone.js/dist/proxy.js', included: true, watched: false},
+      { pattern: 'dist/vendor/zone.js/dist/jasmine-patch.js', included: true, watched: false},
       { pattern: 'config/tests/karma-test-shim.js', included: true, watched: true },
 
-      // Distribution folder.
-      { pattern: 'dist/@angular2-mdl-ext/**/*', included: false, watched: true },
-      { pattern: 'dist/vendor/**/*', included: false, watched: false }
+      { pattern: 'dist/vendor/**/*', included: false, watched: false },
+
+      { pattern: 'dist/@angular2-mdl-ext/**/*', included: false, watched: true }
+
     ],
     exclude: [
       // Vendor packages might include spec files. We don't want to use those.

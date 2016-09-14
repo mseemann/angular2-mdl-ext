@@ -37,7 +37,7 @@ gulp.task(':test:deps', [], (done: any ) => {
         done);
 });
 
-gulp.task('test', [':test:deps'], (done: any) => {
+gulp.task('test', [':test:deps', ':watch:components:spec'], (done: any) => {
     new karma.Server({
         configFile: path.join(PROJECT_ROOT, 'config/tests/karma.conf.js')
     }, done).start();
