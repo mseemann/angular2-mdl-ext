@@ -13,7 +13,7 @@
 # misc
 /.sass-cache
 /connect.lock
-/coverage/*
+/coverage
 npm-debug.log
 
 # e2e

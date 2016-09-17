@@ -1,5 +1,8 @@
-@import "variables";
-@import "mixins";
+// FIXME this should be configured like
+// https://github.com/mseemann/angular2-mdl#how-to-use-the-scss-files-from-material-design-lite
+// but I dont know how to configure it in latest angular-cli
+@import "../../../node_modules/angular2-mdl/src/scss-mdl/variables";
+@import "../../../node_modules/angular2-mdl/src/scss-mdl/mixins";
 
 .mdl-popover__container {
   display: block;
@@ -10,7 +13,6 @@
   position: absolute;
   overflow: visible;
   visibility: hidden;
-  z-index: -1;
 
   &.is-visible,
   &.is-animating {
