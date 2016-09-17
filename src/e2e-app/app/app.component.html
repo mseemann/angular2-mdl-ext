@@ -16,12 +16,15 @@
   <mdl-layout-content>
     <mdl-layout mdl-layout-fixed-drawer mdl-layout-no-drawer-button #mainLayout="mdlLayout">
       <mdl-layout-drawer>
-        menu..
+        <nav class="mdl-navigation">
+          <a (click)="componentSelected(mainLayout)" class="mdl-navigation__link" routerLink="/" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+          <a (click)="componentSelected(mainLayout)" class="mdl-navigation__link" routerLink="/popover" routerLinkActive="router-link-active">Popover</a>
+        </nav>
       </mdl-layout-drawer>
         <mdl-layout-content class="app-main-content">
           <div class="main-content">
             <div class="router-outlet">
-
+              <router-outlet></router-outlet>
             </div>
             <footer class="mdl-mini-footer">
               <div class="mdl-mini-footer__right-section">

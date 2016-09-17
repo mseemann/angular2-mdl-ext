@@ -3,7 +3,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var util = require('./util');
 
-console.log(util.root('node_modules/angular2-mdl/src/scss-mdl'));
+
 module.exports = {
 	entry: {
 		'polyfills': './src/e2e-app/polyfills.ts',
@@ -16,6 +16,17 @@ module.exports = {
 	},
 
 	module: {
+		preLoaders: [
+			{
+				test: /.ts$/,
+				loader: 'string-replace-loader',
+				query: {
+					search: 'moduleId: module.id,',
+					replace: '',
+					flags: 'g'
+				}
+			},
+		],
 		loaders: [
 			{
 				test: /\.ts$/,
@@ -30,23 +41,13 @@ module.exports = {
 				loader: 'file?name=assets/[name].[hash].[ext]'
 			},
 			{
-				test: /\.css$/,
-				exclude: util.root('src/e2e-app', 'app'),
-				loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
-			},
-			{
-				test: /\.css$/,
-				include: util.root('src/e2e-app', 'app'),
-				loaders: ['raw-loader']
-			},
-			{
 				test: /\.scss$/,
-				exclude: util.root('src/e2e-app', 'app'),
+				exclude: [util.root('src', 'e2e-app', 'app'), util.root('src', 'components')],
 				loaders: [ExtractTextPlugin.extract('style', 'css?sourceMap'), 'css-loader', 'sass-loader']
 			},
 			{
 				test: /\.scss$/,
-				include: util.root('src/e2e-app', 'app'),
+				include: [util.root('src', 'e2e-app', 'app'), util.root('src', 'components')],
 				loaders: ['raw-loader', 'sass-loader']
 			},
 			{
@@ -68,6 +69,6 @@ module.exports = {
 	],
 
 	sassLoader: {
-		includePaths: [util.root('node_modules/angular2-mdl/src/scss-mdl')]
+		includePaths: [util.root('node_modules', 'angular2-mdl', 'src', 'scss-mdl')]
 	}
 };

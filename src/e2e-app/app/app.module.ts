@@ -1,15 +1,22 @@
 import { NgModule, ApplicationRef, ApplicationInitStatus } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
-import { AppComponent } from './app.component';
+import { AppComponent, appRoutes, Home } from './app.component';
 import { MdlModule } from 'angular2-mdl';
+import { RouterModule } from '@angular/router';
+import { PopoverDemo } from './popover/popover.component';
+import { MdlPopoverModule } from '../../components/popover/popover';
 
 @NgModule({
   imports: [
     BrowserModule,
-    MdlModule
+    MdlModule,
+    RouterModule.forRoot(appRoutes),
+    MdlPopoverModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    Home,
+    PopoverDemo
   ],
   entryComponents: [AppComponent],
   bootstrap: []

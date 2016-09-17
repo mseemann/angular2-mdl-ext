@@ -13,11 +13,7 @@ import {
 
 
 @Component({
-    // FIXME angular-cli errors with
-    // url_resolver.js: Uncaught TypeError: uri.match is not a function
-    // this could be fixed with http://stackoverflow.com/a/39346902/478584
-    // but I dont know how to configure webpack preloaders in latest angular-cli
-    // moduleId: module.id,
+    moduleId: module.id,
     selector: 'mdl-popover',
     host: {
         '[class.mdl-popover__container]': 'true'
