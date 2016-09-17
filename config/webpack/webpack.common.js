@@ -3,6 +3,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var util = require('./util');
 
+console.log(util.root('node_modules/angular2-mdl/src/scss-mdl'));
 module.exports = {
 	entry: {
 		'polyfills': './src/e2e-app/polyfills.ts',
@@ -36,7 +37,17 @@ module.exports = {
 			{
 				test: /\.css$/,
 				include: util.root('src/e2e-app', 'app'),
-				loader: 'raw-loader'
+				loaders: ['raw-loader']
+			},
+			{
+				test: /\.scss$/,
+				exclude: util.root('src/e2e-app', 'app'),
+				loaders: [ExtractTextPlugin.extract('style', 'css?sourceMap'), 'css-loader', 'sass-loader']
+			},
+			{
+				test: /\.scss$/,
+				include: util.root('src/e2e-app', 'app'),
+				loaders: ['raw-loader', 'sass-loader']
 			},
 			{
 				test: /\.hbs$/,
@@ -54,5 +65,9 @@ module.exports = {
 			template: '!!handlebars!src/e2e-app/index.hbs',
 			baseUrl: process.env.NODE_ENV == 'production' ? '/angular2-mdl-ext/' : '/'
 		})
-	]
+	],
+
+	sassLoader: {
+		includePaths: [util.root('node_modules/angular2-mdl/src/scss-mdl')]
+	}
 };
