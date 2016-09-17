@@ -2,8 +2,8 @@ import {
     Component,
     Input,
     AfterViewInit,
-    ViewChild,
     ElementRef,
+    HostBinding,
     Renderer,
     ModuleWithProviders,
     NgModule,
@@ -29,20 +29,16 @@ import {
 })
 export class MdlPopoverComponent implements AfterViewInit {
     @Input('hide-on-click') public hideOnClick: boolean = false;
-    @Input('width') public width: string = '';
+    @HostBinding('class.is-visible') public isVisible = false;
 
-    @ViewChild('container') private containerChild: ElementRef;
-    private container: HTMLElement;
-    private isVisible   = false;
-
-    constructor(private renderer: Renderer) {}
+    constructor(private elementRef: ElementRef,
+                private renderer: Renderer) {}
 
     public ngAfterViewInit() {
-        this.container    = this.containerChild.nativeElement;
-
         // Add a click listener to the document, to close the popover.
-        var callback = (event) => {
-            if (this.isVisible && (this.hideOnClick || !this.container.contains(event.target))) {
+        var callback = (event: Event) => {
+            if (this.isVisible &&
+               (this.hideOnClick || !this.elementRef.nativeElement.contains(<Node>event.target))) {
                 this.hide();
             }
         };
@@ -59,20 +55,19 @@ export class MdlPopoverComponent implements AfterViewInit {
         }
     }
 
-    public hide() {
-        this.container.classList.remove('is-visible');
+    private hide() {
         this.isVisible = false;
     }
 
-    public hideAllPopovers() {
-        [].map.call(document.querySelectorAll('.mdl-popover__container.is-visible'), function(el) {
-            el.classList.remove('is-visible');
-        });
+    private hideAllPopovers() {
+        [].map.call(
+          document.querySelectorAll('.mdl-popover__container.is-visible'),
+          (el: Element) => el.classList.remove('is-visible')
+        );
     }
 
-    public show(event) {
+    private show(event: Event) {
         event.stopPropagation();
-        this.container.classList.add('is-visible');
         this.isVisible = true;
     }
 }
