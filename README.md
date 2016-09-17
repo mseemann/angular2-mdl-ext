@@ -9,3 +9,12 @@ Additional components for angular2-mdl that are not part of material design lite
 
 
 Status: WIP: creating the basic project structure...
+
+
+
+### Development
+* npm start - local dev server
+* npm build - build a production release
+* npm start test - run the unit tests
+
+The coverage report is stored under: coverage/coverage-remap/index.html
