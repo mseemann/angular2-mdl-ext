@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///webpack:///src/e2e-app/css/style.css"],"names":[],"mappings":"AAAA,KACI,mBACA,UAAY","file":"app.ffb65eb12d2c1bc6748e.css","sourcesContent":["body {\n    background: #0147A7;\n    color: #fff;\n}\n\n\n/** WEBPACK FOOTER **\n ** webpack:///src/e2e-app/css/style.css\n **/"],"sourceRoot":""}
