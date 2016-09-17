@@ -4,12 +4,8 @@ import {
   ActivatedRoute
 } from '@angular/router';
 
-
 @Component({
   selector: 'popover-demo',
   templateUrl: 'popover.component.html'
 })
-export class PopoverDemo {
-
-
-}
+export class PopoverDemo {}

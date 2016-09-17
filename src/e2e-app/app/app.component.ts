@@ -23,7 +23,6 @@ export const appRoutes: Routes = [
 ];
 
 @Component({
-  moduleId: module.id,
   selector: 'root-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
