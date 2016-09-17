@@ -64,7 +64,8 @@ module.exports = {
 
 		new HtmlWebpackPlugin({
 			template: '!!handlebars!src/e2e-app/index.hbs',
-			baseUrl: process.env.NODE_ENV == 'production' ? '/angular2-mdl-ext/' : '/'
+			baseUrl: process.env.NODE_ENV == 'production' ? '/angular2-mdl-ext/' : '/',
+			production: process.env.NODE_ENV == 'production' ? true : false
 		})
 	],
 
