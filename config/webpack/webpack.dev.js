@@ -4,13 +4,11 @@ var commonConfig = require('./webpack.common.js');
 var util = require('./util');
 
 module.exports = webpackMerge(commonConfig, {
-	//devtool: 'cheap-module-eval-source-map',
-
-	debug: true,
+	devtool: 'cheap-module-eval-source-map',
 
 	output: {
 		path: util.root('dist'),
-		publicPath: 'http://localhost:8080/',
+		publicPath: 'http://localhost:4200/',
 		filename: '[name].js',
 		chunkFilename: '[id].chunk.js'
 	},
@@ -21,6 +19,7 @@ module.exports = webpackMerge(commonConfig, {
 
 	devServer: {
 		historyApiFallback: true,
-		stats: 'minimal'
+		stats: 'minimal',
+		port: 4200
 	}
 });
