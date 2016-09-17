@@ -1,0 +1,8 @@
+<div
+    class="mdl-list__item"
+    (click)="onSelect(value)"
+    [class.is-active]="selectedValue == value">
+  <div #contentWrapper class="mdl-list__item-primary-content">
+    <ng-content></ng-content>
+  </div>
+</div>

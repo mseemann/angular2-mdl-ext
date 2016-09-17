@@ -1,5 +1,3 @@
-
-
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { MdlPopoverModule, MdlPopoverComponent } from './popover';
 import { Component } from '@angular/core';
@@ -22,14 +20,14 @@ describe('MdlPopover', () => {
     }));
 
 
-    it('should create the component and add the mdl-popover__container css class',  async(() => {
+    it('should create the component and add the mdl-popover css class', async(() => {
 
         let popoverComponent = fixture.debugElement.query(By.directive(MdlPopoverComponent));
 
         let popoverNativeElement = popoverComponent.nativeElement;
 
-        expect(popoverNativeElement.classList.contains('mdl-popover__container'))
-            .toBe(true, 'did not has css class mdl-popover__container')
+        expect(popoverNativeElement.classList.contains('mdl-popover'))
+            .toBe(true, 'did not has css class mdl-popover')
 
     }));
 });
