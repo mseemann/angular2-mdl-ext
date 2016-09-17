@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import '../css/style.css';
 
 @Component({
-  selector: 'my-app',
+  selector: 'root-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent { }
+export class AppComponent {
+  public title = 'Angular 2 - Material Design Lite Extensions';
+}
