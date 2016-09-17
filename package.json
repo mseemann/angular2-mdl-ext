@@ -9,7 +9,7 @@
     "gulp": "gulp",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --config config/webpack/webpack.prod.js --progress --profile --bail",
     "codeclimate": "CODECLIMATE_REPO_TOKEN=162088e65c68b91563b5ca8e31de5cd5706ae99f4b8c8e76ed0cf4357170bec1 codeclimate-test-reporter < coverage/lcov.info",
-    "deploy-gh-pages": "npm run build && ./scripts/deploy.sh"
+    "deploy-gh-pages": "npm run build && ./scripts/deploy.sh --message \"Deploy gh-pages from commit $(git rev-parse HEAD)  [ci skip]\" -n"
   },
   "repository": {
     "type": "git",
