@@ -46,6 +46,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "gulp": "3.9.1",
     "gulp-clean": "0.3.2",
+    "gulp-inline-ng2-template": "^3.0.1",
     "gulp-print": "^2.0.1",
     "gulp-sass": "^2.3.2",
     "gulp-typescript": "2.13.6",

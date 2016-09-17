@@ -5,6 +5,7 @@ import * as gulpTs from 'gulp-typescript';
 import WritableStream = NodeJS.WritableStream;
 
 const gulpSourcemaps = require('gulp-sourcemaps');
+const gulpInlineNg2Template = require('gulp-inline-ng2-template');
 const gulpMerge = require('merge2');
 const print = require('gulp-print');
 const gulpSass = require('gulp-sass');
@@ -38,6 +39,10 @@ gulp.task(':build:components:spec', () => {
 
     let pipe = tsProject.src()
         .pipe(gulpSourcemaps.init())
+        .pipe(gulpInlineNg2Template({
+            base: componentsDir,
+            useRelativePaths: true
+        }))
         .pipe(gulpTs(tsProject));
     let dts = pipe.dts.pipe(gulp.dest(DIST_COMPONENTS_ROOT));
 
