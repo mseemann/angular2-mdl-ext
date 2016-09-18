@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var util = require('./util');
-
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
 	entry: {
@@ -53,18 +53,23 @@ module.exports = {
 				loaders: [
 					ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' }),
 					'css-loader',
+					'postcss-loader',
 					'sass-loader']
 			},
 			{
 				test: /\.scss$/,
 				include: [util.root('src', 'e2e-app', 'app'), util.root('src', 'components')],
-				loaders: ['raw-loader', 'sass-loader']
+				loaders: ['raw-loader', 'postcss-loader', 'sass-loader']
 			},
 			{
 				test: /\.hbs$/,
 				loader: 'handlebars'
 			}
 		]
+	},
+
+	postcss: function () {
+		return [autoprefixer];
 	},
 
 	plugins: [

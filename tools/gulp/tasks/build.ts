@@ -9,7 +9,8 @@ const gulpMerge = require('merge2');
 const print = require('gulp-print');
 const gulpSass = require('gulp-sass');
 const replace = require('gulp-string-replace');
-
+const autoprefixer = require('gulp-autoprefixer');
+var cleanCSS = require('gulp-clean-css');
 
 const componentsDir = path.join(SOURCE_ROOT, 'components');
 
@@ -91,6 +92,11 @@ gulp.task(':build:components:scss', () => {
     return gulp.src(path.join(componentsDir, '**/*.scss'))
         .pipe(gulpSourcemaps.init())
         .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
+        .pipe(autoprefixer({
+          browsers: ['last 2 versions'],
+          cascade: false
+        }))
+        .pipe(cleanCSS())
         .pipe(gulpSourcemaps.write('.'))
         .pipe(gulp.dest(DIST_COMPONENTS_ROOT));
 });
