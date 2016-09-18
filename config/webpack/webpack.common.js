@@ -12,7 +12,14 @@ module.exports = {
 	},
 
 	resolve: {
-		extensions: ['', '.js', '.ts']
+		extensions: ['', '.js', '.ts'],
+		mainFields: ["module", "main", "browser"]
+	},
+
+	// avoid errors like Error: Can't resolve 'net' in '...angular2-mdl-ext/node_modules/debug'
+	node: {
+		fs: 'empty',
+		net: 'empty'
 	},
 
 	module: {
@@ -43,7 +50,10 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				exclude: [util.root('src', 'e2e-app', 'app'), util.root('src', 'components')],
-				loaders: [ExtractTextPlugin.extract('style', 'css?sourceMap'), 'css-loader', 'sass-loader']
+				loaders: [
+					ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' }),
+					'css-loader',
+					'sass-loader']
 			},
 			{
 				test: /\.scss$/,

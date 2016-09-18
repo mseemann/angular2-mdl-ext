@@ -17,8 +17,9 @@
     <mdl-layout mdl-layout-fixed-drawer mdl-layout-no-drawer-button #mainLayout="mdlLayout">
       <mdl-layout-drawer>
         <nav class="mdl-navigation">
-          <a (click)="componentSelected(mainLayout)" class="mdl-navigation__link" routerLink="/" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact:true}">Home</a>
-          <a (click)="componentSelected(mainLayout)" class="mdl-navigation__link" routerLink="/popover" routerLinkActive="router-link-active">Popover</a>
+          <a (click)="componentSelected(mainLayout)" class="mdl-navigation__link routerLink" routerLink="/" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+          <a (click)="componentSelected(mainLayout)" class="mdl-navigation__link routerLink" routerLink="/popover" routerLinkActive="router-link-active">Popover</a>
+          <a class="mdl-navigation__link routerLink"  href="/angular2-mdl">angular2-mdl</a>
         </nav>
       </mdl-layout-drawer>
         <mdl-layout-content class="app-main-content">

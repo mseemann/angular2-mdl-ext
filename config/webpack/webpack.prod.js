@@ -22,12 +22,13 @@ module.exports = webpackMerge(commonConfig, {
 
 	plugins: [
 		new webpack.NoErrorsPlugin(),
-		new webpack.optimize.DedupePlugin(),
-		new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618
-			mangle: {
-				keep_fnames: true
-			}
+		// waiting for fix: https://github.com/webpack/webpack/issues/2644
+		// new webpack.optimize.DedupePlugin(),
+		new webpack.LoaderOptionsPlugin({
+			minimize: true,
+			debug: false
 		}),
+		new webpack.optimize.UglifyJsPlugin(),
 		new ExtractTextPlugin('[name].[hash].css'),
 		new webpack.DefinePlugin({
 			'process.env': {
