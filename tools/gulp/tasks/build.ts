@@ -55,6 +55,32 @@ gulp.task(':build:components:spec', () => {
 
 });
 
+gulp.task(':build:components:ts', () => {
+
+  const tsConfigPath = path.join(componentsDir, 'tsconfig.json');
+
+  const tsProject = gulpTs.createProject(tsConfigPath, {
+    typescript: require('typescript')
+  });
+
+  let pipe = gulp.src([path.join(componentsDir, '**/*.ts'), '!**/*.spec.ts'])
+  // replace .scss references with .css. why? because the gulp task
+  // build:components:scss converts scss to css files but the webpack loader
+  // includes the requires scss file content directly in the component
+    .pipe(replace(/.scss/g, '.css'))
+    .pipe(gulpSourcemaps.init())
+    .pipe(gulpTs(tsProject));
+  let dts = pipe.dts.pipe(gulp.dest(DIST_COMPONENTS_ROOT));
+
+  return gulpMerge([
+    dts,
+    pipe
+      .pipe(gulpSourcemaps.write('.', {includeContent: false}))
+      .pipe(gulp.dest(DIST_COMPONENTS_ROOT))
+  ]);
+
+});
+
 
 gulp.task(':build:components:scss', () => {
 
