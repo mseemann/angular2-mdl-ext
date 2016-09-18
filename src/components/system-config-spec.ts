@@ -1,6 +1,7 @@
 // here you need to add your component - e.g the name of the folder in the components directorty
 const components = [
-    'popover'
+    'popover',
+    'select'
 ];
 
 const angularPackages = [

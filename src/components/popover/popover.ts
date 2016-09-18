@@ -1,14 +1,13 @@
 import {
-    Component,
-    Input,
     AfterViewInit,
+    Component,
     ElementRef,
     HostBinding,
-    Renderer,
+    Input,
     ModuleWithProviders,
     NgModule,
-    ViewEncapsulation,
-    ChangeDetectionStrategy
+    Renderer,
+    ViewEncapsulation
 } from '@angular/core';
 
 
@@ -16,12 +15,11 @@ import {
     moduleId: module.id,
     selector: 'mdl-popover',
     host: {
-        '[class.mdl-popover__container]': 'true'
+        '[class.mdl-popover]': 'true'
     },
     templateUrl: 'popover.html',
     styleUrls: ['popover.scss'],
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdlPopoverComponent implements AfterViewInit {
     @Input('hide-on-click') public hideOnClick: boolean = false;
@@ -51,7 +49,7 @@ export class MdlPopoverComponent implements AfterViewInit {
         }
     }
 
-    private hide() {
+    public hide() {
         this.isVisible = false;
     }
 

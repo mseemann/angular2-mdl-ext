@@ -5,6 +5,7 @@ import {
 } from '@angular/router';
 import '../css/style.scss';
 import { PopoverDemo } from './popover/popover.component';
+import { SelectDemo } from './select/select.component';
 import { MdlLayoutComponent } from 'angular2-mdl';
 
 
@@ -19,6 +20,7 @@ export class Home {
 export const appRoutes: Routes = [
   { path: '', component: Home, data: {title: 'Home'} },
   { path: 'popover', component: PopoverDemo, data: {title: 'Popover'} },
+  { path: 'select', component: SelectDemo, data: {title: 'Select'} },
   { path: '**', redirectTo: '' }
 ];
 

@@ -1,0 +1,27 @@
+<h4>The Select</h4>
+
+<div>With initial value reactive form</div>
+
+<form [formGroup]="form">
+  <mdl-select formControlName="personId">
+    <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
+  </mdl-select>
+</form>
+
+<div>With initial value ngModel</div>
+
+<mdl-select [(ngModel)]="countryCode" placheholder="Select country">
+  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<div>Undefined value with placeholder</div>
+
+<mdl-select [(ngModel)]="countryCode2" placheholder="Select country">
+  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<div>Undefined value without placeholder</div>
+
+<mdl-select [(ngModel)]="countryCode2">
+  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
