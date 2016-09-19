@@ -29,7 +29,10 @@ export class MdlPopoverComponent implements AfterViewInit {
                 private renderer: Renderer) {}
 
     public ngAfterViewInit() {
-        // Add a click listener to the document, to close the popover.
+        // Add a hide listener to native element
+        this.elementRef.nativeElement.addEventListener('hide', this.hide.bind(this));
+
+        // Add a click listener to the document to close the popover
         var callback = (event: Event) => {
             if (this.isVisible &&
                (this.hideOnClick || !this.elementRef.nativeElement.contains(<Node>event.target))) {
@@ -38,6 +41,10 @@ export class MdlPopoverComponent implements AfterViewInit {
         };
         this.renderer.listenGlobal('window', 'click', callback);
         this.renderer.listenGlobal('window', 'touchstart', callback);
+    }
+
+    public ngOnDestroy() {
+        this.elementRef.nativeElement.removeEventListener('hide');
     }
 
     public toggle(event: Event) {
@@ -55,8 +62,8 @@ export class MdlPopoverComponent implements AfterViewInit {
 
     private hideAllPopovers() {
         [].map.call(
-          document.querySelectorAll('.mdl-popover__container.is-visible'),
-          (el: Element) => el.classList.remove('is-visible')
+          document.querySelectorAll('.mdl-popover.is-visible'),
+          (el: Element) => el.dispatchEvent(new Event('hide'))
         );
     }
 

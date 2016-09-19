@@ -1,21 +1,22 @@
 <div
   class="mdl-textfield is-upgraded has-placeholder"
-  [class.is-focused]="this.popover.isVisible">
+  [class.is-focused]="this.popoverComponent.isVisible"
+  [class.is-disabled]="this.disabled">
   <input
       readonly
       class="mdl-textfield__input"
-      (click)="popover.toggle($event)"
+      (click)="toggle($event)"
       [attr.id]="textfieldId"
       [placeholder]="placeholder"
       [value]="text">
   <span
       class="mdl-select__toggle material-icons"
-      (click)="popover.toggle($event)">
+      (click)="toggle($event)">
     keyboard_arrow_down
   </span>
   <label class="mdl-textfield__label" [attr.for]="textfieldId"></label>
   <span class="mdl-textfield__error"></span>
-  <mdl-popover #popover hide-on-click="true" [style.width.%]="100">
+  <mdl-popover hide-on-click="true" [style.width.%]="100">
     <div class="mdl-shadow--6dp">
       <div class="mdl-list">
         <ng-content></ng-content>

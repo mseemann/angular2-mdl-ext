@@ -10,18 +10,24 @@
 
 <div>With initial value ngModel</div>
 
-<mdl-select [(ngModel)]="countryCode" placheholder="Select country">
+<mdl-select [(ngModel)]="countryCode" placeholder="Select country">
+  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<div>Disabled</div>
+
+<mdl-select [(ngModel)]="countryCode" placeholder="Select country" disabled="true">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
 <div>Undefined value with placeholder</div>
 
-<mdl-select [(ngModel)]="countryCode2" placheholder="Select country">
+<mdl-select [(ngModel)]="countryCodeUndefined" placeholder="Select country">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
 <div>Undefined value without placeholder</div>
 
-<mdl-select [(ngModel)]="countryCode2">
+<mdl-select [(ngModel)]="countryCodeUndefined">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>

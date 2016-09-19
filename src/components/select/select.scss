@@ -18,6 +18,18 @@
         color: $input-text-highlight-color;
       }
     }
+
+    &.is-invalid {
+      .mdl-select__toggle {
+        color: $input-text-error-color;
+      }
+    }
+
+    &.is-disabled {
+      .mdl-select__toggle {
+        color: $input-text-disabled-text-color;
+      }
+    }
   }
 
   .mdl-list {
