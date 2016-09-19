@@ -2,18 +2,17 @@
 @import "mixins";
 
 .mdl-popover {
-  display: block;
-  margin: 0;
-  padding: 0;
-  border: none;
   background: #fff;
-  position: absolute;
+  border: none;
+  display: none;
+  margin: 0;
   overflow: visible;
-  visibility: hidden;
+  padding: 0;
+  position: absolute;
 
   &.is-visible,
   &.is-animating {
+    display: block;
     z-index: 999;
-    visibility: visible;
   }
 }

@@ -40,7 +40,8 @@ const MDL_SELECT_VALUE_ACCESSOR: any = {
 })
 export class MdlSelectComponent implements ControlValueAccessor {
     @Input() ngModel: any;
-    @Input('placheholder') placeholder: string = '';
+    @Input() disabled: boolean = false;
+    @Input() placeholder: string = '';
     @Output() private ngModelChange: EventEmitter<any> = new EventEmitter(true);
     @ViewChild(MdlPopoverComponent) private popoverComponent: MdlPopoverComponent;
     @ContentChildren(MdlOptionComponent) private optionComponents: QueryList<MdlOptionComponent>;
@@ -70,6 +71,12 @@ export class MdlSelectComponent implements ControlValueAccessor {
             this.optionComponents.forEach((selectOptionComponent) => {
                 selectOptionComponent.selectedValue = value;
             });
+        }
+    }
+
+    toggle($event: Event) {
+        if (!this.disabled) {
+            this.popoverComponent.toggle($event);
         }
     }
 
