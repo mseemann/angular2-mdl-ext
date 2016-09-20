@@ -20,15 +20,7 @@ describe('MdlSelect', () => {
     }));
 
 
-    // FIXME renderValue code
-    // this.optionComponents.forEach((selectOptionComponent) => {
-    //     selectOptionComponent.selectedValue = value; // <-- this line
-    // });
-    // retsults in error:
-    // Error in dist/@angular2-mdl-ext/select/select.html:9:6 caused by:
-    // Expression has changed after it was checked. Previous value: ''.
-    // Current value: 'Bryan Cranston'.
-    xit('should create the component and add the mdl-select css class', async(() => {
+    it('should create the component and add the mdl-select css class', async(() => {
 
         let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
 
