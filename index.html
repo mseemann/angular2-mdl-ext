@@ -6,9 +6,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="app.8f507cfeb8d83ade974a.css" rel="stylesheet"></head>
+<link href="app.ec1e9beabe86d9af90bb.css" rel="stylesheet"></head>
 <body>
 <root-app>Loading...</root-app>
+<script>
+  if (sessionStorage && history){
+    // simulate html5 mode server behavior on github pages - see 404.html
+    var redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (redirect && redirect != location.href) {
+      history.replaceState(null, null, redirect);
+    }
+  }
+</script>
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -38,7 +48,7 @@
 
 </script>
 
-<script type="text/javascript" src="polyfills.8f507cfeb8d83ade974a.js"></script><script type="text/javascript" src="vendor.8f507cfeb8d83ade974a.js"></script><script type="text/javascript" src="app.8f507cfeb8d83ade974a.js"></script></body>
+<script type="text/javascript" src="polyfills.ec1e9beabe86d9af90bb.js"></script><script type="text/javascript" src="vendor.ec1e9beabe86d9af90bb.js"></script><script type="text/javascript" src="app.ec1e9beabe86d9af90bb.js"></script></body>
 </html>
 
 
