@@ -18,13 +18,18 @@ export class MdlOptionComponent {
   @Input('value') public value: any;
   @ViewChild('contentWrapper') contentWrapper: ElementRef;
   public text: any;
-  public selectedValue: any;
+  public multiple: boolean = false;
+  public selected: boolean = false;
   public onSelect: any = Function.prototype;
 
   constructor(private changeDetectionRef: ChangeDetectorRef) {}
 
-  setSelectedValue(value: any) {
-    this.selectedValue = value;
+  updateSelected(value: any) {
+    if (this.multiple) {
+      this.selected = value.includes(this.value);
+    } else {
+      this.selected = this.value == value;
+    }
     this.changeDetectionRef.detectChanges();
   }
 

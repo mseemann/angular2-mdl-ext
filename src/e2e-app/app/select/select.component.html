@@ -14,7 +14,7 @@
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
-<div>Disabled</div>
+<div>Disabled, synced with previous</div>
 
 <mdl-select [(ngModel)]="countryCode" placeholder="Select country" disabled="true">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
@@ -30,4 +30,22 @@
 
 <mdl-select [(ngModel)]="countryCodeUndefined">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<div>Multiple with initial value</div>
+
+<mdl-select [(ngModel)]="countryCodes" multiple="true" placeholder="Select countries">
+  <mdl-option mdl-ripple *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<div>Multiple, disabled, synced with previous</div>
+
+<mdl-select [(ngModel)]="countryCodes" multiple="true" disabled="true" placeholder="Select countries">
+  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<div>Multiple without initial value</div>
+
+<mdl-select [(ngModel)]="countryCodesUndefined" multiple="true" placeholder="Select countries">
+  <mdl-option mdl-ripple *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>

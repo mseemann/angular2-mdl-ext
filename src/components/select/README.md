@@ -21,6 +21,7 @@
 | `[ngModel]` | any | Select data binding
 | `[disabled]` | boolean | Whether or not the select is disabled
 | `[placeholder]` | string | Placeholder text
+| `[multiple]` | boolean | Multiselect mode
 
 #### mdl-option
 

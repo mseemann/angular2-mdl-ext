@@ -11,6 +11,7 @@
   .mdl-textfield {
     input {
       cursor: pointer;
+      text-overflow: ellipsis;
     }
 
     &.is-focused {
@@ -45,6 +46,7 @@
       }
 
       &.is-active {
+        color: $checkbox-color;
         background-color: $default-item-active-bg-color;
       }
     }
