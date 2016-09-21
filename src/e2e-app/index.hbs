@@ -9,6 +9,16 @@
 </head>
 <body>
 <root-app>Loading...</root-app>
+<script>
+  if (sessionStorage && history){
+    // simulate html5 mode server behavior on github pages - see 404.html
+    var redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (redirect && redirect != location.href) {
+      history.replaceState(null, null, redirect);
+    }
+  }
+</script>
 
 {{#if htmlWebpackPlugin.options.production}}
 <script>
