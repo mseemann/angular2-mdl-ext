@@ -12,8 +12,8 @@ Additional components for angular2-mdl that are not part of material design lite
 
 | Name | Provided By | Description | npm | documentation
 | --- | --- | --- | --- | --- |
-| popover | @tb | component for showing arbitrary content in a popover | [![npm version](https://badge.fury.io/js/%40angular2-mdl-ext%2Fpopover.svg)](https://badge.fury.io/js/%40angular2-mdl-ext%2Fpopover)| https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/popover
-| select | @tb | component that shows a select box | [![npm version](https://badge.fury.io/js/%40angular2-mdl-ext%2Fselect.svg)](https://badge.fury.io/js/%40angular2-mdl-ext%2Fselect)| https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/select
+| popover | [tb](https://github.com/tb) | component for showing arbitrary content in a popover | [![npm version](https://badge.fury.io/js/%40angular2-mdl-ext%2Fpopover.svg)](https://badge.fury.io/js/%40angular2-mdl-ext%2Fpopover)| https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/popover
+| select | [tb](https://github.com/tb) | component that shows a select box | [![npm version](https://badge.fury.io/js/%40angular2-mdl-ext%2Fselect.svg)](https://badge.fury.io/js/%40angular2-mdl-ext%2Fselect)| https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/select
 
 ### Development
 
