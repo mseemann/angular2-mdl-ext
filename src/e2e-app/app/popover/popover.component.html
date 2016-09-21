@@ -3,19 +3,16 @@
 <div>Custom popover</div>
 
 <button
-        mdl-button
-        (click)="custom.toggle($event)"
-        mdl-button-type="icon"
-        mdl-ripple>
+    mdl-button
+    (click)="myPopover.toggle($event)"
+    mdl-button-type="icon"
+    mdl-ripple>
   <mdl-icon>more_vert</mdl-icon>
 </button>
 
-<mdl-popover #custom [style.width.px]="300">
+<mdl-popover #myPopover [hide-on-click]="true" [style.width.px]="300">
   <div mdl-shadow="6" style="padding: 1rem;">
-    <div>
-      <b>Lorem ipsum</b> dolor sit amet, consectetur adipiscing elit.
-      Ut sed nulla commodo, <i>dignissim magna quis</i>, tristique turpis.
-    </div>
+    <b>This is example popover</b> you can put any HTML content here.
   </div>
 </mdl-popover>
 
@@ -35,8 +32,8 @@
       <h2 mdl-card-title-text>Welcome</h2>
     </mdl-card-title>
     <mdl-card-supporting-text>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Mauris sagittis pellentesque lacus eleifend lacinia...
+      This is example card popover content.
+      Clicking buttons inside popover will not close it.
     </mdl-card-supporting-text>
     <mdl-card-actions mdl-card-border>
       <button mdl-button mdl-colored mdl-ripple>Get Started</button>

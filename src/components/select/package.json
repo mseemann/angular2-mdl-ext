@@ -1,6 +1,6 @@
 {
   "name": "@angular2-mdl-ext/select",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Angular 2 Material Design Lite - Select Component",
   "main": "./index.js",
   "typings": "./index.d.ts",

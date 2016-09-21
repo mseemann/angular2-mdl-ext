@@ -1,5 +1,6 @@
 import {
     Component,
+    ChangeDetectorRef,
     ContentChildren,
     EventEmitter,
     forwardRef,
@@ -51,7 +52,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
     private onChange: any = Function.prototype;
     private onTouched: any = Function.prototype;
 
-    constructor() {
+    constructor(private changeDetectionRef: ChangeDetectorRef) {
         this.textfieldId = `mdl-textfield-${randomId()}`;
     }
 
@@ -66,10 +67,11 @@ export class MdlSelectComponent implements ControlValueAccessor {
 
     private renderValue(value: any) {
         this.text = !!value ? this.textByValue[String(value)] : '';
+        this.changeDetectionRef.detectChanges();
 
         if (this.optionComponents) {
             this.optionComponents.forEach((selectOptionComponent) => {
-                selectOptionComponent.selectedValue = value;
+                selectOptionComponent.setSelectedValue(value);
             });
         }
     }
