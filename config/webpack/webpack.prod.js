@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var commonConfig = require('./webpack.common.js');
 var util = require('./util');
 
@@ -21,6 +22,7 @@ module.exports = webpackMerge(commonConfig, {
 	},
 
 	plugins: [
+		new CopyWebpackPlugin([{ from: util.root('src', 'e2e-app', '404.html') }], {copyUnmodified: true}),
 		new webpack.NoErrorsPlugin(),
 		// waiting for fix: https://github.com/webpack/webpack/issues/2644
 		// new webpack.optimize.DedupePlugin(),
