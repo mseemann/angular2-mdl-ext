@@ -2,7 +2,7 @@
 
 ### Installing
 
-    npm i --save @angular2-mdl-ext/select
+    npm i --save @angular2-mdl-ext/popover @angular2-mdl-ext/select
 
     import { MdlSelectModule } from '@angular2-mdl-ext/select';
 
