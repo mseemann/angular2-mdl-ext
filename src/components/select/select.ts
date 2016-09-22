@@ -46,7 +46,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
     @Input() disabled: boolean = false;
     @Input() placeholder: string = '';
     @Input() multiple: boolean = false;
-    @Output() private ngModelChange: EventEmitter<any> = new EventEmitter(true);
+    @Output() private change: EventEmitter<any> = new EventEmitter(true);
     @ViewChild(MdlPopoverComponent) private popoverComponent: MdlPopoverComponent;
     @ContentChildren(MdlOptionComponent) private optionComponents: QueryList<MdlOptionComponent>;
     private textfieldId: string;
@@ -59,14 +59,33 @@ export class MdlSelectComponent implements ControlValueAccessor {
         this.textfieldId = `mdl-textfield-${randomId()}`;
     }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit() {
+        this.bindOptions();
+        this.renderValue(this.ngModel);
+    }
+
+    private isEmpty() {
+        return this.multiple ? !this.ngModel.length : !this.ngModel;
+    }
+
+    // rebind options and reset value in connected select
+    public reset(resetValue: boolean = true) {
+        this.bindOptions();
+        if (resetValue && !this.isEmpty()) {
+            this.ngModel = this.multiple ? [] : '';
+            this.onChange(this.ngModel);
+            this.change.emit(this.ngModel);
+            this.renderValue(this.ngModel);
+        }
+    }
+
+    private bindOptions() {
         this.textByValue[''] = this.placeholder;
         this.optionComponents.forEach((selectOptionComponent: MdlOptionComponent) => {
             selectOptionComponent.multiple = this.multiple;
             selectOptionComponent.onSelect = this.onSelect.bind(this);
-            this.textByValue[String(selectOptionComponent.value)] = selectOptionComponent.text;
+            this.textByValue[String(selectOptionComponent.value||'')] = selectOptionComponent.text;
         });
-        this.renderValue(this.ngModel);
     }
 
     private renderValue(value: any) {
@@ -84,22 +103,22 @@ export class MdlSelectComponent implements ControlValueAccessor {
         }
     }
 
-    toggle($event: Event) {
+    private toggle($event: Event) {
         if (!this.disabled) {
             this.popoverComponent.toggle($event);
         }
     }
 
-    public onSelect($event: Event, value: any) {
+    private onSelect($event: Event, value: any) {
         if (this.multiple) {
             // prevent popup close on click inside popover when selecting multiple
             $event.stopPropagation();
         }
         this.writeValue(value);
-        this.ngModelChange.emit(this.ngModel);
+        this.change.emit(this.ngModel);
     }
 
-    writeValue(value: any): void {
+    public writeValue(value: any): void {
         if (this.multiple) {
             this.ngModel = this.ngModel || [];
             if (!value || this.ngModel === value) {
@@ -118,11 +137,11 @@ export class MdlSelectComponent implements ControlValueAccessor {
         this.renderValue(this.ngModel);
     }
 
-    registerOnChange(fn: (value: any) => void) {
+    public registerOnChange(fn: (value: any) => void) {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: () => {}): void {
+    public registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
     }
 }
