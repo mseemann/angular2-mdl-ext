@@ -17,6 +17,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MdlPopoverModule, MdlPopoverComponent } from '../popover';
 import { MdlOptionComponent } from './index';
 
+const uniq = (array: any[]) => Array.from(new Set(array));
+
 function randomId() {
     const S4 = () => (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     return (S4()+S4());
@@ -43,6 +45,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
     @Input() ngModel: any;
     @Input() disabled: boolean = false;
     @Input() placeholder: string = '';
+    @Input() multiple: boolean = false;
     @Output() private ngModelChange: EventEmitter<any> = new EventEmitter(true);
     @ViewChild(MdlPopoverComponent) private popoverComponent: MdlPopoverComponent;
     @ContentChildren(MdlOptionComponent) private optionComponents: QueryList<MdlOptionComponent>;
@@ -59,6 +62,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
     ngAfterViewInit() {
         this.textByValue[''] = this.placeholder;
         this.optionComponents.forEach((selectOptionComponent: MdlOptionComponent) => {
+            selectOptionComponent.multiple = this.multiple;
             selectOptionComponent.onSelect = this.onSelect.bind(this);
             this.textByValue[String(selectOptionComponent.value)] = selectOptionComponent.text;
         });
@@ -66,12 +70,16 @@ export class MdlSelectComponent implements ControlValueAccessor {
     }
 
     private renderValue(value: any) {
-        this.text = !!value ? this.textByValue[String(value)] : '';
+        if (this.multiple) {
+            this.text = value.map((value: string) => this.textByValue[String(value)]).join(', ');
+        } else {
+            this.text = !!value ? this.textByValue[String(value)] : '';
+        }
         this.changeDetectionRef.detectChanges();
 
         if (this.optionComponents) {
             this.optionComponents.forEach((selectOptionComponent) => {
-                selectOptionComponent.setSelectedValue(value);
+                selectOptionComponent.updateSelected(value);
             });
         }
     }
@@ -82,16 +90,32 @@ export class MdlSelectComponent implements ControlValueAccessor {
         }
     }
 
-    public onSelect(value: any) {
-        this.popoverComponent.hide();
+    public onSelect($event: Event, value: any) {
+        if (this.multiple) {
+            // prevent popup close on click inside popover when selecting multiple
+            $event.stopPropagation();
+        }
         this.writeValue(value);
-        this.ngModelChange.emit(value);
+        this.ngModelChange.emit(this.ngModel);
     }
 
     writeValue(value: any): void {
-        this.ngModel = value;
-        this.onChange(value);
-        this.renderValue(value);
+        if (this.multiple) {
+            this.ngModel = this.ngModel || [];
+            if (!value || this.ngModel === value) {
+                // skip ngModel update when undefined value or multiple selects initialized with same array
+            } else if (Array.isArray(value)) {
+                this.ngModel = uniq(this.ngModel.concat(value));
+            } else if (this.ngModel.includes(value)) {
+                this.ngModel = [...this.ngModel.filter((v: string) => v !== value)];
+            } else if (!!value) {
+                this.ngModel = [...this.ngModel, value];
+            }
+        } else {
+            this.ngModel = value;
+        }
+        this.onChange(this.ngModel);
+        this.renderValue(this.ngModel);
     }
 
     registerOnChange(fn: (value: any) => void) {

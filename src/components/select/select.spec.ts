@@ -5,43 +5,166 @@ import { By } from '@angular/platform-browser';
 
 describe('MdlSelect', () => {
 
-    let fixture: ComponentFixture<TestComponent>;
+    describe('single', () => {
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [MdlSelectModule.forRoot()],
-            declarations: [TestComponent],
-        });
+        let fixture: ComponentFixture<TestSingleComponent>;
 
-        TestBed.compileComponents().then( () => {
-            fixture = TestBed.createComponent(TestComponent);
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [MdlSelectModule.forRoot()],
+                declarations: [TestSingleComponent],
+            });
+
+            TestBed.compileComponents().then( () => {
+                fixture = TestBed.createComponent(TestSingleComponent);
+                fixture.detectChanges();
+            });
+        }));
+
+
+        it('should create the component and add the mdl-select css class', async(() => {
+
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+
+            expect(selectNativeElement.classList.contains('mdl-select'))
+                .toBe(true, 'did not has css class mdl-select')
+
+        }));
+
+        it('should support ngModel', async(() => {
+
+            let testInstance = fixture.componentInstance;
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            fixture.whenStable().then(() => {
+                expect(selectComponent.ngModel)
+                  .toEqual(1, 'did not init ngModel');
+
+                testInstance.personId = 2;
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(selectComponent.ngModel)
+                      .toEqual(2, 'did not update ngModel')
+                });
+            });
+
+        }));
+
+    });
+
+    describe('multiple', () => {
+
+        let fixture: ComponentFixture<TestMultipleComponent>;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [MdlSelectModule.forRoot()],
+                declarations: [TestMultipleComponent],
+            });
+
+            TestBed.compileComponents().then( () => {
+                fixture = TestBed.createComponent(TestMultipleComponent);
+                fixture.detectChanges();
+            });
+        }));
+
+        it('should create the component and add the mdl-select css class', async(() => {
+
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+
+            expect(selectNativeElement.classList.contains('mdl-select'))
+              .toBe(true, 'did not has css class mdl-select')
+
+        }));
+
+        it('should support ngModel', async(() => {
+
+            let testInstance = fixture.componentInstance;
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            fixture.whenStable().then(() => {
+                expect(selectComponentInstance.ngModel)
+                  .toEqual([ 1, 2 ], 'did not init ngModel');
+
+                testInstance.personIds = [ 1 ];
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(selectComponentInstance.ngModel)
+                      .toEqual([ 1 ], 'did not update ngModel')
+                });
+            });
+
+        }));
+
+        it('should select and deselect value', async(() => {
+
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            const event = <Event>jasmine.createSpyObj('event', ['stopPropagation']);
+
+            expect(selectComponentInstance.multiple)
+              .toBe(true, 'is not multiple');
+
+            selectComponentInstance.onSelect(event, 3);
+
+            expect(event.stopPropagation)
+              .toHaveBeenCalled();
+
             fixture.detectChanges();
-        });
-    }));
+            fixture.whenStable().then(() => {
 
+                expect(selectComponentInstance.ngModel)
+                  .toEqual([ 1, 2, 3 ], 'did not update ngModel on select 3');
 
-    it('should create the component and add the mdl-select css class', async(() => {
+                selectComponentInstance.onSelect(event, 3);
 
-        let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
 
-        let selectNativeElement = selectComponent.nativeElement;
+                    expect(selectComponentInstance.ngModel)
+                      .toEqual([ 1, 2 ], 'did not update ngModel on deselect 3');
 
-        expect(selectNativeElement.classList.contains('mdl-select'))
-            .toBe(true, 'did not has css class mdl-select')
+                });
 
-    }));
+            });
+
+        }));
+    });
 });
 
 @Component({
-    selector: 'test-component',
+    selector: 'test-single-component',
     template: `
         <mdl-select [(ngModel)]="personId">
           <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
         </mdl-select>
     `
 })
-class TestComponent {
+class TestSingleComponent {
     personId: number = 1;
+    people: any[] = [
+        {id: 1, name: 'Bryan Cranston'},
+        {id: 2, name: 'Aaron Paul'},
+        {id: 3, name: 'Bob Odenkirk'},
+    ];
+}
+
+@Component({
+    selector: 'test-multiple-component',
+    template: `
+        <mdl-select [(ngModel)]="personIds" [multiple]="true">
+          <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
+        </mdl-select>
+    `
+})
+class TestMultipleComponent {
+    personIds: number[] = [1, 2];
     people: any[] = [
         {id: 1, name: 'Bryan Cranston'},
         {id: 2, name: 'Aaron Paul'},
