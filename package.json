@@ -6,6 +6,7 @@
     "start": "webpack-dev-server --inline --progress --port 8080",
     "test": "gulp test:single-run",
     "dist": "gulp dist",
+    "build-dist": "gulp dist:build",
     "posttest": "remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t lcovonly -o coverage/lcov.info; remap-istanbul -i coverage/coverage-final.json -o coverage/coverage-mapped.json -t html -o coverage/coverage-remap",
     "gulp": "gulp",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --config config/webpack/webpack.prod.js --progress --profile --bail",

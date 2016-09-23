@@ -99,10 +99,10 @@ gulp.task(':dist:publish', (done: () => void) => {
   done();
 });
 
-gulp.task('dist', function(done: () => void) {
+// creates a build the publishing must be done manually cd into dist/component; npm publish
+gulp.task('dist:build', (done: () => void) => {
   runSequence(
     'clean',
-    ':dist:checknpmuser',
     [
       ':build:components:assets',
       ':build:components:scss',
@@ -111,6 +111,14 @@ gulp.task('dist', function(done: () => void) {
     ':dist:removemoduleid',
     ':dist:inlinehtml',
     ':dist:inlinecss',
+    done);
+});
+
+//build and publis all
+gulp.task('dist', function(done: () => void) {
+  runSequence(
+    ':dist:checknpmuser',
+    'dist:build',
     ':dist:publish',
     done);
 });
