@@ -44,7 +44,7 @@ gulp.task(':build:components:spec', () => {
         // includes the requires scss file content directly in the component
         .pipe(replace(/.scss/g, '.css'))
         .pipe(gulpSourcemaps.init())
-        .pipe(gulpTs(tsProject));
+        .pipe(tsProject());
     let dts = pipe.dts.pipe(gulp.dest(DIST_COMPONENTS_ROOT));
 
     return gulpMerge([
@@ -70,7 +70,7 @@ gulp.task(':build:components:ts', () => {
   // includes the requires scss file content directly in the component
     .pipe(replace(/.scss/g, '.css'))
     .pipe(gulpSourcemaps.init())
-    .pipe(gulpTs(tsProject));
+    .pipe(tsProject());
   let dts = pipe.dts.pipe(gulp.dest(DIST_COMPONENTS_ROOT));
 
   return gulpMerge([
