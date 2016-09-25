@@ -31,6 +31,23 @@ describe('MdlPopover', () => {
 
     }));
 
+    it('should hide on click outside of popover', async(() => {
+
+        let popoverComponent = fixture.debugElement.query(By.directive(MdlPopoverComponent));
+
+        let popoverComponentInstance = popoverComponent.componentInstance;
+
+        popoverComponentInstance.isVisible = true;
+
+        spyOn(popoverComponentInstance, 'hide');
+
+        fixture.debugElement.nativeElement.click();
+
+        expect(popoverComponentInstance.hide)
+          .toHaveBeenCalled();
+
+    }));
+
     it('should toggle', async(() => {
 
         let popoverComponent = fixture.debugElement.query(By.directive(MdlPopoverComponent));

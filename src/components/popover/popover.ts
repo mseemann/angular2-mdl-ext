@@ -24,6 +24,8 @@ import {
 export class MdlPopoverComponent implements AfterViewInit {
     @Input('hide-on-click') public hideOnClick: boolean = false;
     @HostBinding('class.is-visible') public isVisible = false;
+    private removeEventListenWindowClick: Function;
+    private removeEventListenWindowTouchstart: Function;
 
     constructor(private elementRef: ElementRef,
                 private renderer: Renderer) {}
@@ -39,12 +41,14 @@ export class MdlPopoverComponent implements AfterViewInit {
                 this.hide();
             }
         };
-        this.renderer.listenGlobal('window', 'click', callback);
-        this.renderer.listenGlobal('window', 'touchstart', callback);
+        this.removeEventListenWindowClick = this.renderer.listenGlobal('window', 'click', callback);
+        this.removeEventListenWindowTouchstart = this.renderer.listenGlobal('window', 'touchstart', callback);
     }
 
     public ngOnDestroy() {
         this.elementRef.nativeElement.removeEventListener('hide');
+        this.removeEventListenWindowClick();
+        this.removeEventListenWindowTouchstart();
     }
 
     public toggle(event: Event) {
