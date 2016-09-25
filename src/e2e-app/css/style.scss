@@ -12,3 +12,11 @@ code {
   background: #f5f2f0;
   padding: 2px;
 }
+
+@import "prism.css";
+
+[prism] {
+  background: #f5f2f0;
+  white-space: pre-wrap;
+  padding-left: 1rem;
+}

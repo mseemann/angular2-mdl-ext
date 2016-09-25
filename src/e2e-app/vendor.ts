@@ -9,3 +9,4 @@ import '@angular/router';
 import 'rxjs';
 // angular2-mdl
 import 'angular2-mdl';
+import '@mseemann/prism';

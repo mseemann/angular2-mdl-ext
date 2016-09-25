@@ -8,6 +8,7 @@ import { PopoverDemo } from './popover/popover.component';
 import { SelectDemo } from './select/select.component';
 import { MdlPopoverModule } from '../../components/popover/popover';
 import { MdlSelectModule } from '../../components/select/select';
+import { PrismDirective } from '@mseemann/prism';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { MdlSelectModule } from '../../components/select/select';
     AppComponent,
     Home,
     PopoverDemo,
-    SelectDemo
+    SelectDemo,
+    PrismDirective
   ],
   entryComponents: [AppComponent],
   bootstrap: []
