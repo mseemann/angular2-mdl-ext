@@ -7,3 +7,8 @@ $color-primary-contrast: $color-dark-contrast;
 $color-accent-contrast: $color-dark-contrast;
 
 @import 'material-design-lite';
+
+code {
+  background: #f5f2f0;
+  padding: 2px;
+}

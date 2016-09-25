@@ -53,6 +53,30 @@ describe('MdlSelect', () => {
 
         }));
 
+        it('should reset ngModel', async(() => {
+
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            spyOn(selectComponentInstance, 'bindOptions');
+
+            fixture.whenStable().then(() => {
+                expect(selectComponentInstance.ngModel)
+                  .toEqual(1, 'did not init ngModel');
+
+                selectComponentInstance.reset();
+
+                expect(selectComponentInstance.bindOptions)
+                  .toHaveBeenCalled();
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(selectComponentInstance.ngModel)
+                      .toEqual('', 'did not reset ngModel')
+                });
+            });
+
+        }));
+
     });
 
     describe('multiple', () => {
@@ -97,6 +121,30 @@ describe('MdlSelect', () => {
                 fixture.whenStable().then(() => {
                     expect(selectComponentInstance.ngModel)
                       .toEqual([ 1 ], 'did not update ngModel')
+                });
+            });
+
+        }));
+
+        it('should reset ngModel', async(() => {
+
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            spyOn(selectComponentInstance, 'bindOptions');
+
+            fixture.whenStable().then(() => {
+                expect(selectComponentInstance.ngModel)
+                  .toEqual([ 1, 2 ], 'did not init ngModel');
+
+                selectComponentInstance.reset();
+
+                expect(selectComponentInstance.bindOptions)
+                  .toHaveBeenCalled();
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(selectComponentInstance.ngModel)
+                      .toEqual([ ], 'did not reset ngModel')
                 });
             });
 

@@ -1,6 +1,6 @@
-<h4>The Select</h4>
+<h4>THE SELECT</h4>
 
-<div>With initial value reactive form</div>
+<h5>Reactive form</h5>
 
 <form [formGroup]="form">
   <mdl-select formControlName="personId">
@@ -8,44 +8,43 @@
   </mdl-select>
 </form>
 
-<div>With initial value ngModel</div>
+
+<h5>ngModel with initial value</h5>
 
 <mdl-select [(ngModel)]="countryCode" placeholder="Select country">
+  <mdl-option [value]=""><em>None</em></mdl-option>
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
-
-<div>Disabled, synced with previous</div>
 
 <mdl-select [(ngModel)]="countryCode" placeholder="Select country" disabled="true">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
-<div>Undefined value with placeholder</div>
 
-<mdl-select [(ngModel)]="countryCodeUndefined" placeholder="Select country">
-  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
-</mdl-select>
-
-<div>Undefined value without placeholder</div>
-
-<mdl-select [(ngModel)]="countryCodeUndefined">
-  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
-</mdl-select>
-
-<div>Multiple with initial value</div>
+<h5>Multiple with initial value</h5>
 
 <mdl-select [(ngModel)]="countryCodes" multiple="true" placeholder="Select countries">
   <mdl-option mdl-ripple *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
-<div>Multiple, disabled, synced with previous</div>
-
 <mdl-select [(ngModel)]="countryCodes" multiple="true" disabled="true" placeholder="Select countries">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
-<div>Multiple without initial value</div>
 
-<mdl-select [(ngModel)]="countryCodesUndefined" multiple="true" placeholder="Select countries">
-  <mdl-option mdl-ripple *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+<h5>Dynamic multiselect</h5>
+
+<p>
+  The <code>foodCategory</code> select has <code>(change)="foodSelect.reset()"</code>
+  that reloads multiselect options and resets its value.
+</p>
+
+<mdl-select [(ngModel)]="foodCategory" placeholder="Select category" (change)="foodSelect.reset()">
+  <mdl-option *ngFor="let c of foodCategories" [value]="c.id">{{ c.name }}</mdl-option>
 </mdl-select>
+
+<mdl-select #foodSelect [(ngModel)]="food" multiple="true" placeholder="Select food" (change)="onChange(food)">
+  <mdl-option mdl-ripple *ngFor="let foodName of foodByCategory[foodCategory]" [value]="foodName">{{ foodName }}</mdl-option>
+</mdl-select>
+
+<div style="height: 200px;"></div>
