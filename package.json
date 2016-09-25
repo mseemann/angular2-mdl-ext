@@ -53,7 +53,7 @@
     "gulp-clean-css": "^2.0.12",
     "gulp-print": "^2.0.1",
     "gulp-sass": "^2.3.2",
-    "gulp-string-replace": "^0.1.1",
+    "gulp-string-replace": "^0.2.0",
     "gulp-typescript": "3.0.1",
     "handlebars-loader": "^1.4.0",
     "html-loader": "^0.4.4",
