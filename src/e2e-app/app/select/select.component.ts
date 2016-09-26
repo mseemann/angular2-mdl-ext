@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import {
   Router,
   ActivatedRoute
@@ -10,7 +13,8 @@ import {
 
 @Component({
   selector: 'select-demo',
-  templateUrl: 'select.component.html'
+  templateUrl: 'select.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectDemo {
   form: FormGroup;

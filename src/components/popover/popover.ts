@@ -1,5 +1,6 @@
 import {
     AfterViewInit,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     HostBinding,
@@ -27,7 +28,8 @@ export class MdlPopoverComponent implements AfterViewInit {
     private removeEventListenWindowClick: Function;
     private removeEventListenWindowTouchstart: Function;
 
-    constructor(private elementRef: ElementRef,
+    constructor(private changeDetectionRef: ChangeDetectorRef,
+                private elementRef: ElementRef,
                 private renderer: Renderer) {}
 
     public ngAfterViewInit() {
@@ -62,6 +64,7 @@ export class MdlPopoverComponent implements AfterViewInit {
 
     public hide() {
         this.isVisible = false;
+        this.changeDetectionRef.markForCheck();
     }
 
     private hideAllPopovers() {
