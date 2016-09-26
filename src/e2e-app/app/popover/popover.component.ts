@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component
+} from '@angular/core';
 import {
   Router,
   ActivatedRoute
@@ -6,6 +9,7 @@ import {
 
 @Component({
   selector: 'popover-demo',
-  templateUrl: 'popover.component.html'
+  templateUrl: 'popover.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PopoverDemo {}
