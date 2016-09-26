@@ -21,6 +21,41 @@ Status means:
 * experimental (0.x.x) - under development, but already usable
 * stable (^1.x.x) - basic feature set is complete and tests coverage is good
 
+### How to use the components
+Install the components via npm. Please checkout the individual readme for each component from the table above.
+ 
+Starting with version 0.2.0 every component has no css styles imported by default. You need to setup your build pipeline 
+to include the scss files from each component you want to use. This makes it possible to configure the theming for
+the components you want to use.
+
+If you are using webpack you may use the special webpack import syntax for node_modules:
+
+```
+@import "color-definitions";
+
+$color-primary: $palette-blue-500;
+$color-primary-dark: $palette-blue-700;
+$color-accent: $palette-amber-A200;
+$color-primary-contrast: $color-dark-contrast;
+$color-accent-contrast: $color-dark-contrast;
+
+@import 'material-design-lite';
+
+@import '~@angular2-mdl-ext/popover/popover'
+@import '~@angular2-mdl-ext/select/select'
+```
+
+An other way is to include each component folder in the search path for your scss preprocessor. For example webpack:
+
+```
+	sassLoader: {
+		includePaths: [
+		'node_modules/@angular2-mdl-ext/popover',
+		'node_modules/@angular2-mdl-ext/select'
+		]
+	}
+```
+
 ### Development
 
 * npm start - local dev server
