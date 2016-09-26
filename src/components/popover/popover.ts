@@ -19,7 +19,6 @@ import {
         '[class.mdl-popover]': 'true'
     },
     templateUrl: 'popover.html',
-    styleUrls: ['popover.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class MdlPopoverComponent implements AfterViewInit {

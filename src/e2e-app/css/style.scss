@@ -8,6 +8,9 @@ $color-accent-contrast: $color-dark-contrast;
 
 @import 'material-design-lite';
 
+@import '../../components/popover/popover';
+@import '../../components/select/select';
+
 code {
   background: #f5f2f0;
   padding: 2px;
