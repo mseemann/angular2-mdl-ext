@@ -85,22 +85,22 @@ gulp.task(':dist:publish', (done: () => void) => {
 
         process.chdir(fullPath);
 
-        exec('npm view version \'dist-tags\'.latest', (error: Error, stdout: Buffer, stderr: Buffer) => {
-          const publishedVersion = stdout.toString().replace(/^\s+|\s+$/g, '');
-          console.log(`${fileOrDir}: published version is:${publishedVersion}`);
-
-          var pJson = JSON.parse(fs.readFileSync(path.join(fullPath, 'package.json'), 'utf8'));
-          console.log(`${fileOrDir}: version to publish is:${pJson.version}`);
-
-          if (publishedVersion != pJson.version) {
+        // exec('npm view version \'dist-tags\'.latest', (error: Error, stdout: Buffer, stderr: Buffer) => {
+        //   const publishedVersion = stdout.toString().replace(/^\s+|\s+$/g, '');
+        //   console.log(`${fileOrDir}: published version is:${publishedVersion}`);
+        //
+        //   var pJson = JSON.parse(fs.readFileSync(path.join(fullPath, 'package.json'), 'utf8'));
+        //   console.log(`${fileOrDir}: version to publish is:${pJson.version}`);
+        //
+        //   if (publishedVersion != pJson.version) {
             console.log(`publishing ${fileOrDir}`);
             exec('npm publish --access public', (error: Error, stdout: Buffer, stderr: Buffer) => {
               if(error){
                 console.log(`error publishing ${fileOrDir}`, error);
               }
             });
-          }
-        });
+        //   }
+        // });
 
       }
     }
