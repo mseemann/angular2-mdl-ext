@@ -37,7 +37,6 @@ const MDL_SELECT_VALUE_ACCESSOR: any = {
         '[class.mdl-select]': 'true'
     },
     templateUrl: 'select.html',
-    styleUrls: ['select.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [MDL_SELECT_VALUE_ACCESSOR]
 })
