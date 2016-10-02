@@ -61,6 +61,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
     public ngAfterViewInit() {
         this.bindOptions();
         this.renderValue(this.ngModel);
+        this.optionComponents.changes.subscribe(() => this.bindOptions());
     }
 
     private isEmpty() {
@@ -69,7 +70,6 @@ export class MdlSelectComponent implements ControlValueAccessor {
 
     // rebind options and reset value in connected select
     public reset(resetValue: boolean = true) {
-        this.bindOptions();
         if (resetValue && !this.isEmpty()) {
             this.ngModel = this.multiple ? [] : '';
             this.onChange(this.ngModel);
