@@ -13,7 +13,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { MdlPopoverModule, MdlPopoverComponent } from '../popover';
 import { MdlOptionComponent } from './index';
 
@@ -148,7 +148,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
 
 @NgModule({
     imports: [
-        BrowserModule,
+        CommonModule,
         MdlPopoverModule
     ],
     exports: [
