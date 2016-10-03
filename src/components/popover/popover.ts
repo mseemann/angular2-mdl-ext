@@ -4,11 +4,12 @@ import {
     Component,
     ElementRef,
     HostBinding,
+    HostListener,
     Input,
     ModuleWithProviders,
     NgModule,
     Renderer,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from '@angular/core';
 
 
@@ -24,32 +25,25 @@ import {
 export class MdlPopoverComponent implements AfterViewInit {
     @Input('hide-on-click') public hideOnClick: boolean = false;
     @HostBinding('class.is-visible') public isVisible = false;
-    private removeEventListenWindowClick: Function;
-    private removeEventListenWindowTouchstart: Function;
 
     constructor(private changeDetectionRef: ChangeDetectorRef,
-                private elementRef: ElementRef,
-                private renderer: Renderer) {}
+                private elementRef: ElementRef) {}
 
     public ngAfterViewInit() {
         // Add a hide listener to native element
         this.elementRef.nativeElement.addEventListener('hide', this.hide.bind(this));
+    }
 
-        // Add a click listener to the document to close the popover
-        var callback = (event: Event) => {
-            if (this.isVisible &&
-               (this.hideOnClick || !this.elementRef.nativeElement.contains(<Node>event.target))) {
-                this.hide();
-            }
-        };
-        this.removeEventListenWindowClick = this.renderer.listenGlobal('window', 'click', callback);
-        this.removeEventListenWindowTouchstart = this.renderer.listenGlobal('window', 'touchstart', callback);
+    @HostListener('document:click', ['$event'])
+    onDocumentClick(event: Event) {
+        if (this.isVisible &&
+          (this.hideOnClick || !this.elementRef.nativeElement.contains(<Node>event.target))) {
+            this.hide();
+        }
     }
 
     public ngOnDestroy() {
         this.elementRef.nativeElement.removeEventListener('hide');
-        this.removeEventListenWindowClick();
-        this.removeEventListenWindowTouchstart();
     }
 
     public toggle(event: Event) {
