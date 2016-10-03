@@ -9,9 +9,13 @@
   }
 
   .mdl-textfield {
-    input {
+    &__input {
+      box-sizing: border-box;
       cursor: pointer;
+      overflow: hidden;
+      padding-right: 1rem;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     &.is-focused {
@@ -34,11 +38,11 @@
   }
 
   .mdl-list {
-    max-height: 300px !important;
+    max-height: 280px;
     overflow-y: auto;
     padding: 0;
 
-    .mdl-list__item {
+    &__item {
       cursor: pointer;
 
       &:hover {
