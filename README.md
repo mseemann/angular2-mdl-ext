@@ -31,7 +31,7 @@ the components you want to use.
 If you are using webpack you may use the special webpack import syntax for node_modules:
 
 ```
-@import "color-definitions";
+@import '~angular2-mdl/src/scss-mdl/color-definitions';
 
 $color-primary: $palette-blue-500;
 $color-primary-dark: $palette-blue-700;
@@ -39,10 +39,10 @@ $color-accent: $palette-amber-A200;
 $color-primary-contrast: $color-dark-contrast;
 $color-accent-contrast: $color-dark-contrast;
 
-@import 'material-design-lite';
+@import '~angular2-mdl/src/scss-mdl/material-design-lite';
 
-@import '~@angular2-mdl-ext/popover/popover'
-@import '~@angular2-mdl-ext/select/select'
+@import '~@angular2-mdl-ext/popover/popover';
+@import '~@angular2-mdl-ext/select/select';
 ```
 
 An other way is to include each component folder in the search path for your scss preprocessor. For example webpack:
@@ -50,8 +50,8 @@ An other way is to include each component folder in the search path for your scs
 ```
 	sassLoader: {
 		includePaths: [
-		'node_modules/@angular2-mdl-ext/popover',
-		'node_modules/@angular2-mdl-ext/select'
+			'node_modules/@angular2-mdl-ext/popover',
+			'node_modules/@angular2-mdl-ext/select'
 		]
 	}
 ```
