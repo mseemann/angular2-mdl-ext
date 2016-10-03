@@ -39,10 +39,6 @@ gulp.task(':build:components:spec', () => {
     });
 
     let pipe = tsProject.src()
-        // replace .scss references with .css. why? because the gulp task
-        // build:components:scss converts scss to css files but the webpack loader
-        // includes the requires scss file content directly in the component
-        .pipe(replace(/.scss/g, '.css'))
         .pipe(gulpSourcemaps.init())
         .pipe(tsProject());
     let dts = pipe.dts.pipe(gulp.dest(DIST_COMPONENTS_ROOT));
@@ -65,10 +61,6 @@ gulp.task(':build:components:ts', () => {
   });
 
   let pipe = gulp.src([path.join(componentsDir, '**/*.ts'), '!**/*.spec.ts'])
-  // replace .scss references with .css. why? because the gulp task
-  // build:components:scss converts scss to css files but the webpack loader
-  // includes the requires scss file content directly in the component
-    .pipe(replace(/.scss/g, '.css'))
     .pipe(gulpSourcemaps.init())
     .pipe(tsProject());
   let dts = pipe.dts.pipe(gulp.dest(DIST_COMPONENTS_ROOT));
