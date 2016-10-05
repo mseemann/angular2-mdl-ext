@@ -196,6 +196,27 @@ describe('MdlSelect', () => {
             });
 
         }));
+
+        it('should bind options on options change', async(() => {
+
+            let testInstance = fixture.componentInstance;
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            spyOn(selectComponentInstance, 'bindOptions').and.callThrough();
+
+            testInstance.people.push({id: 4, name: 'Gary Cole'});
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+
+                expect(selectComponentInstance.bindOptions)
+                  .toHaveBeenCalled();
+
+                expect(selectComponentInstance.textByValue[4])
+                  .toEqual('Gary Cole');
+
+            });
+        }));
     });
 });
 
