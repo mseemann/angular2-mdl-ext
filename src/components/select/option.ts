@@ -24,7 +24,12 @@ export class MdlOptionComponent {
 
   constructor(private changeDetectionRef: ChangeDetectorRef) {}
 
-  updateSelected(value: any) {
+  public setMultiple(multiple: boolean) {
+    this.multiple = multiple;
+    this.changeDetectionRef.detectChanges();
+  }
+
+  public updateSelected(value: any) {
     if (this.multiple) {
       this.selected = value.includes(this.value);
     } else {

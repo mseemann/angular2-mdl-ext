@@ -79,9 +79,8 @@ export class MdlSelectComponent implements ControlValueAccessor {
     }
 
     private bindOptions() {
-        this.textByValue[''] = this.placeholder;
         this.optionComponents.forEach((selectOptionComponent: MdlOptionComponent) => {
-            selectOptionComponent.multiple = this.multiple;
+            selectOptionComponent.setMultiple(this.multiple);
             selectOptionComponent.onSelect = this.onSelect.bind(this);
             this.textByValue[String(selectOptionComponent.value||'')] = selectOptionComponent.text;
         });
