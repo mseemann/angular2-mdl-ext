@@ -25,7 +25,7 @@ import {
 export class MdlPopoverComponent implements AfterViewInit {
     @Input('hide-on-click') public hideOnClick: boolean = false;
     @HostBinding('class.is-visible') public isVisible = false;
-
+    @HostBinding('class.direction-up') public directionUp = false;
     constructor(private changeDetectionRef: ChangeDetectorRef,
                 private elementRef: ElementRef) {}
 
@@ -61,15 +61,51 @@ export class MdlPopoverComponent implements AfterViewInit {
     }
 
     private hideAllPopovers() {
-        [].map.call(
-          document.querySelectorAll('.mdl-popover.is-visible'),
-          (el: Element) => el.dispatchEvent(new Event('hide'))
-        );
+      let nodeList = document.querySelectorAll('.mdl-popover.is-visible');
+      for(let i=0; i < nodeList.length;++i) {
+        nodeList[i].dispatchEvent(new Event('hide'));
+      }
     }
 
     private show(event: Event) {
         event.stopPropagation();
         this.isVisible = true;
+        this.updateDirection(event);
+    }
+
+    private updateDirection(event: Event) {
+      // To prevent toggle test from failing, since jasmines SpyObj EventTarget didn't work as expected
+      if(!event.target) {
+        return;
+      }
+      const nativeEl = this.elementRef.nativeElement;
+      const targetRect = (<HTMLElement>event.target).getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+
+      // In case something goes wrong, pollBuffer is there to stop avoid memory leak
+      let pollBuffer = 0;
+      let longPoll = setInterval(() => {
+          let height = nativeEl.offsetHeight;
+          pollBuffer += 1;
+          if (height !== 0) {
+            const spaceAvailable = {
+              top: targetRect.top,
+              bottom: viewHeight - targetRect.bottom
+            };
+
+            let absoluteHeight = Math.max(spaceAvailable.top, spaceAvailable.bottom);
+            if (height > absoluteHeight) {
+              nativeEl.style.maxHeight = `${absoluteHeight}px`;
+            } else {
+              nativeEl.style.maxHeight = 'auto';
+              this.directionUp = spaceAvailable.bottom < height;
+            }
+            this.changeDetectionRef.markForCheck();
+            clearInterval(longPoll);
+          } else if(pollBuffer === 10) {
+            clearInterval(longPoll);
+          }
+        });
     }
 }
 

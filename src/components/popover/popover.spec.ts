@@ -64,6 +64,9 @@ describe('MdlPopover', () => {
 
         spyOn(popoverComponentInstance, 'hideAllPopovers');
 
+        // Adding target here does not help since EventTarget is not inherited
+        // from Element/HTMLElement. Hence the issues with getBoundingClientRect
+        // in updateDirection
         const event = <Event>jasmine.createSpyObj('event', ['stopPropagation']);
 
         popoverComponentInstance.toggle(event);

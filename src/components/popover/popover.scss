@@ -12,4 +12,7 @@
     display: block;
     z-index: 999;
   }
+  &.direction-up {
+    bottom: 22px;
+  }
 }
