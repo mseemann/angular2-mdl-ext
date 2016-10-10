@@ -77,7 +77,7 @@ gulp.task(':build:components:ts', () => {
 
 gulp.task(':build:components:scss', () => {
 
-    const mdlScss = path.join(PROJECT_ROOT, 'node_modules/angular2-mdl/src/scss-mdl');
+    const mdlScss = path.join(PROJECT_ROOT, 'node_modules/angular2-mdl/scss');
 
     const sassOptions = {includePaths: [mdlScss]};
 
