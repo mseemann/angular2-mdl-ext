@@ -85,6 +85,6 @@ module.exports = {
 	],
 
 	sassLoader: {
-		includePaths: [util.root('node_modules', 'angular2-mdl', 'src', 'scss-mdl')]
+		includePaths: [util.root('node_modules', 'angular2-mdl', 'scss')]
 	}
 };
