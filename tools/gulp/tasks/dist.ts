@@ -72,42 +72,105 @@ gulp.task(':dist:inlinecss', ( done: (err?: any) => void ) => {
   done();
 });
 
-gulp.task(':dist:publish', (done: () => void) => {
-  // run through each component and publish it
-  // keep the current dir, because we need to cd to every component to publish the component
-  const currentDir = process.cwd();
-  const components = fs.readdirSync(DIST_COMPONENTS_ROOT);
-  components.forEach( (fileOrDir: string) => {
-    const fullPath = path.join(DIST_COMPONENTS_ROOT, fileOrDir);
-    const stat = fs.statSync(fullPath);
-    if (stat.isDirectory()) {
-      if (fs.existsSync(path.join(fullPath, 'package.json'))) {
+/**
+ * publish the package (determinde by the current working dir)
+ */
+function publishPackage() {
+  var pJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
-        process.chdir(fullPath);
+  console.log(`publish ${pJson.name}:${pJson.version}`);
+  // FIXME aktivate before next publishing
+  console.log('FIXME');
+  return Promise.resolve();
 
-        // exec('npm view version \'dist-tags\'.latest', (error: Error, stdout: Buffer, stderr: Buffer) => {
-        //   const publishedVersion = stdout.toString().replace(/^\s+|\s+$/g, '');
-        //   console.log(`${fileOrDir}: published version is:${publishedVersion}`);
-        //
-        //   var pJson = JSON.parse(fs.readFileSync(path.join(fullPath, 'package.json'), 'utf8'));
-        //   console.log(`${fileOrDir}: version to publish is:${pJson.version}`);
-        //
-        //   if (publishedVersion != pJson.version) {
-            console.log(`publishing ${fileOrDir}`);
-            exec('npm publish --access public', (error: Error, stdout: Buffer, stderr: Buffer) => {
-              if(error){
-                console.log(`error publishing ${fileOrDir}`, error);
-              }
-            });
-        //   }
-        // });
+  // return new Promise<any>( (resolve, reject) => {
+  //   exec('npm publish --access public', (error: Error, stdout: Buffer, stderr: Buffer) => {
+  //     if (error) {
+  //       console.log(`error publishing ${pJson.name}`, error);
+  //       reject(error);
+  //     }
+  //     resolve();
+  //   });
+  // });
+}
+/**
+ * determine the published npm version of the component
+ * @param componentDir
+ * @returns {Promise<any>}
+ */
+function getPublishedVersion(componentDir: string) {
 
+  return new Promise<any>( (resolve, reject) => {
+
+    var pJson = JSON.parse(fs.readFileSync(path.join(componentDir, 'package.json'), 'utf8'));
+
+    exec(`npm show ${pJson.name} version`, (error: Error, stdout: Buffer, stderr: Buffer) => {
+      if (error){
+        reject(error);
       }
-    }
-  })
-  // restore the working dir.
-  process.chdir(currentDir);
-  done();
+      const publishedVersion: string = stdout.toString().replace(/^\s+|\s+$/g, '');
+      resolve(publishedVersion);
+    });
+  });
+}
+
+function publishComponnet(dir: string) {
+
+  const fullPath = path.join(DIST_COMPONENTS_ROOT, dir);
+
+  return Promise.resolve()
+    .then ( () => {
+      process.chdir(fullPath);
+      return Promise.resolve();
+    })
+    .then( () => {
+      return getPublishedVersion(fullPath);
+    })
+    .then( (publishedVersion: any) => {
+      console.log(`published version of ${dir} is: ${publishedVersion}`);
+
+      var pJson = JSON.parse(fs.readFileSync(path.join(fullPath, 'package.json'), 'utf8'));
+      console.log(`${dir}: version to publish is: ${pJson.version}`);
+
+      return new Promise( (resolve, reject)=>{
+        if (publishedVersion != pJson.version) {
+          publishPackage().then( () => {
+            resolve();
+          })
+        } else {
+          // nothing to do
+          console.log('not published');
+          resolve();
+        }
+      })
+    });
+}
+
+gulp.task(':dist:publish', () => {
+
+    // run through each component and publish it
+    // keep the current dir, because we need to cd to every component to publish the component
+    const currentDir = process.cwd();
+    const possiblyComponents = fs.readdirSync(DIST_COMPONENTS_ROOT);
+
+    // filter any non components
+    const components = possiblyComponents.filter( (fileOrDir: string) => {
+      const fullPath = path.join(DIST_COMPONENTS_ROOT, fileOrDir);
+      const stat = fs.statSync(fullPath);
+      return stat.isDirectory() && fs.existsSync(path.join(fullPath, 'package.json'));
+    });
+
+    let p = components.reduce(function(p: Promise<any>, item: string) {
+      return p.then( () => {return publishComponnet(item);});
+    }, Promise.resolve());
+
+    return p.then( () => {
+      // restore the working dir.
+      console.log(`set path to ${currentDir}`);
+      process.chdir(currentDir);
+      return Promise.resolve();
+    });
+
 });
 
 // creates a build. the publishing must be done manually cd into dist/component; npm publish
