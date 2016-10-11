@@ -79,19 +79,16 @@ function publishPackage() {
   var pJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
   console.log(`publish ${pJson.name}:${pJson.version}`);
-  // FIXME aktivate before next publishing
-  console.log('FIXME');
-  return Promise.resolve();
 
-  // return new Promise<any>( (resolve, reject) => {
-  //   exec('npm publish --access public', (error: Error, stdout: Buffer, stderr: Buffer) => {
-  //     if (error) {
-  //       console.log(`error publishing ${pJson.name}`, error);
-  //       reject(error);
-  //     }
-  //     resolve();
-  //   });
-  // });
+  return new Promise<any>( (resolve, reject) => {
+    exec('npm publish --access public', (error: Error, stdout: Buffer, stderr: Buffer) => {
+      if (error) {
+        console.log(`error publishing ${pJson.name}`, error);
+        reject(error);
+      }
+      resolve();
+    });
+  });
 }
 /**
  * determine the published npm version of the component
@@ -114,7 +111,7 @@ function getPublishedVersion(componentDir: string) {
   });
 }
 
-function publishComponnet(dir: string) {
+function publishComponent(dir: string) {
 
   const fullPath = path.join(DIST_COMPONENTS_ROOT, dir);
 
@@ -134,9 +131,11 @@ function publishComponnet(dir: string) {
 
       return new Promise( (resolve, reject)=>{
         if (publishedVersion != pJson.version) {
+          // publish that package
           publishPackage().then( () => {
             resolve();
           })
+
         } else {
           // nothing to do
           console.log('not published');
@@ -161,7 +160,7 @@ gulp.task(':dist:publish', () => {
     });
 
     let p = components.reduce(function(p: Promise<any>, item: string) {
-      return p.then( () => {return publishComponnet(item);});
+      return p.then( () => {return publishComponent(item);});
     }, Promise.resolve());
 
     return p.then( () => {
@@ -186,6 +185,7 @@ gulp.task('dist:build', (done: () => void) => {
     ':dist:removemoduleid',
     ':dist:inlinehtml',
     ':dist:inlinecss',
+    ':build:components:umd',
     done);
 });
 

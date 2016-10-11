@@ -12,6 +12,7 @@ const gulpSass = require('gulp-sass');
 const replace = require('gulp-string-replace');
 const autoprefixer = require('gulp-autoprefixer');
 var cleanCSS = require('gulp-clean-css');
+const fs = require('fs');
 
 const componentsDir = path.join(SOURCE_ROOT, 'components');
 
@@ -103,4 +104,29 @@ gulp.task(':build:components:scss', () => {
         .pipe(cleanCSS())
         .pipe(gulpSourcemaps.write('.'))
         .pipe(gulp.dest(DIST_COMPONENTS_ROOT));
+});
+
+function createUmdBundle(component: string){
+  console.log(`create umd bundle for ${component}`);
+
+  return Promise.resolve();
+}
+
+gulp.task(':build:components:umd', () => {
+
+  const possiblyComponents = fs.readdirSync(componentsDir);
+
+  // filter any non components
+  const components = possiblyComponents.filter( (fileOrDir: string) => {
+    const fullPath = path.join(componentsDir, fileOrDir);
+    const stat = fs.statSync(fullPath);
+    return stat.isDirectory() && fs.existsSync(path.join(fullPath, 'package.json'));
+  });
+
+  let p = components.reduce(function(p: Promise<any>, component: string) {
+    return p.then( () => {return createUmdBundle(component);});
+  }, Promise.resolve());
+
+  return p;
+
 });
