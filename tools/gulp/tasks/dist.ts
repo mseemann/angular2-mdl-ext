@@ -110,14 +110,15 @@ gulp.task(':dist:publish', (done: () => void) => {
   done();
 });
 
-// creates a build the publishing must be done manually cd into dist/component; npm publish
+// creates a build. the publishing must be done manually cd into dist/component; npm publish
 gulp.task('dist:build', (done: () => void) => {
   runSequence(
     'clean',
     [
       ':build:components:assets',
       ':build:components:scss',
-      ':build:components:ts'
+      ':build:components:ts',
+      ':build:components:ngc'
     ],
     ':dist:removemoduleid',
     ':dist:inlinehtml',

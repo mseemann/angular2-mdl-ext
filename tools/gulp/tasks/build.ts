@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as gulpTs from 'gulp-typescript';
 import WritableStream = NodeJS.WritableStream;
 
+var exec = require('child_process').exec;
 const gulpSourcemaps = require('gulp-sourcemaps');
 const gulpMerge = require('merge2');
 const print = require('gulp-print');
@@ -54,7 +55,7 @@ gulp.task(':build:components:spec', () => {
 
 gulp.task(':build:components:ts', () => {
 
-  const tsConfigPath = path.join(componentsDir, 'tsconfig.json');
+  const tsConfigPath = path.join(componentsDir, 'tsconfig-ngc.json');
 
   const tsProject = gulpTs.createProject(tsConfigPath, {
     typescript: require('typescript')
@@ -74,6 +75,17 @@ gulp.task(':build:components:ts', () => {
 
 });
 
+gulp.task(':build:components:ngc', (done: () => void) => {
+
+  const tsConfigPath = path.join(componentsDir, 'tsconfig-ngc.json');
+
+  exec('ngc -p '+tsConfigPath, (error: Error, stdout: Buffer, stderr: Buffer) => {
+    if(error){
+      console.log(`ngc error`, error);
+    }
+    done();
+  });
+});
 
 gulp.task(':build:components:scss', () => {
 

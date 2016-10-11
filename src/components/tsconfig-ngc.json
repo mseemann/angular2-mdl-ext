@@ -4,19 +4,26 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["es6", "es2015", "dom"],
-    "mapRoot": "dist",
-    "module": "commonjs",
+    "sourceMap": true,
+    "module": "es2015",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noImplicitAny": true,
     "outDir": "../../dist/@angular2-mdl-ext",
     "rootDir": ".",
     "target": "es5",
-    "inlineSources": true,
     "stripInternal": true,
     "baseUrl": "",
     "types": [
     ]
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true,
+    "genDir": "../../dist/@angular2-mdl-ext",
+    "skipTemplateCodegen": true,
+    "debug": true
   }
-
 }
