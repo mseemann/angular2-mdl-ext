@@ -73,6 +73,12 @@ module.exports = {
 	},
 
 	plugins: [
+		// should fix: https://github.com/angular/angular/issues/11580
+		new webpack.ContextReplacementPlugin(
+			// The (\\|\/) piece accounts for path separators in *nix and Windows
+			/angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+			util.root('src')
+		),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: ['app', 'vendor', 'polyfills']
 		}),
