@@ -65,3 +65,36 @@
     </mdl-card-menu>
   </mdl-card>
 </mdl-popover>
+
+<pre prism>
+  <![CDATA[
+
+<button
+        mdl-button
+        (click)="card.toggle($event)"
+        mdl-button-type="icon"
+        mdl-ripple>
+  <mdl-icon>more_vert</mdl-icon>
+</button>
+
+<mdl-popover #card>
+  <mdl-card mdl-shadow="6">
+    <mdl-card-title>
+      <h2 mdl-card-title-text>Welcome</h2>
+    </mdl-card-title>
+    <mdl-card-supporting-text>
+      This is example card popover content.
+      Clicking buttons inside popover will not close it.
+    </mdl-card-supporting-text>
+    <mdl-card-actions mdl-card-border>
+      <button mdl-button mdl-colored mdl-ripple>Get Started</button>
+    </mdl-card-actions>
+    <mdl-card-menu>
+      <button mdl-button mdl-button-type="icon" mdl-ripple>
+        <mdl-icon>share</mdl-icon>
+      </button>
+    </mdl-card-menu>
+  </mdl-card>
+</mdl-popover>
+  ]]>
+</pre>
