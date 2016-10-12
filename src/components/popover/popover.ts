@@ -8,7 +8,6 @@ import {
     Input,
     ModuleWithProviders,
     NgModule,
-    Renderer,
     ViewEncapsulation,
 } from '@angular/core';
 
@@ -25,7 +24,7 @@ import {
 export class MdlPopoverComponent implements AfterViewInit {
     @Input('hide-on-click') public hideOnClick: boolean = false;
     @HostBinding('class.is-visible') public isVisible = false;
-
+    @HostBinding('class.direction-up') public directionUp = false;
     constructor(private changeDetectionRef: ChangeDetectorRef,
                 private elementRef: ElementRef) {}
 
@@ -61,15 +60,34 @@ export class MdlPopoverComponent implements AfterViewInit {
     }
 
     private hideAllPopovers() {
-        [].map.call(
-          document.querySelectorAll('.mdl-popover.is-visible'),
-          (el: Element) => el.dispatchEvent(new Event('hide'))
-        );
+      let nodeList = document.querySelectorAll('.mdl-popover.is-visible');
+      for(let i=0; i < nodeList.length;++i) {
+        nodeList[i].dispatchEvent(new Event('hide'));
+      }
     }
 
     private show(event: Event) {
         event.stopPropagation();
         this.isVisible = true;
+        this.updateDirection(event);
+    }
+
+    private updateDirection(event: Event) {
+        const nativeEl = this.elementRef.nativeElement;
+        const targetRect = (<HTMLElement>event.target).getBoundingClientRect();
+        const viewHeight = window.innerHeight;
+
+        setTimeout(() => {
+            let height = nativeEl.offsetHeight;
+            if (height) {
+                const spaceAvailable = {
+                    top: targetRect.top,
+                    bottom: viewHeight - targetRect.bottom
+                };
+                this.directionUp = spaceAvailable.bottom < height;
+                this.changeDetectionRef.markForCheck();
+            }
+        });
     }
 }
 
