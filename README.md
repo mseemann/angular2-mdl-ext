@@ -21,6 +21,8 @@ Status means:
 * experimental (0.x.x) - under development, but already usable
 * stable (^1.x.x) - basic feature set is complete and tests coverage is good
 
+These components support AOT and TreeShaking!
+
 ### How to use the components
 Install the components via npm. Please checkout the individual readme for each component from the table above.
  
