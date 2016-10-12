@@ -4,13 +4,15 @@ import * as path from 'path';
 import * as gulpTs from 'gulp-typescript';
 import WritableStream = NodeJS.WritableStream;
 
+var exec = require('child_process').exec;
 const gulpSourcemaps = require('gulp-sourcemaps');
 const gulpMerge = require('merge2');
 const print = require('gulp-print');
 const gulpSass = require('gulp-sass');
-const replace = require('gulp-string-replace');
 const autoprefixer = require('gulp-autoprefixer');
 var cleanCSS = require('gulp-clean-css');
+const fs = require('fs');
+const rollup = require('rollup').rollup;
 
 const componentsDir = path.join(SOURCE_ROOT, 'components');
 
@@ -54,7 +56,7 @@ gulp.task(':build:components:spec', () => {
 
 gulp.task(':build:components:ts', () => {
 
-  const tsConfigPath = path.join(componentsDir, 'tsconfig.json');
+  const tsConfigPath = path.join(componentsDir, 'tsconfig-ngc.json');
 
   const tsProject = gulpTs.createProject(tsConfigPath, {
     typescript: require('typescript')
@@ -74,6 +76,17 @@ gulp.task(':build:components:ts', () => {
 
 });
 
+gulp.task(':build:components:ngc', (done: () => void) => {
+
+  const tsConfigPath = path.join(componentsDir, 'tsconfig-ngc.json');
+
+  exec('ngc -p '+tsConfigPath, (error: Error, stdout: Buffer, stderr: Buffer) => {
+    if(error){
+      console.log(`ngc error`, error);
+    }
+    done();
+  });
+});
 
 gulp.task(':build:components:scss', () => {
 
@@ -91,4 +104,55 @@ gulp.task(':build:components:scss', () => {
         .pipe(cleanCSS())
         .pipe(gulpSourcemaps.write('.'))
         .pipe(gulp.dest(DIST_COMPONENTS_ROOT));
+});
+
+function createUmdBundle(component: string){
+
+  console.log(`create umd bundle for ${component}`);
+
+  const globals: {[name: string]: string} = {
+    '@angular/core': 'ng.core',
+    '@angular/common': 'ng.common',
+    '@angular/forms': 'ng.forms',
+    '@angular/platform-browser': 'ng.platformBrowser',
+    'rxjs/Subject': 'Rx',
+    'rxjs/Observable': 'Rx'
+  };
+
+  return rollup({
+    entry: path.join(DIST_COMPONENTS_ROOT, component,  'index.js'),
+    context: 'this',
+    external: Object.keys(globals)
+  }).then((bundle: { generate: any }) => {
+    const result = bundle.generate({
+      moduleName: 'angular2Mdl.'+component,
+      format: 'umd',
+      globals,
+      sourceMap: true,
+      dest: path.join(DIST_COMPONENTS_ROOT, component, 'index.umd.js')
+    });
+
+    fs.writeFileSync(path.join(DIST_COMPONENTS_ROOT, component, 'index.umd.js'), result.code, 'utf8');
+    fs.writeFileSync(path.join(DIST_COMPONENTS_ROOT, component, 'index.umd.js.map'), result.map, 'utf8');
+  });
+
+}
+
+gulp.task(':build:components:umd', () => {
+
+  const possiblyComponents = fs.readdirSync(componentsDir);
+
+  // filter any non components
+  const components = possiblyComponents.filter( (fileOrDir: string) => {
+    const fullPath = path.join(componentsDir, fileOrDir);
+    const stat = fs.statSync(fullPath);
+    return stat.isDirectory() && fs.existsSync(path.join(fullPath, 'package.json'));
+  });
+
+  let p = components.reduce(function(p: Promise<any>, component: string) {
+    return p.then( () => {return createUmdBundle(component);});
+  }, Promise.resolve());
+
+  return p;
+
 });
