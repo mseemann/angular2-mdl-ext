@@ -24,7 +24,7 @@ gulp.task(':dist:checknpmuser', (cb: (err?: any) => void) => {
 
 gulp.task(':dist:removemoduleid', () => {
   return gulp.src(path.join(DIST_COMPONENTS_ROOT, '**/*.js'))
-    .pipe(replace(/\s*moduleId:\s*module\.id\s*,?\s*/gm, ''))
+    .pipe(replace(/\s*moduleId:\s*module\.id\s*,?\s*/gm, '', {logs:{notReplaced:true}}))
     .pipe(gulp.dest(DIST_COMPONENTS_ROOT))
 });
 

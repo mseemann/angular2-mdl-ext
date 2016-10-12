@@ -9,7 +9,6 @@ const gulpSourcemaps = require('gulp-sourcemaps');
 const gulpMerge = require('merge2');
 const print = require('gulp-print');
 const gulpSass = require('gulp-sass');
-const replace = require('gulp-string-replace');
 const autoprefixer = require('gulp-autoprefixer');
 var cleanCSS = require('gulp-clean-css');
 const fs = require('fs');
