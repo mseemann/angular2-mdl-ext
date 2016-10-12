@@ -48,11 +48,13 @@ describe('MdlPopover', () => {
 
     }));
 
-    it('should toggle', async(() => {
+    it('should toggle popover on button click', async(() => {
 
         let popoverComponent = fixture.debugElement.query(By.directive(MdlPopoverComponent));
 
         let popoverNativeElement = popoverComponent.nativeElement;
+
+        let buttonNativeElement = fixture.debugElement.query(By.css('button')).nativeElement;
 
         let popoverComponentInstance = popoverComponent.componentInstance;
 
@@ -62,20 +64,19 @@ describe('MdlPopover', () => {
         expect(popoverNativeElement.classList.contains('is-visible'))
           .toBe(false, 'did has css class is-visible');
 
-        spyOn(popoverComponentInstance, 'hideAllPopovers');
+        spyOn(popoverComponentInstance, 'toggle').and.callThrough();
 
-        // Adding target here does not help since EventTarget is not inherited
-        // from Element/HTMLElement. Hence the issues with getBoundingClientRect
-        // in updateDirection
-        const event = <Event>jasmine.createSpyObj('event', ['stopPropagation']);
+        spyOn(popoverComponentInstance, 'hideAllPopovers').and.callThrough();
 
-        popoverComponentInstance.toggle(event);
+        spyOn(popoverComponentInstance, 'updateDirection').and.callThrough();
 
-        expect(event.stopPropagation)
-          .toHaveBeenCalled();
+        buttonNativeElement.click();
 
-        expect(popoverComponentInstance.hideAllPopovers)
-          .toHaveBeenCalled();
+        expect(popoverComponentInstance.toggle).toHaveBeenCalled();
+
+        expect(popoverComponentInstance.hideAllPopovers).toHaveBeenCalled();
+
+        expect(popoverComponentInstance.updateDirection).toHaveBeenCalled();
 
         expect(popoverComponentInstance.isVisible)
           .toEqual(true, 'toggle did not update isVisible to true');
@@ -94,6 +95,9 @@ describe('MdlPopover', () => {
 
 @Component({
     selector: 'test-component',
-    template: '<mdl-popover>test</mdl-popover>'
+    template: `
+      <button (click)="popover.toggle($event)">button</button>
+      <mdl-popover #popover>popover content</mdl-popover>
+    `
 })
 class TestComponent {}
