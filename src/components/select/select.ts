@@ -90,7 +90,10 @@ export class MdlSelectComponent implements ControlValueAccessor {
         if (this.multiple) {
             this.text = value.map((value: string) => this.textByValue[String(value)]).join(', ');
         } else {
-            this.text = !!value ? this.textByValue[String(value)] : '';
+            this.text =
+              (!!value || typeof value === 'number')
+              ? this.textByValue[String(value)]
+              : '';
         }
         this.changeDetectionRef.detectChanges();
 
