@@ -152,9 +152,9 @@ amdefine@>=0.0.4, amdefine@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.0.tgz#fd17474700cb5cc9c2b709f0be9d23ce3c198c33"
 
-angular2-mdl@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/angular2-mdl/-/angular2-mdl-2.2.1.tgz#8fa41e042f8de3823ff178e3e1f3ed05c8eacbff"
+angular2-mdl@2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/angular2-mdl/-/angular2-mdl-2.2.2.tgz#b1288a84ef8530f02cf1d4fb147e86ae8a188465"
 
 angular2-template-loader@^0.5.0:
   version "0.5.0"
@@ -987,13 +987,14 @@ cookie@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
-copy-webpack-plugin@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-3.0.1.tgz#9bb3e9d6c6064de65c5bce44cf236b4d077a2131"
+copy-webpack-plugin@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/copy-webpack-plugin/-/copy-webpack-plugin-4.0.0.tgz#385e7f8deeb993f6d48b9f9854d50391912633ae"
   dependencies:
     bluebird "^2.10.2"
     fs-extra "^0.26.4"
     glob "^6.0.4"
+    loader-utils "^0.2.15"
     lodash "^4.3.0"
     minimatch "^3.0.0"
     node-dir "^0.1.10"
