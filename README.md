@@ -33,7 +33,7 @@ the components you want to use.
 If you are using webpack you may use the special webpack import syntax for node_modules:
 
 ```
-@import '~angular2-mdl/src/scss-mdl/color-definitions';
+@import '~angular2-mdl/scss/color-definitions';
 
 $color-primary: $palette-blue-500;
 $color-primary-dark: $palette-blue-700;
