@@ -57,7 +57,7 @@
     "gulp-print": "^2.0.1",
     "gulp-sass": "^2.3.2",
     "gulp-string-replace": "^0.2.0",
-    "gulp-typescript": "3.0.2",
+    "gulp-typescript": "3.1.0",
     "handlebars-loader": "^1.4.0",
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.22.0",
