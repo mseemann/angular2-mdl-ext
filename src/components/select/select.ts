@@ -10,7 +10,8 @@ import {
     Output,
     QueryList,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    HostListener
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -64,6 +65,52 @@ export class MdlSelectComponent implements ControlValueAccessor {
         this.optionComponents.changes.subscribe(() => this.bindOptions());
     }
 
+    @HostListener('keydown.arrowUp', ['$event'])
+    public onArrowUp($event: Event): void {
+        if (!this.disabled && !this.multiple) {
+            let arr = this.optionComponents.toArray();
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].selected) {
+                    if (i - 1 >= 0) {
+                        this.onSelect($event, arr[i-1].value);
+                    }
+
+                    break;
+                }
+            }
+
+            $event.preventDefault();
+        }
+    }
+
+    @HostListener('keydown.arrowDown', ['$event'])
+    public onArrowDown($event: Event): void {
+        if (!this.disabled && !this.multiple) {
+            let arr = this.optionComponents.toArray();
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].selected) {
+                    if (i + 1 < arr.length) {
+                        this.onSelect($event, arr[i+1].value);
+                    }
+
+                    break;
+                }
+            }
+
+            $event.preventDefault();
+        }
+    }
+
+    @HostListener('keydown.enter', ['$event'])
+    @HostListener('keydown.esc', ['$event'])
+    @HostListener('keydown.tab', ['$event'])
+    @HostListener('keydown.shift.tab', ['$event'])
+    public onKeydown($event: Event): void {
+        if (!this.disabled) {
+            this.popoverComponent.hide();
+        }
+    }
+
     private isEmpty() {
         return this.multiple ? !this.ngModel.length : !this.ngModel;
     }
@@ -107,6 +154,20 @@ export class MdlSelectComponent implements ControlValueAccessor {
     private toggle($event: Event) {
         if (!this.disabled) {
             this.popoverComponent.toggle($event);
+            $event.stopPropagation();
+        }
+    }
+
+    public open($event: Event) {
+        if (!this.disabled && !this.popoverComponent.isVisible) {
+            this.popoverComponent.show($event);
+        }
+
+    }
+
+    public close($event: Event) {
+        if (!this.disabled && this.popoverComponent.isVisible) {
+            this.popoverComponent.hide();
         }
     }
 

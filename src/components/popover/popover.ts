@@ -8,7 +8,7 @@ import {
     Input,
     ModuleWithProviders,
     NgModule,
-    ViewEncapsulation,
+    ViewEncapsulation
 } from '@angular/core';
 
 
@@ -66,7 +66,7 @@ export class MdlPopoverComponent implements AfterViewInit {
       }
     }
 
-    private show(event: Event) {
+    public show(event: Event) {
         event.stopPropagation();
         this.isVisible = true;
         this.updateDirection(event);
