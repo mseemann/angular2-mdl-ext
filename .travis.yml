@@ -25,5 +25,7 @@ after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   # send code coverage to codeclimate
   - npm run codeclimate
+  # create a dist build to check the toolchain
+  - npm run build-dist
 
 after_script:
