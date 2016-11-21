@@ -155,9 +155,9 @@ amdefine@>=0.0.4, amdefine@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.0.tgz#fd17474700cb5cc9c2b709f0be9d23ce3c198c33"
 
-angular2-mdl@2.4.2:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/angular2-mdl/-/angular2-mdl-2.4.2.tgz#12fe227a79e13d2543908260ba31e29e265e9e6e"
+angular2-mdl@2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/angular2-mdl/-/angular2-mdl-2.4.4.tgz#0d5e61c7668ed5a5d04c7e904c0f24aa88f1a2f1"
 
 angular2-template-loader@^0.6.0:
   version "0.6.0"
@@ -5003,9 +5003,9 @@ run-sequence@^1.2.2:
     chalk "*"
     gulp-util "*"
 
-rxjs@5.0.0-rc.2:
-  version "5.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.0.0-rc.2.tgz#d38206f50eeb1e77b0832a74c1c2adeeed5ec2b7"
+rxjs@5.0.0-rc.4:
+  version "5.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.0.0-rc.4.tgz#a4d08bc5d7f30d48ed7130e2995490c326a325c4"
   dependencies:
     symbol-observable "^1.0.1"
 
