@@ -82,9 +82,9 @@
   version "6.0.47"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.47.tgz#07dd004f05d0b74344ebf943b559659bd7f445b1"
 
-"@types/node@6.0.48":
-  version "6.0.48"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.48.tgz#86ccc15f66b73cbbc5eb3483398936c585122b3c"
+"@types/node@6.0.49":
+  version "6.0.49"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.49.tgz#c644f7305e0d64bd797c939af833f22d150e1d33"
 
 "@types/orchestrator@*":
   version "0.0.30"
