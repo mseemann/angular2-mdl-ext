@@ -24,7 +24,7 @@
     "@angular/forms": "2.2.1",
     "@angular/http": "2.2.1",
     "@angular/platform-browser": "2.2.1",
-    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.2",
     "@angular/router": "3.2.1",
     "@mseemann/prism": "0.0.1",
     "angular2-mdl": "2.4.5",
