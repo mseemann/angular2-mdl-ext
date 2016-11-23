@@ -34,7 +34,7 @@
     "zone.js": "0.7.1"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "2.2.2",
+    "@angular/compiler-cli": "2.2.3",
     "@angular/platform-server": "2.2.2",
     "@types/core-js": "0.9.34",
     "@types/gulp": "3.8.32",
