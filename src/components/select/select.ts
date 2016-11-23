@@ -175,6 +175,25 @@ export class MdlSelectComponent implements ControlValueAccessor {
         if (this.multiple) {
             // prevent popup close on click inside popover when selecting multiple
             $event.stopPropagation();
+        } else {
+            let popover: any = this.popoverComponent.elementRef.nativeElement;
+            let list: any = popover.querySelector(".mdl-list");
+            let option: any = null;
+
+            this.optionComponents.forEach(o => {
+                // not great for long lists because break is not available
+                if (o.value == value) {
+                    option = o.contentWrapper.nativeElement;
+                }
+            });
+
+            if (option) {
+                if (option.offsetTop > popover.clientHeight) {
+                    list.scrollTop += option.parentElement.clientHeight;
+                } else if (option.offsetTop < list.scrollTop) {
+                    list.scrollTop -= option.parentElement.clientHeight;
+                }
+            }
         }
         this.writeValue(value);
         this.change.emit(this.ngModel);

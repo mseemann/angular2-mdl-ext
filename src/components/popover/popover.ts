@@ -26,7 +26,7 @@ export class MdlPopoverComponent implements AfterViewInit {
     @HostBinding('class.is-visible') public isVisible = false;
     @HostBinding('class.direction-up') public directionUp = false;
     constructor(private changeDetectionRef: ChangeDetectorRef,
-                private elementRef: ElementRef) {}
+                public elementRef: ElementRef) {}
 
     public ngAfterViewInit() {
         // Add a hide listener to native element
