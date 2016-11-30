@@ -3,7 +3,7 @@
   [class.is-focused]="this.popoverComponent.isVisible || this.focused"
   [class.is-disabled]="this.disabled">
   <span
-      tabindex="0"
+      [attr.tabindex]="!this.disabled ? 1 : null"
       (focus)="open($event);addFocus();"
       (blur)="removeFocus()">
     <!-- don't want click to also trigger focus -->
