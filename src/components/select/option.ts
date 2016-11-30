@@ -31,7 +31,7 @@ export class MdlOptionComponent {
 
   public updateSelected(value: any) {
     if (this.multiple) {
-      this.selected = value.includes(this.value);
+      this.selected = (value.indexOf(this.value) != -1);
     } else {
       this.selected = this.value == value;
     }

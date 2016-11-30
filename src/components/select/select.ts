@@ -65,50 +65,50 @@ export class MdlSelectComponent implements ControlValueAccessor {
         this.optionComponents.changes.subscribe(() => this.bindOptions());
     }
 
-    @HostListener('keydown.arrowUp', ['$event'])
-    public onArrowUp($event: Event): void {
-        if (!this.disabled && !this.multiple) {
-            let arr = this.optionComponents.toArray();
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i].selected) {
-                    if (i - 1 >= 0) {
-                        this.onSelect($event, arr[i-1].value);
-                    }
-
-                    break;
+    @HostListener('document:keydown', ['$event'])
+    public onKeydown($event: KeyboardEvent): void {
+        if (!this.disabled && this.popoverComponent.isVisible) {
+            let closeKeys: Array<Number> = [13, 27, 9];
+            if (closeKeys.indexOf($event.keyCode) != -1) {
+                this.popoverComponent.hide();
+            } else if (!this.multiple) {
+                if ($event.keyCode == 38) {
+                    this.onArrowUp($event);
+                } else if ($event.keyCode == 40) {
+                    this.onArrowDown($event);
                 }
             }
-
-            $event.preventDefault();
         }
     }
 
-    @HostListener('keydown.arrowDown', ['$event'])
-    public onArrowDown($event: Event): void {
-        if (!this.disabled && !this.multiple) {
-            let arr = this.optionComponents.toArray();
-            for (var i = 0; i < arr.length; i++) {
-                if (arr[i].selected) {
-                    if (i + 1 < arr.length) {
-                        this.onSelect($event, arr[i+1].value);
-                    }
-
-                    break;
+    private onArrowUp($event: KeyboardEvent) {
+        let arr = this.optionComponents.toArray();
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].selected) {
+                if (i - 1 >= 0) {
+                    this.onSelect($event, arr[i-1].value);
                 }
-            }
 
-            $event.preventDefault();
+                break;
+            }
         }
+
+        $event.preventDefault();
     }
 
-    @HostListener('keydown.enter', ['$event'])
-    @HostListener('keydown.esc', ['$event'])
-    @HostListener('keydown.tab', ['$event'])
-    @HostListener('keydown.shift.tab', ['$event'])
-    public onKeydown($event: Event): void {
-        if (!this.disabled) {
-            this.popoverComponent.hide();
+    private onArrowDown($event: KeyboardEvent) {
+        let arr = this.optionComponents.toArray();
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].selected) {
+                if (i + 1 < arr.length) {
+                    this.onSelect($event, arr[i+1].value);
+                }
+
+                break;
+            }
         }
+
+        $event.preventDefault();
     }
 
     private isEmpty() {
@@ -206,7 +206,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
                 // skip ngModel update when undefined value or multiple selects initialized with same array
             } else if (Array.isArray(value)) {
                 this.ngModel = uniq(this.ngModel.concat(value));
-            } else if (this.ngModel.includes(value)) {
+            } else if (this.ngModel.indexOf(value) != -1) {
                 this.ngModel = [...this.ngModel.filter((v: string) => v !== value)];
             } else if (!!value) {
                 this.ngModel = [...this.ngModel, value];
