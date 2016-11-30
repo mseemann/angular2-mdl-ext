@@ -54,6 +54,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
     private textByValue: any = {};
     private onChange: any = Function.prototype;
     private onTouched: any = Function.prototype;
+    private focused: boolean = false;
 
     constructor(private changeDetectionRef: ChangeDetectorRef) {
         this.textfieldId = `mdl-textfield-${randomId()}`;
@@ -109,6 +110,14 @@ export class MdlSelectComponent implements ControlValueAccessor {
         }
 
         $event.preventDefault();
+    }
+
+    private addFocus(): void {
+        this.focused = true;
+    }
+
+    private removeFocus(): void {
+        this.focused = false;
     }
 
     private isEmpty() {
