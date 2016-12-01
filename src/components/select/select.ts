@@ -47,8 +47,8 @@ export class MdlSelectComponent implements ControlValueAccessor {
     @Input() placeholder: string = '';
     @Input() multiple: boolean = false;
     @Output() private change: EventEmitter<any> = new EventEmitter(true);
-    @ViewChild(MdlPopoverComponent) private popoverComponent: MdlPopoverComponent;
-    @ContentChildren(MdlOptionComponent) private optionComponents: QueryList<MdlOptionComponent>;
+    @ViewChild(MdlPopoverComponent) public popoverComponent: MdlPopoverComponent;
+    @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
     private textfieldId: string;
     private text: string = '';
     private textByValue: any = {};
@@ -69,13 +69,14 @@ export class MdlSelectComponent implements ControlValueAccessor {
     @HostListener('document:keydown', ['$event'])
     public onKeydown($event: KeyboardEvent): void {
         if (!this.disabled && this.popoverComponent.isVisible) {
-            let closeKeys: Array<Number> = [13, 27, 9];
-            if (closeKeys.indexOf($event.keyCode) != -1) {
+            let closeKeys: Array<string> = ["Escape", "Tab", "Enter"];
+            let closeKeyCodes: Array<Number> = [13, 27, 9];
+            if (closeKeyCodes.indexOf($event.keyCode) != -1 || ($event.key && closeKeys.indexOf($event.key) != -1)) {
                 this.popoverComponent.hide();
             } else if (!this.multiple) {
-                if ($event.keyCode == 38) {
+                if ($event.keyCode == 38 || ($event.key && $event.key == "ArrowUp")) {
                     this.onArrowUp($event);
-                } else if ($event.keyCode == 40) {
+                } else if ($event.keyCode == 40 || ($event.key && $event.key == "ArrowDown")) {
                     this.onArrowDown($event);
                 }
             }
