@@ -26,7 +26,10 @@ export class SelectDemo {
     {id: 3, name: 'Bob Odenkirk'},
   ];
 
+  person2Id: FormControl = new FormControl(1);
+
   countryCode: string = 'FR';
+  otherCountryCode: string = null;
   countryCodes: string[] = ['FR', 'DE', 'IT'];
   countries: any = [
     {name: 'France', code: 'FR'},

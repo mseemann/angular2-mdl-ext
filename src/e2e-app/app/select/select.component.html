@@ -18,6 +18,22 @@
    ]]>
 </pre>
 
+<h5>ngModel with placeholder (no initial value) and floating label</h5>
+
+<mdl-select floating-label [(ngModel)]="otherCountryCode" placeholder="Country">
+  <mdl-option [value]=""><em>None</em></mdl-option>
+  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<pre prism ngNonBindable>
+  <![CDATA[
+<mdl-select floating-label [(ngModel)]="otherCountryCode" placeholder="Country">
+  <mdl-option [value]=""><em>None</em></mdl-option>
+  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+   ]]>
+</pre>
+
 <h5>ngModel with initial value</h5>
 
 <mdl-select [(ngModel)]="countryCode" placeholder="Select country">
