@@ -18,14 +18,14 @@
     "url": "git+https://github.com/mseemann/angular2-mdl-ext.git"
   },
   "dependencies": {
-    "@angular/common": "2.2.2",
-    "@angular/compiler": "2.2.2",
-    "@angular/core": "2.2.2",
-    "@angular/forms": "2.2.2",
-    "@angular/http": "2.2.2",
-    "@angular/platform-browser": "2.2.2",
-    "@angular/platform-browser-dynamic": "2.2.2",
-    "@angular/router": "3.2.2",
+    "@angular/common": "2.2.4",
+    "@angular/compiler": "2.2.4",
+    "@angular/core": "2.2.4",
+    "@angular/forms": "2.2.4",
+    "@angular/http": "2.2.4",
+    "@angular/platform-browser": "2.2.4",
+    "@angular/platform-browser-dynamic": "2.2.4",
+    "@angular/router": "3.2.4",
     "@mseemann/prism": "0.0.1",
     "angular2-mdl": "2.4.5",
     "core-js": "2.4.1",
@@ -34,8 +34,8 @@
     "zone.js": "0.7.1"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "2.2.2",
-    "@angular/platform-server": "2.2.2",
+    "@angular/compiler-cli": "2.2.4",
+    "@angular/platform-server": "2.2.4",
     "@types/core-js": "0.9.35",
     "@types/gulp": "3.8.32",
     "@types/jasmine": "2.5.38",
@@ -75,8 +75,8 @@
     "postcss-loader": "^1.0.0",
     "raw-loader": "^0.5.1",
     "remap-istanbul": "0.7.0",
-    "rimraf": "^2.5.4",
-    "rollup": "^0.36.3",
+    "rimraf": "2.5.4",
+    "rollup": "0.36.4",
     "run-sequence": "^1.2.2",
     "sass-loader": "^4.0.2",
     "string-replace-loader": "1.0.5",
@@ -88,7 +88,7 @@
     "typings": "2.0.0",
     "webpack": "2.1.0-beta.22",
     "webpack-dev-server": "2.1.0-beta.4",
-    "webpack-merge": "1.0.0"
+    "webpack-merge": "1.0.2"
   },
   "keywords": [
     "angular2",
