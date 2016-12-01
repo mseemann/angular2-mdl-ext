@@ -93,6 +93,61 @@ describe('MdlSelect', () => {
             });
         }));
 
+        it('focus should have keyboard events', async(() => {
+
+            let testInstance = fixture.componentInstance;
+
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+
+            let selectComponentInstance = selectComponent.componentInstance;
+
+            spyOn(selectComponentInstance, 'onKeydown').and.callThrough();
+
+            spyOn(selectComponentInstance, 'onArrowUp').and.callThrough();
+
+            spyOn(selectComponentInstance, 'onArrowDown').and.callThrough();
+
+            spyOn(selectComponentInstance, 'addFocus').and.callThrough();
+
+            spyOn(selectComponentInstance, 'removeFocus').and.callThrough();
+            
+            //console.log(selectNativeElement.querySelector("span[tabindex]"));
+            //document.body.appendChild(selectNativeElement);
+
+            selectNativeElement.querySelector("span[tabindex]").focus();
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.popoverComponent.isVisible)
+                .toEqual(true, 'toggle did not update isVisible to true');
+
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: "ArrowDown" })); // 40, 38, 9
+            fixture.detectChanges();
+            
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: "ArrowUp" })); // 40, 38, 9
+            fixture.detectChanges();
+
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: "Tab" })); // 40, 38, 9
+            fixture.detectChanges();
+
+            selectNativeElement.querySelector("span[tabindex]").blur();
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.popoverComponent.isVisible)
+                .toEqual(false, 'toggle did not update isVisible to false');
+
+            expect(selectComponentInstance.onKeydown).toHaveBeenCalled();
+
+            expect(selectComponentInstance.onArrowUp).toHaveBeenCalled();
+
+            expect(selectComponentInstance.onArrowDown).toHaveBeenCalled();
+
+            expect(selectComponentInstance.addFocus).toHaveBeenCalled();
+
+            expect(selectComponentInstance.removeFocus).toHaveBeenCalled();
+        }));
+
     });
 
     describe('multiple', () => {

@@ -1,7 +1,13 @@
 <div
   class="mdl-textfield is-upgraded has-placeholder"
-  [class.is-focused]="this.popoverComponent.isVisible"
+  [class.is-focused]="this.popoverComponent.isVisible || this.focused"
   [class.is-disabled]="this.disabled">
+  <span
+      [attr.tabindex]="!this.disabled ? 1 : null"
+      (focus)="open($event);addFocus();"
+      (blur)="removeFocus()">
+    <!-- don't want click to also trigger focus -->
+  </span>
   <div
       class="mdl-textfield__input"
       (click)="toggle($event)"

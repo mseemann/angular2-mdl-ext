@@ -8,7 +8,7 @@ import {
     Input,
     ModuleWithProviders,
     NgModule,
-    ViewEncapsulation,
+    ViewEncapsulation
 } from '@angular/core';
 
 
@@ -26,7 +26,7 @@ export class MdlPopoverComponent implements AfterViewInit {
     @HostBinding('class.is-visible') public isVisible = false;
     @HostBinding('class.direction-up') public directionUp = false;
     constructor(private changeDetectionRef: ChangeDetectorRef,
-                private elementRef: ElementRef) {}
+                public elementRef: ElementRef) {}
 
     public ngAfterViewInit() {
         // Add a hide listener to native element
@@ -66,7 +66,7 @@ export class MdlPopoverComponent implements AfterViewInit {
       }
     }
 
-    private show(event: Event) {
+    public show(event: Event) {
         event.stopPropagation();
         this.isVisible = true;
         this.updateDirection(event);

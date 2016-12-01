@@ -10,7 +10,8 @@ import {
     Output,
     QueryList,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    HostListener
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -46,13 +47,14 @@ export class MdlSelectComponent implements ControlValueAccessor {
     @Input() placeholder: string = '';
     @Input() multiple: boolean = false;
     @Output() private change: EventEmitter<any> = new EventEmitter(true);
-    @ViewChild(MdlPopoverComponent) private popoverComponent: MdlPopoverComponent;
-    @ContentChildren(MdlOptionComponent) private optionComponents: QueryList<MdlOptionComponent>;
+    @ViewChild(MdlPopoverComponent) public popoverComponent: MdlPopoverComponent;
+    @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
     private textfieldId: string;
     private text: string = '';
     private textByValue: any = {};
     private onChange: any = Function.prototype;
     private onTouched: any = Function.prototype;
+    private focused: boolean = false;
 
     constructor(private changeDetectionRef: ChangeDetectorRef) {
         this.textfieldId = `mdl-textfield-${randomId()}`;
@@ -62,6 +64,61 @@ export class MdlSelectComponent implements ControlValueAccessor {
         this.bindOptions();
         this.renderValue(this.ngModel);
         this.optionComponents.changes.subscribe(() => this.bindOptions());
+    }
+
+    @HostListener('document:keydown', ['$event'])
+    public onKeydown($event: KeyboardEvent): void {
+        if (!this.disabled && this.popoverComponent.isVisible) {
+            let closeKeys: Array<string> = ["Escape", "Tab", "Enter"];
+            let closeKeyCodes: Array<Number> = [13, 27, 9];
+            if (closeKeyCodes.indexOf($event.keyCode) != -1 || ($event.key && closeKeys.indexOf($event.key) != -1)) {
+                this.popoverComponent.hide();
+            } else if (!this.multiple) {
+                if ($event.keyCode == 38 || ($event.key && $event.key == "ArrowUp")) {
+                    this.onArrowUp($event);
+                } else if ($event.keyCode == 40 || ($event.key && $event.key == "ArrowDown")) {
+                    this.onArrowDown($event);
+                }
+            }
+        }
+    }
+
+    private onArrowUp($event: KeyboardEvent) {
+        let arr = this.optionComponents.toArray();
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].selected) {
+                if (i - 1 >= 0) {
+                    this.onSelect($event, arr[i-1].value);
+                }
+
+                break;
+            }
+        }
+
+        $event.preventDefault();
+    }
+
+    private onArrowDown($event: KeyboardEvent) {
+        let arr = this.optionComponents.toArray();
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].selected) {
+                if (i + 1 < arr.length) {
+                    this.onSelect($event, arr[i+1].value);
+                }
+
+                break;
+            }
+        }
+
+        $event.preventDefault();
+    }
+
+    private addFocus(): void {
+        this.focused = true;
+    }
+
+    private removeFocus(): void {
+        this.focused = false;
     }
 
     private isEmpty() {
@@ -107,6 +164,20 @@ export class MdlSelectComponent implements ControlValueAccessor {
     private toggle($event: Event) {
         if (!this.disabled) {
             this.popoverComponent.toggle($event);
+            $event.stopPropagation();
+        }
+    }
+
+    public open($event: Event) {
+        if (!this.disabled && !this.popoverComponent.isVisible) {
+            this.popoverComponent.show($event);
+        }
+
+    }
+
+    public close($event: Event) {
+        if (!this.disabled && this.popoverComponent.isVisible) {
+            this.popoverComponent.hide();
         }
     }
 
@@ -114,6 +185,25 @@ export class MdlSelectComponent implements ControlValueAccessor {
         if (this.multiple) {
             // prevent popup close on click inside popover when selecting multiple
             $event.stopPropagation();
+        } else {
+            let popover: any = this.popoverComponent.elementRef.nativeElement;
+            let list: any = popover.querySelector(".mdl-list");
+            let option: any = null;
+
+            this.optionComponents.forEach(o => {
+                // not great for long lists because break is not available
+                if (o.value == value) {
+                    option = o.contentWrapper.nativeElement;
+                }
+            });
+
+            if (option) {
+                if (option.offsetTop > popover.clientHeight) {
+                    list.scrollTop += option.parentElement.clientHeight;
+                } else if (option.offsetTop < list.scrollTop) {
+                    list.scrollTop -= option.parentElement.clientHeight;
+                }
+            }
         }
         this.writeValue(value);
         this.change.emit(this.ngModel);
@@ -126,7 +216,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
                 // skip ngModel update when undefined value or multiple selects initialized with same array
             } else if (Array.isArray(value)) {
                 this.ngModel = uniq(this.ngModel.concat(value));
-            } else if (this.ngModel.includes(value)) {
+            } else if (this.ngModel.indexOf(value) != -1) {
                 this.ngModel = [...this.ngModel.filter((v: string) => v !== value)];
             } else if (!!value) {
                 this.ngModel = [...this.ngModel, value];
