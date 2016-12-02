@@ -1,7 +1,6 @@
 @import "../../../node_modules/angular2-mdl/scss/variables";
 
 .mdl-select {
-
   &--floating-label {
     @extend .mdl-textfield--floating-label !optional;
     

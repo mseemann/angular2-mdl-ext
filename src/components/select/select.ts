@@ -17,7 +17,6 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MdlPopoverModule, MdlPopoverComponent } from '../popover/index';
 import { MdlOptionComponent } from './option';
-//import { BooleanProperty } from 'angular2-mdl/common';
 
 const uniq = (array: any[]) => Array.from(new Set(array));
 
