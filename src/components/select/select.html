@@ -1,7 +1,8 @@
 <div
   class="mdl-textfield is-upgraded has-placeholder"
   [class.is-focused]="this.popoverComponent.isVisible || this.focused"
-  [class.is-disabled]="this.disabled">
+  [class.is-disabled]="this.disabled"
+  [class.is-dirty]="text != null && text.length > 0">
   <span
       [attr.tabindex]="!this.disabled ? 1 : null"
       (focus)="open($event);addFocus();"
@@ -19,7 +20,7 @@
       (click)="toggle($event)">
     keyboard_arrow_down
   </span>
-  <label class="mdl-textfield__label" [attr.for]="textfieldId" [style.display]="getLabelVisibility()">{{ placeholder }}</label>
+  <label class="mdl-textfield__label" [attr.for]="textfieldId">{{ placeholder }}</label>
   <span class="mdl-textfield__error"></span>
   <mdl-popover hide-on-click="!multiple" [style.width.%]="100">
     <div class="mdl-list mdl-shadow--6dp">

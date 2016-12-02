@@ -1,19 +1,28 @@
 @import "../../../node_modules/angular2-mdl/scss/variables";
 
 .mdl-select {
+
   &--floating-label {
-    @extend .mdl-textfield;
     @extend .mdl-textfield--floating-label !optional;
-    @extend .is-dirty;
+    
+    .mdl-textfield {
+      &.is-dirty {
+        @extend .mdl-textfield--floating-label.is-dirty !optional;
+      }
+    }
 
     padding: 0;
 
     .mdl-textfield__label {
       &:after {
-        @extend .mdl-textfield__label:after;
+        @extend .mdl-textfield__label:after !optional;
       }
 
-      visibility: visible !important; // sorry for !important
+      &.is-dirty {
+        &:after {
+          @extend .mdl-textfield__label.is-dirty:after !optional;
+        }
+      }
     }
   }
 
