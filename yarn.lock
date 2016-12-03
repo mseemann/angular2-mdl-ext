@@ -58,6 +58,10 @@
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@mseemann/prism/-/prism-0.0.1.tgz#abbc7a7a2c52d70b0aaa228338fd82960f1dde73"
 
+"@types/chai@^3.4.34":
+  version "3.4.34"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-3.4.34.tgz#d5335792823bb09cddd5e38c3d211b709183854d"
+
 "@types/core-js@0.9.35":
   version "0.9.35"
   resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-0.9.35.tgz#444064e63711cdcc62ea844d27642f6efc2285f2"
@@ -80,11 +84,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*":
-  version "6.0.47"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.47.tgz#07dd004f05d0b74344ebf943b559659bd7f445b1"
-
-"@types/node@6.0.51":
+"@types/node@*", "@types/node@6.0.51":
   version "6.0.51"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.51.tgz#84cbf25111516ec9304d0b61469dc0fa9d12ba32"
 
@@ -161,9 +161,9 @@ amdefine@1.0.0, amdefine@>=0.0.4:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.0.tgz#fd17474700cb5cc9c2b709f0be9d23ce3c198c33"
 
-angular2-mdl@2.4.5:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/angular2-mdl/-/angular2-mdl-2.4.5.tgz#f1fa43390fbd6318af569244fc807c7ea349f07e"
+angular2-mdl@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/angular2-mdl/-/angular2-mdl-2.5.1.tgz#a479ab484cd883ffb8cc5b4fa89ef182779e4a91"
 
 angular2-template-loader@^0.6.0:
   version "0.6.0"
@@ -6169,6 +6169,6 @@ zip-object@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/zip-object/-/zip-object-0.1.0.tgz#c1a0da04c88c837756e248680a03ff902ec3f53a"
 
-zone.js@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.7.1.tgz#62db98e2b9cfcb60eff9cf105d199c23c8d78e4f"
+zone.js@0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.7.2.tgz#1a62b6be4b24d1b935e4566b0b4386b66966d1a7"
