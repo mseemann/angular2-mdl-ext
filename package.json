@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "2.2.4",
     "@angular/router": "3.2.4",
     "@mseemann/prism": "0.0.1",
-    "angular2-mdl": "2.4.5",
+    "angular2-mdl": "2.5.0",
     "core-js": "2.4.1",
     "rxjs": "5.0.0-rc.4",
     "systemjs": "0.19.41",
