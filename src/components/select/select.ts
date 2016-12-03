@@ -35,7 +35,8 @@ const MDL_SELECT_VALUE_ACCESSOR: any = {
     moduleId: module.id,
     selector: 'mdl-select',
     host: {
-        '[class.mdl-select]': 'true'
+        '[class.mdl-select]': 'true',
+        '[class.mdl-select--floating-label]': 'isFloatingLabel != null'
     },
     templateUrl: 'select.html',
     encapsulation: ViewEncapsulation.None,
@@ -44,6 +45,7 @@ const MDL_SELECT_VALUE_ACCESSOR: any = {
 export class MdlSelectComponent implements ControlValueAccessor {
     @Input() ngModel: any;
     @Input() disabled: boolean = false;
+    @Input('floating-label') public isFloatingLabel: any;
     @Input() placeholder: string = '';
     @Input() multiple: boolean = false;
     @Output() private change: EventEmitter<any> = new EventEmitter(true);
@@ -234,6 +236,10 @@ export class MdlSelectComponent implements ControlValueAccessor {
 
     public registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
+    }
+
+    public getLabelVisibility(): string {
+        return this.isFloatingLabel == null || (this.isFloatingLabel != null && this.text != null && this.text.length > 0) ? "block" : "none";
     }
 }
 

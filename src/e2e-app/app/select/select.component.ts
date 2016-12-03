@@ -27,6 +27,7 @@ export class SelectDemo {
   ];
 
   countryCode: string = 'FR';
+  otherCountryCode: string = null;
   countryCodes: string[] = ['FR', 'DE', 'IT'];
   countries: any = [
     {name: 'France', code: 'FR'},

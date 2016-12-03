@@ -1,6 +1,30 @@
 @import "../../../node_modules/angular2-mdl/scss/variables";
 
 .mdl-select {
+  &--floating-label {
+    @extend .mdl-textfield--floating-label !optional;
+    
+    .mdl-textfield {
+      &.is-dirty {
+        @extend .mdl-textfield--floating-label.is-dirty !optional;
+      }
+    }
+
+    padding: 0;
+
+    .mdl-textfield__label {
+      &:after {
+        @extend .mdl-textfield__label:after !optional;
+      }
+
+      &.is-dirty {
+        &:after {
+          @extend .mdl-textfield__label.is-dirty:after !optional;
+        }
+      }
+    }
+  }
+
   &__toggle {
     cursor: pointer;
     float: right;
