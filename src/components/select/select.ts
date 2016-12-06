@@ -141,18 +141,15 @@ export class MdlSelectComponent implements ControlValueAccessor {
         this.optionComponents.forEach((selectOptionComponent: MdlOptionComponent) => {
             selectOptionComponent.setMultiple(this.multiple);
             selectOptionComponent.onSelect = this.onSelect.bind(this);
-            this.textByValue[String(selectOptionComponent.value||'')] = selectOptionComponent.text;
+            this.textByValue[this.stringifyValue(selectOptionComponent.value)] = selectOptionComponent.text;
         });
     }
 
     private renderValue(value: any) {
         if (this.multiple) {
-            this.text = value.map((value: string) => this.textByValue[String(value)]).join(', ');
+            this.text = value.map((value: string) => this.textByValue[this.stringifyValue(value)]).join(', ');
         } else {
-            this.text =
-              (!!value || typeof value === 'number')
-              ? this.textByValue[String(value)]
-              : '';
+            this.text = this.textByValue[this.stringifyValue(value)]||'';
         }
         this.changeDetectionRef.detectChanges();
 
@@ -160,6 +157,14 @@ export class MdlSelectComponent implements ControlValueAccessor {
             this.optionComponents.forEach((selectOptionComponent) => {
                 selectOptionComponent.updateSelected(value);
             });
+        }
+    }
+
+    private stringifyValue(value: any): string {
+        switch (typeof value) {
+            case 'number': return String(value);
+            case 'object': return JSON.stringify(value);
+            default: return (!!value) ? String(value) : '';
         }
     }
 
