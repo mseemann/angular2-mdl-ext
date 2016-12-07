@@ -31,7 +31,7 @@ export class MdlOptionComponent {
 
   public updateSelected(value: any) {
     if (this.multiple) {
-      this.selected = (value.indexOf(this.value) != -1);
+      this.selected = (value.map((v: any) => this.stringifyValue(v)).indexOf(this.stringValue) != -1);
     } else {
       this.selected = this.value == value;
     }
@@ -40,5 +40,17 @@ export class MdlOptionComponent {
 
   ngAfterViewInit() {
     this.text = this.contentWrapper.nativeElement.textContent.trim();
+  }
+
+  get stringValue(): string {
+    return this.stringifyValue(this.value);
+  }
+
+  private stringifyValue(value: any): string {
+    switch (typeof value) {
+      case 'number': return String(value);
+      case 'object': return JSON.stringify(value);
+      default: return (!!value) ? String(value) : '';
+    }
   }
 }

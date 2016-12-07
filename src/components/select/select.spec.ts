@@ -273,6 +273,121 @@ describe('MdlSelect', () => {
             });
         }));
     });
+    describe('object', () => {
+
+        let fixture: ComponentFixture<TestObjectComponent>;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [MdlSelectModule.forRoot()],
+                declarations: [TestObjectComponent],
+            });
+
+            TestBed.compileComponents().then( () => {
+                fixture = TestBed.createComponent(TestObjectComponent);
+                fixture.detectChanges();
+            });
+        }));
+
+        it('should support ngModel', async(() => {
+
+            let testInstance = fixture.componentInstance;
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            fixture.whenStable().then(() => {
+                expect(selectComponentInstance.ngModel)
+                  .toEqual( [{i: 1, n: 'Bryan Cranston'}, {i: 2, n: 'Aaron Paul'}], 'did not init ngModel');
+
+                testInstance.personObjs = [{i: 1, n: 'Bryan Cranston'}];
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(selectComponentInstance.ngModel)
+                      .toEqual( [{i: 1, n: 'Bryan Cranston'}], 'did not update ngModel')
+                });
+            });
+
+        }));
+
+        it('should reset ngModel', async(() => {
+
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            spyOn(selectComponentInstance, 'bindOptions');
+
+            fixture.whenStable().then(() => {
+                expect(selectComponentInstance.ngModel)
+                  .toEqual( [{i: 1, n: 'Bryan Cranston'}, {i: 2, n: 'Aaron Paul'}], 'did not init ngModel');
+
+                selectComponentInstance.reset();
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(selectComponentInstance.ngModel)
+                      .toEqual([ ], 'did not reset ngModel')
+                });
+            });
+
+        }));
+
+        it('should select and deselect value', async(() => {
+
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            const event = <Event>jasmine.createSpyObj('event', ['stopPropagation']);
+
+            let arrWith3Obj = [{i: 1, n: 'Bryan Cranston'}, {i: 2, n: 'Aaron Paul'}, {i: 3, n: 'Bob Odenkirk'}];
+
+            expect(selectComponentInstance.multiple)
+              .toBe(true, 'is not multiple');
+
+            selectComponentInstance.onSelect(event, arrWith3Obj[2]);
+
+            expect(event.stopPropagation)
+              .toHaveBeenCalled();
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+
+                expect(selectComponentInstance.ngModel)
+                  .toEqual( arrWith3Obj, 'did not update ngModel on select 3');
+
+                selectComponentInstance.onSelect(event, arrWith3Obj[2]);
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+
+                    expect(selectComponentInstance.ngModel)
+                      .toEqual( [arrWith3Obj[0], arrWith3Obj[1]], 'did not update ngModel on deselect 3');
+
+                });
+
+            });
+
+        }));
+
+
+        it('should bind options on options change', async(() => {
+
+            let testInstance = fixture.componentInstance;
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            spyOn(selectComponentInstance, 'bindOptions').and.callThrough();
+
+            testInstance.people.push({id: 4, name: 'Gary Cole'});
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+
+                expect(selectComponentInstance.bindOptions)
+                  .toHaveBeenCalled();
+
+                expect(selectComponentInstance.textByValue[JSON.stringify({i: 4, n: 'Gary Cole'})])
+                  .toEqual('Gary Cole');
+
+            });
+        }));
+    });
 });
 
 @Component({
@@ -308,3 +423,21 @@ class TestMultipleComponent {
         {id: 3, name: 'Bob Odenkirk'},
     ];
 }
+
+@Component({
+    selector: 'test-object-component',
+    template: `
+        <mdl-select [(ngModel)]="personObjs" [multiple]="true">
+          <mdl-option *ngFor="let p of people" [value]="{ i: p.id, n: p.name }">{{p.name}}</mdl-option>
+        </mdl-select>
+    `
+})
+class TestObjectComponent {
+    personObjs: any[] = [{i: 1, n: 'Bryan Cranston'}, {i: 2, n: 'Aaron Paul'}];
+    people: any[] = [
+        {id: 1, name: 'Bryan Cranston'},
+        {id: 2, name: 'Aaron Paul'},
+        {id: 3, name: 'Bob Odenkirk'},
+    ];
+}
+

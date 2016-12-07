@@ -56,6 +56,17 @@ export class SelectDemo {
   };
   food: string[];
 
+  cityCoordinates: any = [
+    {name: 'İstanbul', latitude:'41.0055005',longitude:'28.7319952'},
+    {name: 'Paris', latitude:'48.8589507',longitude:'2.2770202'},
+    {name: 'London', latitude:'51.5287718',longitude:'-0.2416813'},
+    {name: 'New York', latitude:'40.6976701',longitude:'-74.2598654'},
+    {name: 'San Francisco', latitude:'37.757815',longitude:'-122.50764'},
+    {name: 'Sydney', latitude:'-33.8474027',longitude:'150.6517794'},
+    {name: 'Shanghai', latitude:'31.2246325',longitude:'121.1965643'}
+  ];
+  locations: any[];
+
   ngOnInit() {
     this.form = new FormGroup({
       personId: this.personId
