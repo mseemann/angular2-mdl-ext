@@ -111,3 +111,24 @@
 </mdl-select>
    ]]>
 </pre>
+
+<h5>Object value</h5>
+
+<p>
+  FormControl return array of coordinate object as value
+</p>
+
+<mdl-select [(ngModel)]="locations" multiple="true" placeholder="Select locations">
+  <mdl-option *ngFor="let c of cityCoordinates" [value]="{ latitude: c.latitude , longitude: c.longitude }">{{ c.name }}</mdl-option>
+</mdl-select>
+<p>
+  Locations: {{ locations | json }}
+</p>
+
+<pre prism ngNonBindable>
+  <![CDATA[
+<mdl-select [(ngModel)]="locations" multiple="true" placeholder="Select locations">
+  <mdl-option *ngFor="let c of cityCoordinates" [value]="{ latitude: c.latitude , longitude: c.longitude }">{{ c.name }}</mdl-option>
+</mdl-select>
+   ]]>
+</pre>
