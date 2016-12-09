@@ -20,6 +20,7 @@
 
 <h5>ngModel with placeholder (no initial value) and floating label</h5>
 
+<h6>without initial value</h6>
 <mdl-select floating-label [(ngModel)]="otherCountryCode" placeholder="Country">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
@@ -27,8 +28,38 @@
 <pre prism ngNonBindable>
   <![CDATA[
 <mdl-select floating-label [(ngModel)]="otherCountryCode" placeholder="Country">
-  <mdl-option [value]=""><em>None</em></mdl-option>
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+   ]]>
+</pre>
+
+<h6>without initial value, with nullable option</h6>
+<p>By setting an option with a blank value, the select field will revert back to the placeholder text (similar to a textfield).</p>
+<mdl-select floating-label [(ngModel)]="otherCountryCode2" placeholder="Country">
+  <mdl-option [value]=""><em>-- Select a Country --</em></mdl-option>
+  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<pre prism ngNonBindable>
+  <![CDATA[
+<mdl-select floating-label [(ngModel)]="otherCountryCode2" placeholder="Country">
+  <mdl-option [value]=""><em>-- Select a Country --</em></mdl-option>
+  <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+   ]]>
+</pre>
+
+<h6>With initial value, without nullable option</h6>
+<mdl-select floating-label [(ngModel)]="color" placeholder="Filter by Color">
+  <mdl-option value="all"><em>All</em></mdl-option>
+  <mdl-option *ngFor="let c of colors" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<pre prism ngNonBindable>
+  <![CDATA[
+<mdl-select floating-label [(ngModel)]="color" placeholder="Country">
+  <mdl-option [value]=""><em>Select a Country</em></mdl-option>
+  <mdl-option *ngFor="let c of colors" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
    ]]>
 </pre>
