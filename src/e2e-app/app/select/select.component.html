@@ -58,7 +58,7 @@
 <pre prism ngNonBindable>
   <![CDATA[
 <mdl-select floating-label [(ngModel)]="color" placeholder="Country">
-  <mdl-option [value]=""><em>Select a Country</em></mdl-option>
+  <mdl-option value="all"><em>All</em></mdl-option>
   <mdl-option *ngFor="let c of colors" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
    ]]>
