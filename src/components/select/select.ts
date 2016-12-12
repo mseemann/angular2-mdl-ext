@@ -102,14 +102,16 @@ export class MdlSelectComponent implements ControlValueAccessor {
 
     private onArrowDown($event: KeyboardEvent) {
         let arr = this.optionComponents.toArray();
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].selected) {
-                if (i + 1 < arr.length) {
-                    this.onSelect($event, arr[i+1].value);
-                }
 
-                break;
+        const selectedOption = arr.find(option => option.selected);
+
+        if(selectedOption){
+            const selectedOptionIndex = arr.indexOf(selectedOption);
+            if (selectedOptionIndex + 1 < arr.length) {
+                this.onSelect($event, arr[selectedOptionIndex + 1].value);
             }
+        }else {
+            this.onSelect($event, arr[0].value);
         }
 
         $event.preventDefault();
