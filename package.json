@@ -73,7 +73,7 @@
     "karma-spec-reporter": "0.0.26",
     "merge2": "1.0.2",
     "node-sass": "3.13.1",
-    "postcss-loader": "1.0.0",
+    "postcss-loader": "1.2.1",
     "raw-loader": "0.5.1",
     "remap-istanbul": "0.8.0",
     "rimraf": "2.5.4",
