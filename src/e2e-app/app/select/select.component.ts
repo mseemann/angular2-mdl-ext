@@ -28,6 +28,7 @@ export class SelectDemo {
 
   countryCode: string = 'FR';
   otherCountryCode: string = null;
+  otherCountryCode2: string = null;
   countryCodes: string[] = ['FR', 'DE', 'IT'];
   countries: any = [
     {name: 'France', code: 'FR'},
@@ -37,6 +38,13 @@ export class SelectDemo {
     {name: 'Poland', code: 'PL'},
     {name: 'Spain', code: 'ES'},
     {name: 'United Kingdom', code: 'UK'},
+  ];
+
+  color: string = "all";
+  colors: any = [
+    { name: "Red", code: "r"},
+    { name: "Green", code: "g"},
+    { name: "Blue", code: "b"}
   ];
 
   foodCategories: any[] = [

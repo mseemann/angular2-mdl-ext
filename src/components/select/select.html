@@ -4,7 +4,7 @@
   [class.is-disabled]="this.disabled"
   [class.is-dirty]="text != null && text.length > 0">
   <span
-      [attr.tabindex]="!this.disabled ? 1 : null"
+      [attr.tabindex]="!this.disabled ? 0 : null"
       (focus)="open($event);addFocus();"
       (blur)="removeFocus()">
     <!-- don't want click to also trigger focus -->
