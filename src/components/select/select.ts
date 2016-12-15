@@ -31,6 +31,32 @@ const MDL_SELECT_VALUE_ACCESSOR: any = {
     multi: true
 };
 
+export class SearchableComponent {
+    private clearTimeout : any = null;
+    private query : string = '';
+    private searchTimeout: number;
+
+    constructor(searchTimeout = 300) {
+        this.searchTimeout = searchTimeout;
+    }
+
+    protected updateSearchQuery(event : any) {
+        if(this.clearTimeout){
+            clearTimeout(this.clearTimeout);
+        }
+
+        this.clearTimeout = setTimeout(() => {
+            this.query = '';
+        }, this.searchTimeout);
+
+        this.query += String.fromCharCode(event.keyCode).toLowerCase();
+    }
+
+    protected getSearchQuery() : string {
+        return this.query;
+    }
+}
+
 @Component({
     moduleId: module.id,
     selector: 'mdl-select',
@@ -42,7 +68,7 @@ const MDL_SELECT_VALUE_ACCESSOR: any = {
     encapsulation: ViewEncapsulation.None,
     providers: [MDL_SELECT_VALUE_ACCESSOR]
 })
-export class MdlSelectComponent implements ControlValueAccessor {
+export class MdlSelectComponent extends SearchableComponent implements ControlValueAccessor {
     @Input() ngModel: any;
     @Input() disabled: boolean = false;
     @Input('floating-label') public isFloatingLabel: any;
@@ -59,6 +85,7 @@ export class MdlSelectComponent implements ControlValueAccessor {
     private focused: boolean = false;
 
     constructor(private changeDetectionRef: ChangeDetectorRef) {
+        super();
         this.textfieldId = `mdl-textfield-${randomId()}`;
     }
 
@@ -80,9 +107,32 @@ export class MdlSelectComponent implements ControlValueAccessor {
                     this.onArrowUp($event);
                 } else if ($event.keyCode == 40 || ($event.key && $event.key == "ArrowDown")) {
                     this.onArrowDown($event);
+                } else if ($event.keyCode >= 31 && $event.keyCode <= 90) {
+                    this.onCharacterKeydown($event); 
                 }
             }
         }
+    }
+
+    private onCharacterKeydown($event : KeyboardEvent) : void {
+        this.updateSearchQuery($event);
+        let optionsList = this.optionComponents.toArray();
+
+        const filteredOptions = optionsList.filter(option => {
+            return option.text.toLowerCase().startsWith(this.getSearchQuery());
+        });
+
+        const selectedOption = optionsList.find(option => option.selected);
+                        
+        if (filteredOptions.length > 0) {
+            const selectedOptionInFiltered = filteredOptions.indexOf(selectedOption) != -1;
+
+            if(!selectedOptionInFiltered && !filteredOptions[0].selected){
+                this.onSelect($event, filteredOptions[0].value);
+            }
+        }
+
+        $event.preventDefault();
     }
 
     private onArrowUp($event: KeyboardEvent) {

@@ -3,6 +3,20 @@ import { MdlSelectModule, MdlSelectComponent } from './select';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
+function dispatchKeydownEvent(element: HTMLElement, keyCode: number): any {
+  let event: any = document.createEvent('KeyboardEvent');
+
+  (event.initKeyEvent || event.initKeyboardEvent).bind(event)(
+      'keydown', true, true, window, 0, 0, 0, 0, 0, keyCode);
+
+  Object.defineProperty(event, 'keyCode', {
+    get: () => keyCode
+  });
+
+  element.dispatchEvent(event);
+  return event;
+}
+
 describe('MdlSelect', () => {
 
     describe('single', () => {
@@ -146,6 +160,52 @@ describe('MdlSelect', () => {
             expect(selectComponentInstance.addFocus).toHaveBeenCalled();
 
             expect(selectComponentInstance.removeFocus).toHaveBeenCalled();
+        }));
+
+         it('should auto-select searched options', async(() => {
+            
+            jasmine.clock().uninstall();
+            jasmine.clock().install();
+
+            let testInstance = fixture.componentInstance;
+
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+
+            let selectComponentInstance = selectComponent.componentInstance;
+
+            spyOn(selectComponentInstance, 'onSelect').and.callThrough();
+            spyOn(selectComponentInstance, 'onCharacterKeydown').and.callThrough();
+
+            selectNativeElement.querySelector("span[tabindex]").focus();
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.ngModel).toEqual(1);
+            dispatchKeydownEvent(document.body, 66); // 'B' key
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.onSelect).not.toHaveBeenCalled();
+            expect(selectComponentInstance.onCharacterKeydown).toHaveBeenCalled();
+            expect(selectComponentInstance.ngModel).toEqual(1);
+
+            dispatchKeydownEvent(document.body, 79); // 'O' key
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.onSelect).toHaveBeenCalled();
+            expect(selectComponentInstance.ngModel).toEqual(3); // B and O typed, so 'Bob Odenkirk' selected
+
+            jasmine.clock().tick(300); // search query timeout is cleared
+
+            expect(selectComponentInstance.getSearchQuery()).toEqual('');
+
+            dispatchKeydownEvent(document.body, 65); // 'A' key
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.onSelect).toHaveBeenCalled();
+            expect(selectComponentInstance.ngModel).toEqual(2); // A typed, so 'Aaron Paul' selected
+
+            jasmine.clock().uninstall();
         }));
 
     });
