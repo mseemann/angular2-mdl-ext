@@ -7,13 +7,12 @@ Additional components for angular2-mdl that are not part of material design lite
 [![dependencies Status](https://david-dm.org/mseemann/angular2-mdl-ext/status.svg)](https://david-dm.org/mseemann/angular2-mdl-ext)
 [![devDependencies Status](https://david-dm.org/mseemann/angular2-mdl-ext/dev-status.svg)](https://david-dm.org/mseemann/angular2-mdl-ext?type=dev)
 
-
 ##The components
 
-| Name | Provided By | Description | npm | documentation | status
-| --- | --- | --- | --- | --- | --- |
-| popover | [tb](https://github.com/tb) | component for showing arbitrary content in a popover | [![npm version](https://badge.fury.io/js/%40angular2-mdl-ext%2Fpopover.svg)](https://badge.fury.io/js/%40angular2-mdl-ext%2Fpopover)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/popover) | experimental
-| select | [tb](https://github.com/tb) | component that shows a select box | [![npm version](https://badge.fury.io/js/%40angular2-mdl-ext%2Fselect.svg)](https://badge.fury.io/js/%40angular2-mdl-ext%2Fselect)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/select) | experimental
+| Name | Provided By | Description | npm | documentation | status | demo
+| --- | --- | --- | --- | --- | --- | --- |
+| popover | [tb](https://github.com/tb) | component for showing arbitrary content in a popover | [![npm version](https://badge.fury.io/js/%40angular2-mdl-ext%2Fpopover.svg)](https://badge.fury.io/js/%40angular2-mdl-ext%2Fpopover)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/popover) | experimental | [demo](http://mseemann.io/angular2-mdl-ext/popover)
+| select | [tb](https://github.com/tb) | component that shows a select box | [![npm version](https://badge.fury.io/js/%40angular2-mdl-ext%2Fselect.svg)](https://badge.fury.io/js/%40angular2-mdl-ext%2Fselect)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/select) | experimental | [demo](http://mseemann.io/angular2-mdl-ext/select)
 
 Status means:
 
