@@ -75,7 +75,7 @@
     "node-sass": "4.1.1",
     "postcss-loader": "1.2.1",
     "raw-loader": "0.5.1",
-    "remap-istanbul": "0.8.0",
+    "remap-istanbul": "0.8.3",
     "rimraf": "2.5.4",
     "rollup": "0.37.0",
     "run-sequence": "1.2.2",
