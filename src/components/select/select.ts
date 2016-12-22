@@ -260,11 +260,9 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
             });
 
             if (option) {
-                if (option.offsetTop > popover.clientHeight) {
-                    list.scrollTop += option.parentElement.clientHeight;
-                } else if (option.offsetTop < list.scrollTop) {
-                    list.scrollTop -= option.parentElement.clientHeight;
-                }
+                const selectedItemElem = option.parentElement;
+                const computedScrollTop = selectedItemElem.offsetTop - (list.clientHeight / 2) + (selectedItemElem.clientHeight / 2);
+                list.scrollTop =  Math.max(computedScrollTop, 0);
             }
         }
         this.writeValue(value);

@@ -24,6 +24,15 @@ export class SelectDemo {
     {id: 1, name: 'Bryan Cranston'},
     {id: 2, name: 'Aaron Paul'},
     {id: 3, name: 'Bob Odenkirk'},
+    {id: 4, name: 'Dean Norris'},
+    {id: 5, name: 'Jonathan Banks'},
+    {id: 6, name: 'Seal Henry Olusegun Olumide Adeola Samuel'},
+    {id: 7, name: 'Rami Malek'},
+    {id: 8, name: 'Christian Slater'},
+    {id: 9, name: 'Martin Wallström'},
+    {id: 10, name: 'Angela Sarafyan'},
+    {id: 11, name: 'Robert Pattinson'},
+    {id: 12, name: 'Billy Bob Thornton'}
   ];
 
   countryCode: string = 'FR';
