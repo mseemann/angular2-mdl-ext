@@ -71,7 +71,7 @@
     "karma-jasmine": "1.0.2",
     "karma-remap-istanbul": "0.3.1",
     "karma-spec-reporter": "0.0.26",
-    "merge2": "1.0.2",
+    "merge2": "1.0.3",
     "node-sass": "4.1.1",
     "postcss-loader": "1.2.1",
     "raw-loader": "0.5.1",
