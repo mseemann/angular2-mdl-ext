@@ -1,0 +1,86 @@
+@import "../../../node_modules/angular2-mdl/scss/color-definitions";
+@import "../../../node_modules/angular2-mdl/scss/variables";
+@import "../../../node_modules/angular2-mdl/scss/mixins";
+
+$padding-vertical: 16px;
+$padding-horizontal: 24px;
+
+@mixin divider() {
+  border-bottom: 1px solid rgba(#000, 0.12);
+}
+
+.mdl-expansion-panel {
+  font-family: $preferred_font;
+  background-color: unquote("rgb(#{$color-white})");
+  display: block;
+  @include shadow-2dp();
+  &__header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 0px $padding-horizontal;
+    align-items: center;
+    line-height: 48px;
+    @include divider();
+    &--list-content {
+      flex-grow: 1;
+      color: rgba(#000, 0.87);
+    }
+    &--secondary-content {
+      padding-left: $padding-vertical;
+      flex-grow: 3;
+      color: rgba(#000, 0.54);
+    }
+    &--expand-icon {
+      padding-left: $padding-vertical;
+      color: rgba(#000, 0.38);
+      cursor: pointer;
+      mdl-icon {
+        vertical-align: middle;
+      }
+    }
+  }
+  &__content {
+    display: block;
+    overflow: hidden;
+    &--body {
+      display: block;
+      padding: 0px $padding-horizontal $padding-vertical $padding-horizontal;
+      @include divider();
+    }
+    &--footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: $padding-vertical $padding-vertical/2 $padding-vertical $padding-horizontal;
+      .mdl-button {
+        padding: 0px $padding-vertical/2;
+      }
+    }
+  }
+  &.expanded {
+    .mdl-expansion-panel__header {
+      line-height: 64px;
+      border-bottom: none;
+    }
+  }
+  &.disabled {
+    .mdl-expansion-panel__header--expand-icon {
+      cursor: default;
+    }
+  }
+}
+
+.mdl-expansion-panel-group {
+  display: block;
+  .mdl-expansion-panel {
+    &.expanded {
+      margin: $padding-vertical 0px;
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
