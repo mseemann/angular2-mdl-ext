@@ -13,7 +13,8 @@ import {
   transition,
   Output,
   Input,
-  QueryList
+  QueryList,
+  HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MdlModule } from 'angular2-mdl';
@@ -101,7 +102,8 @@ export class MdlExpansionPanelFooterComponent { }
   host: {
     '[class.mdl-expansion-panel]': 'true',
     '[class.expanded]': 'isExpanded',
-    '[class.disabled]': 'disabled'
+    '[class.disabled]': 'disabled',
+    '[tabindex]': '0'
   }
 })
 export class MdlExpansionPanelComponent implements AfterContentInit {
@@ -115,6 +117,11 @@ export class MdlExpansionPanelComponent implements AfterContentInit {
     this.header.onChange.subscribe(() => {
       if (!this.disabled) this._toggle(!this.isExpanded);
     });
+  }
+
+  @HostListener('keyup', ['$event'])
+  onKeyUp($event: any) {
+    if ($event.keyCode === 13 && !this.disabled) this.toggle();
   }
 
   toggle() {
@@ -159,7 +166,8 @@ export class MdlExpansionPanelGroupComponent implements AfterContentInit {
   ngAfterContentInit() {
     /**
      * Expand the panel and collapse previously
-     * expanded panel. Save the expanded panel.
+     * expanded panel.
+     * Save the new expanded panel.
      */
     this.panels.forEach((panel, i) => {
       panel.onChange.subscribe((isExpanded: boolean) => {

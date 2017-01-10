@@ -2,8 +2,8 @@
 @import "../../../node_modules/angular2-mdl/scss/variables";
 @import "../../../node_modules/angular2-mdl/scss/mixins";
 
-$padding-vertical: 16px;
-$padding-horizontal: 24px;
+$gutter-vertical: 16px;
+$gutter-horizontal: 24px;
 
 @mixin divider() {
   border-bottom: 1px solid rgba(#000, 0.12);
@@ -13,12 +13,13 @@ $padding-horizontal: 24px;
   font-family: $preferred_font;
   background-color: unquote("rgb(#{$color-white})");
   display: block;
+  outline: none;
   @include shadow-2dp();
   &__header {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    padding: 0px $padding-horizontal;
+    padding: 0px $gutter-horizontal;
     align-items: center;
     line-height: 48px;
     @include divider();
@@ -27,12 +28,12 @@ $padding-horizontal: 24px;
       color: rgba(#000, 0.87);
     }
     &--secondary-content {
-      padding-left: $padding-vertical;
+      padding-left: $gutter-vertical;
       flex-grow: 3;
       color: rgba(#000, 0.54);
     }
     &--expand-icon {
-      padding-left: $padding-vertical;
+      padding-left: $gutter-vertical;
       color: rgba(#000, 0.38);
       cursor: pointer;
       mdl-icon {
@@ -45,15 +46,15 @@ $padding-horizontal: 24px;
     overflow: hidden;
     &--body {
       display: block;
-      padding: 0px $padding-horizontal $padding-vertical $padding-horizontal;
+      padding: 0px $gutter-horizontal $gutter-vertical $gutter-horizontal;
       @include divider();
     }
     &--footer {
       display: flex;
       justify-content: flex-end;
-      padding: $padding-vertical $padding-vertical/2 $padding-vertical $padding-horizontal;
+      padding: $gutter-vertical $gutter-vertical/2 $gutter-vertical $gutter-horizontal;
       .mdl-button {
-        padding: 0px $padding-vertical/2;
+        padding: 0px $gutter-vertical/2;
       }
     }
   }
@@ -73,8 +74,18 @@ $padding-horizontal: 24px;
 .mdl-expansion-panel-group {
   display: block;
   .mdl-expansion-panel {
+    &:focus {
+      background-color: unquote("rgb(#{$palette-grey-200})");
+      .mdl-expansion-panel__header--expand-icon {
+        color: rgba(#000, 0.54);
+      }
+    }
     &.expanded {
-      margin: $padding-vertical 0px;
+      margin: $gutter-vertical 0px;
+      background-color: unquote("rgb(#{$color-white})");
+      .mdl-expansion.panel__header--expand-icon {
+        color: rgba(#000, 0.38);
+      }
       &:first-child {
         margin-top: 0;
       }
