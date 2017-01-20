@@ -37,7 +37,7 @@ module.exports = {
 		loaders: [
 			{
 				test: /\.ts$/,
-				loaders: ['awesome-typescript-loader?tsconfig=./src/e2e-app/tsconfig.json', 'angular2-template-loader']
+				loaders: ['awesome-typescript-loader?configFileName=./src/e2e-app/tsconfig.json', 'angular2-template-loader']
 			},
 			{
 				test: /\.html$/,

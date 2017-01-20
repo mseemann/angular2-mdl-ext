@@ -355,13 +355,13 @@ autoprefixer@^6.0.0, autoprefixer@^6.3.1:
     postcss "^5.2.4"
     postcss-value-parser "^3.2.3"
 
-awesome-typescript-loader@2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-2.2.4.tgz#4185d60c035c25515f9c2a747fa5f69b2a001e9e"
+awesome-typescript-loader@3.0.0-beta.18:
+  version "3.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-3.0.0-beta.18.tgz#7a72b1cca9a2dca59794ab2a4133f779a3a221e7"
   dependencies:
     colors "^1.1.2"
-    enhanced-resolve "^2.2.2"
-    loader-utils "^0.2.6"
+    enhanced-resolve "^2.3.0"
+    loader-utils "^0.2.16"
     lodash "^4.13.1"
     object-assign "^4.1.0"
     source-map-support "^0.4.0"
@@ -462,11 +462,7 @@ bluebird@^2.10.2:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-2.11.0.tgz#534b9033c022c9579c56ba3b3e5a5caafbb650e1"
 
-bluebird@^3.1.1, bluebird@^3.3.0:
-  version "3.4.6"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.6.tgz#01da8d821d87813d158967e743d5fe6c62cf8c0f"
-
-bluebird@^3.4.7:
+bluebird@^3.1.1, bluebird@^3.3.0, bluebird@^3.4.7:
   version "3.4.7"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.4.7.tgz#f72d760be09b7f76d08ed8fae98b289a8d05fab3"
 
@@ -1527,7 +1523,7 @@ engine.io@1.8.2:
     engine.io-parser "1.3.2"
     ws "1.1.1"
 
-enhanced-resolve@^2.2.0, enhanced-resolve@^2.2.2:
+enhanced-resolve@^2.2.0, enhanced-resolve@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-2.3.0.tgz#a115c32504b6302e85a76269d7a57ccdd962e359"
   dependencies:
@@ -3118,7 +3114,7 @@ loader-runner@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.2.0.tgz#824c1b699c4e7a2b6501b85902d5b862bf45b3fa"
 
-loader-utils@0.2.x, loader-utils@^0.2.11, loader-utils@^0.2.15, loader-utils@^0.2.16, loader-utils@^0.2.3, loader-utils@^0.2.6, loader-utils@^0.2.7, loader-utils@~0.2.2:
+loader-utils@0.2.x, loader-utils@^0.2.11, loader-utils@^0.2.15, loader-utils@^0.2.16, loader-utils@^0.2.3, loader-utils@^0.2.7, loader-utils@~0.2.2:
   version "0.2.16"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-0.2.16.tgz#f08632066ed8282835dff88dfb52704765adee6d"
   dependencies:
@@ -3359,11 +3355,11 @@ lodash@^3.10.1, lodash@^3.8.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.5.0:
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.5.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
-lodash@^4.13.1, lodash@^4.3.0:
+lodash@^4.3.0:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
 
