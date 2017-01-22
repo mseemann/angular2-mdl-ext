@@ -144,11 +144,11 @@ export class MdlExpansionPanelComponent implements AfterContentInit {
   }
 
   disableToggle() {
-    this.disabled = false;
+    this.disabled = true;
   }
 
   enableToggle() {
-    this.disabled = true;
+    this.disabled = false;
   }
 }
 
