@@ -21,7 +21,7 @@ import { PrismDirective } from '@mseemann/prism';
     RouterModule.forRoot(appRoutes),
     MdlPopoverModule,
     MdlSelectModule,
-    MdlExpansionPanelModule.forRoot()
+    MdlExpansionPanelModule
   ],
   declarations: [
     AppComponent,
