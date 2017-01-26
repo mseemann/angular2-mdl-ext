@@ -115,6 +115,7 @@ function createUmdBundle(component: string){
     '@angular/common': 'ng.common',
     '@angular/forms': 'ng.forms',
     '@angular/platform-browser': 'ng.platformBrowser',
+    'angular2-mdl': 'angular2Mdl',
     'rxjs/Subject': 'Rx',
     'rxjs/Observable': 'Rx'
   };
@@ -125,7 +126,8 @@ function createUmdBundle(component: string){
     external: Object.keys(globals)
   }).then((bundle: { generate: any }) => {
     const result = bundle.generate({
-      moduleName: 'angular2Mdl.'+component,
+        // remove - from the name - otherwise the umd name is not a valid name
+      moduleName: 'angular2Mdl.'+component.replace(/-/g, ""),
       format: 'umd',
       globals,
       sourceMap: true,
