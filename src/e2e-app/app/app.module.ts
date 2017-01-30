@@ -6,8 +6,10 @@ import { MdlModule } from 'angular2-mdl';
 import { RouterModule } from '@angular/router';
 import { PopoverDemo } from './popover/popover.component';
 import { SelectDemo } from './select/select.component';
+import { ExpansionPanelDemo } from './expansion-panel/expansion-panel.component';
 import { MdlPopoverModule } from '../../components/popover/popover';
 import { MdlSelectModule } from '../../components/select/select';
+import { MdlExpansionPanelModule } from '../../components/expansion-panel/expansion-panel.component';
 import { PrismDirective } from '@mseemann/prism';
 
 @NgModule({
@@ -18,13 +20,15 @@ import { PrismDirective } from '@mseemann/prism';
     MdlModule,
     RouterModule.forRoot(appRoutes),
     MdlPopoverModule,
-    MdlSelectModule
+    MdlSelectModule,
+    MdlExpansionPanelModule
   ],
   declarations: [
     AppComponent,
     Home,
     PopoverDemo,
     SelectDemo,
+    ExpansionPanelDemo,
     PrismDirective
   ],
   entryComponents: [AppComponent],

@@ -13,8 +13,7 @@ gulp.task(':build:test:vendor', () => {
         'core-js/client',
         'rxjs',
         'systemjs/dist',
-        'zone.js/dist',
-        'angular2-mdl/dist/components'
+        'zone.js/dist'
     ];
 
     return gulpMerge(

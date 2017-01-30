@@ -6,6 +6,7 @@ import {
 import '../css/style.scss';
 import { PopoverDemo } from './popover/popover.component';
 import { SelectDemo } from './select/select.component';
+import { ExpansionPanelDemo } from './expansion-panel/expansion-panel.component';
 import { MdlLayoutComponent } from 'angular2-mdl';
 
 
@@ -21,6 +22,7 @@ export const appRoutes: Routes = [
   { path: '', component: Home, data: {title: 'Home'} },
   { path: 'popover', component: PopoverDemo, data: {title: 'Popover'} },
   { path: 'select', component: SelectDemo, data: {title: 'Select'} },
+  { path: 'expansion-panel', component: ExpansionPanelDemo, data: {title: 'Expanion Panel'} },
   { path: '**', redirectTo: '' }
 ];
 
