@@ -276,8 +276,8 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
                 // skip ngModel update when undefined value or multiple selects initialized with same array
             } else if (Array.isArray(value)) {
                 this.ngModel = uniq(this.ngModel.concat(value));
-            } else if (this.ngModel.indexOf(value) != -1) {
-                this.ngModel = [...this.ngModel.filter((v: string) => v !== value)];
+            } else if (this.ngModel.map((v:any) => this.stringifyValue(v)).indexOf(this.stringifyValue(value)) != -1) {
+                this.ngModel = [...this.ngModel.filter((v: any) => this.stringifyValue(v) !== this.stringifyValue(value))];
             } else if (!!value) {
                 this.ngModel = [...this.ngModel, value];
             }

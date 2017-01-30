@@ -420,8 +420,18 @@ describe('MdlSelect', () => {
                     expect(selectComponentInstance.ngModel)
                       .toEqual( [arrWith3Obj[0], arrWith3Obj[1]], 'did not update ngModel on deselect 3');
 
+                    selectComponentInstance.onSelect(event, arrWith3Obj[1]);
+
+                    fixture.detectChanges();
+                    fixture.whenStable().then(() => {
+
+                    expect(selectComponentInstance.ngModel)
+                      .toEqual( [arrWith3Obj[0]], 'did not update ngModel on deselect 3');
+
+                    });
                 });
 
+                
             });
 
         }));
