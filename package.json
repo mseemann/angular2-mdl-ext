@@ -30,7 +30,7 @@
     "angular2-mdl": "2.12.1",
     "core-js": "2.4.1",
     "rxjs": "5.0.3",
-    "systemjs": "0.20.2",
+    "systemjs": "0.20.3",
     "zone.js": "0.7.6"
   },
   "devDependencies": {
