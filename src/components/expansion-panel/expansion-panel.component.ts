@@ -17,15 +17,14 @@ import {
   HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdlModule } from 'angular2-mdl';
 
 @Component({
   selector: 'mdl-expansion-panel-header',
   template: `
     <ng-content></ng-content>
     <div class="mdl-expansion-panel__header--expand-icon" (click)="onClick()">
-      <mdl-icon *ngIf="!isExpanded">expand_more</mdl-icon>
-      <mdl-icon *ngIf="isExpanded">expand_less</mdl-icon>
+      <span *ngIf="!isExpanded" class="material-icons">expand_more</span>
+      <span *ngIf="isExpanded" class="material-icons">expand_less</span>
     </div>
   `,
   host: {
@@ -121,7 +120,7 @@ export class MdlExpansionPanelComponent implements AfterContentInit {
 
   @HostListener('keyup', ['$event'])
   onKeyUp($event: any) {
-    if ($event.keyCode === 13 && !this.disabled) this.toggle();
+    if ($event.key === 'Enter' && !this.disabled) this.toggle();
   }
 
   toggle() {
@@ -205,7 +204,7 @@ const MDL_EXPANSION_PANEL_DIRECTIVES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, MdlModule],
+  imports: [CommonModule],
   exports: MDL_EXPANSION_PANEL_DIRECTIVES,
   declarations: MDL_EXPANSION_PANEL_DIRECTIVES,
 })

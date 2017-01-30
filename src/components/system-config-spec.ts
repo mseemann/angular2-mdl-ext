@@ -25,7 +25,6 @@ angularPackages.forEach(name => {
 
 
 vendorPackages['rxjs'] = { main: 'index.js' };
-vendorPackages['angular2-mdl'] = { main: `bundle/angular2-mdl.js` };
 
 /** Type declaration for ambient System. */
 declare var System: any;
@@ -34,8 +33,7 @@ declare var System: any;
 System.config({
     map: {
         '@angular': 'vendor/@angular',
-        'rxjs': 'vendor/rxjs',
-        'angular2-mdl': 'vendor/angular2-mdl'
+        'rxjs': 'vendor/rxjs'
     },
     packages: vendorPackages
 });
