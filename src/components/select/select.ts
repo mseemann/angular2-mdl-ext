@@ -272,13 +272,13 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     public writeValue(value: any): void {
         if (this.multiple) {
             this.ngModel = this.ngModel || [];
-            if (!value || this.ngModel === value) {
+            if (value===undefined || value===null || this.ngModel === value) {
                 // skip ngModel update when undefined value or multiple selects initialized with same array
             } else if (Array.isArray(value)) {
                 this.ngModel = uniq(this.ngModel.concat(value));
             } else if (this.ngModel.indexOf(value) != -1) {
                 this.ngModel = [...this.ngModel.filter((v: string) => v !== value)];
-            } else if (!!value) {
+            } else if (!!value || value===0 || value==='0') {
                 this.ngModel = [...this.ngModel, value];
             }
         } else {
