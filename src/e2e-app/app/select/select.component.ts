@@ -73,6 +73,9 @@ export class SelectDemo {
   };
   food: string[];
 
+  arrayForm: FormGroup;
+  locationControl = new FormControl('');
+
   cityCoordinates: any = [
     {name: 'İstanbul', latitude:'41.0055005',longitude:'28.7319952'},
     {name: 'Paris', latitude:'48.8589507',longitude:'2.2770202'},
@@ -88,6 +91,23 @@ export class SelectDemo {
     this.form = new FormGroup({
       personId: this.personId
     });
+
+    this.arrayForm = new FormGroup({
+      locations: this.locationControl
+    })
+
+    this.locationControl.valueChanges
+      .subscribe((value: any) => {
+        console.log('locationControl.valueChanges', value);
+      });
+
+    this.locationControl.setValue([
+      {latitude:'41.0055005',longitude:'28.7319952'},
+      {latitude:'37.757815',longitude:'-122.50764'}
+    ]);
+
+    console.log('this.arrayForm.value',this.arrayForm.value);
+
 
     this.personId.valueChanges
       .subscribe((value: any) => {
