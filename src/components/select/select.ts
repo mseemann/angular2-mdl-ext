@@ -20,6 +20,10 @@ import { MdlOptionComponent } from './option';
 
 const uniq = (array: any[]) => Array.from(new Set(array));
 
+function toBoolean (value:any): boolean {
+  return value != null && `${value}` !== 'false';
+}
+
 function randomId() {
     const S4 = () => (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     return (S4()+S4());
@@ -62,7 +66,8 @@ export class SearchableComponent {
     selector: 'mdl-select',
     host: {
         '[class.mdl-select]': 'true',
-        '[class.mdl-select--floating-label]': 'isFloatingLabel != null'
+        '[class.mdl-select--floating-label]': 'isFloatingLabel',
+        '[class.has-placeholder]': 'placeholder'
     },
     templateUrl: 'select.html',
     encapsulation: ViewEncapsulation.None,
@@ -71,12 +76,16 @@ export class SearchableComponent {
 export class MdlSelectComponent extends SearchableComponent implements ControlValueAccessor {
     @Input() ngModel: any;
     @Input() disabled: boolean = false;
-    @Input('floating-label') public isFloatingLabel: any;
+    @Input() public label: string = '';
+    @Input('floating-label')
+    get isFloatingLabel() { return this._isFloatingLabel; }
+    set isFloatingLabel(value) { this._isFloatingLabel = toBoolean(value); }
     @Input() placeholder: string = '';
     @Input() multiple: boolean = false;
     @Output() private change: EventEmitter<any> = new EventEmitter(true);
     @ViewChild(MdlPopoverComponent) public popoverComponent: MdlPopoverComponent;
     @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
+    private _isFloatingLabel: boolean = false;
     private textfieldId: string;
     private text: string = '';
     private textByValue: any = {};
@@ -294,10 +303,6 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
 
     public registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
-    }
-
-    public getLabelVisibility(): string {
-        return this.isFloatingLabel == null || (this.isFloatingLabel != null && this.text != null && this.text.length > 0) ? "block" : "none";
     }
 }
 

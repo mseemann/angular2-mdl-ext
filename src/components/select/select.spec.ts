@@ -35,6 +35,19 @@ describe('MdlSelect', () => {
             });
         }));
 
+        it('should support floating-label attr', async(() => {
+
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+
+            expect(selectNativeElement.classList.contains('mdl-select--floating-label'))
+                .toBe(true, 'did not has css class mdl-select--floating-label')
+
+            expect(selectComponent.nativeElement.querySelector('.mdl-textfield__label').innerText)
+                .toBe(selectComponent.componentInstance.label, 'did not set correct label text');
+        }));
+
 
         it('should create the component and add the mdl-select css class', async(() => {
 
@@ -463,13 +476,14 @@ describe('MdlSelect', () => {
 @Component({
     selector: 'test-single-component',
     template: `
-        <mdl-select [(ngModel)]="personId">
+        <mdl-select label="{{label}}" floating-label [(ngModel)]="personId">
           <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
         </mdl-select>
     `
 })
 class TestSingleComponent {
     personId: number = 1;
+    label: string = 'floating label';
     people: any[] = [
         {id: 1, name: 'Bryan Cranston'},
         {id: 2, name: 'Aaron Paul'},
