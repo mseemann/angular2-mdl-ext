@@ -129,7 +129,6 @@ describe('MdlSelect', () => {
             
             //console.log(selectNativeElement.querySelector("span[tabindex]"));
             //document.body.appendChild(selectNativeElement);
-
             selectNativeElement.querySelector("span[tabindex]").focus();
             fixture.detectChanges();
 
@@ -288,6 +287,7 @@ describe('MdlSelect', () => {
               .toBe(true, 'is not multiple');
 
             selectComponentInstance.onSelect(event, 3);
+            selectComponentInstance.onSelect(event, 0);
 
             expect(event.stopPropagation)
               .toHaveBeenCalled();
@@ -296,15 +296,16 @@ describe('MdlSelect', () => {
             fixture.whenStable().then(() => {
 
                 expect(selectComponentInstance.ngModel)
-                  .toEqual([ 1, 2, 3 ], 'did not update ngModel on select 3');
+                  .toEqual([ 1, 2, 3, 0 ], 'did not update ngModel on select 3 and 0');
 
-                selectComponentInstance.onSelect(event, 3);
+                //selectComponentInstance.onSelect(event, 3);
+                selectComponentInstance.onSelect(event, 0);
 
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
 
                     expect(selectComponentInstance.ngModel)
-                      .toEqual([ 1, 2 ], 'did not update ngModel on deselect 3');
+                      .toEqual([ 1, 2, 3 ], 'did not update ngModel on deselect 3 and 0');
 
                 });
 
@@ -464,6 +465,7 @@ class TestSingleComponent {
         {id: 1, name: 'Bryan Cranston'},
         {id: 2, name: 'Aaron Paul'},
         {id: 3, name: 'Bob Odenkirk'},
+        {id: 0, name: 'Dima V'},
     ];
 }
 
@@ -481,6 +483,7 @@ class TestMultipleComponent {
         {id: 1, name: 'Bryan Cranston'},
         {id: 2, name: 'Aaron Paul'},
         {id: 3, name: 'Bob Odenkirk'},
+        {id: 0, name: 'Dima V'},
     ];
 }
 
@@ -498,6 +501,7 @@ class TestObjectComponent {
         {id: 1, name: 'Bryan Cranston'},
         {id: 2, name: 'Aaron Paul'},
         {id: 3, name: 'Bob Odenkirk'},
+        {id: 0, name: 'Dima V'},
     ];
 }
 
