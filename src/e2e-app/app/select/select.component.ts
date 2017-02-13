@@ -36,6 +36,7 @@ export class SelectDemo {
   ];
 
   countryCode: string = 'FR';
+  countryLabel: string = 'Country';
   otherCountryCode: string = null;
   otherCountryCode2: string = null;
   countryCodes: string[] = ['FR', 'DE', 'IT'];

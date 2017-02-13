@@ -1,5 +1,5 @@
 <div
-  class="mdl-textfield is-upgraded has-placeholder"
+  class="mdl-textfield is-upgraded"
   [class.is-focused]="this.popoverComponent.isVisible || this.focused"
   [class.is-disabled]="this.disabled"
   [class.is-dirty]="text != null && text.length > 0">
@@ -10,9 +10,9 @@
     <!-- don't want click to also trigger focus -->
   </span>
   <input readonly tabindex="-1"
-      [placeholder]="placeholder"
       class="mdl-textfield__input"
       (click)="toggle($event)"
+      [placeholder]="placeholder ? placeholder : ''"
       [attr.id]="textfieldId"
       [value]="text">
   <span
@@ -20,7 +20,7 @@
       (click)="toggle($event)">
     keyboard_arrow_down
   </span>
-  <label class="mdl-textfield__label" [attr.for]="textfieldId">{{ placeholder }}</label>
+  <label class="mdl-textfield__label" [attr.for]="textfieldId">{{ label }}</label>
   <span class="mdl-textfield__error"></span>
   <mdl-popover hide-on-click="!multiple" [style.width.%]="100">
     <div class="mdl-list mdl-shadow--6dp">
