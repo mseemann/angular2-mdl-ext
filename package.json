@@ -39,7 +39,7 @@
     "@types/chai": "3.4.34",
     "@types/core-js": "0.9.35",
     "@types/gulp": "3.8.32",
-    "@types/jasmine": "2.5.41",
+    "@types/jasmine": "2.5.43",
     "@types/merge2": "0.3.29",
     "@types/node": "7.0.5",
     "angular2-template-loader": "0.6.2",
