@@ -1,5 +1,7 @@
 @import "../../../node_modules/angular2-mdl/scss/variables";
 
+@import "../popover/popover";
+
 .mdl-select {
   &--floating-label {
     @extend .mdl-textfield--floating-label !optional;
@@ -22,6 +24,12 @@
           @extend .mdl-textfield__label.is-dirty:after !optional;
         }
       }
+    }
+  }
+
+  .mdl-popover.mdl-popover--above {
+    &.direction-up {
+      bottom: $popover-direction-up-bottom-offset + $input-text-vertical-spacing + $input-text-font-size + $input-text-padding * 2;
     }
   }
 
