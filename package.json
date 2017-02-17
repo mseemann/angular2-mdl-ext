@@ -79,7 +79,7 @@
     "rimraf": "2.5.4",
     "rollup": "0.41.4",
     "run-sequence": "1.2.2",
-    "sass-loader": "6.0.0",
+    "sass-loader": "6.0.1",
     "string-replace-loader": "1.0.5",
     "style-loader": "0.13.1",
     "ts-helpers": "1.1.2",
