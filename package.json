@@ -43,7 +43,7 @@
     "@types/merge2": "0.3.29",
     "@types/node": "7.0.5",
     "angular2-template-loader": "0.6.2",
-    "awesome-typescript-loader": "3.0.4",
+    "awesome-typescript-loader": "3.0.5",
     "codeclimate-test-reporter": "0.4.1",
     "copy-webpack-plugin": "4.0.0",
     "coveralls": "2.11.16",
