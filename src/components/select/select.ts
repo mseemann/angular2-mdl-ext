@@ -143,6 +143,10 @@ export class MdlSelectComponent implements ControlValueAccessor {
     public registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
     }
+
+    public setDisabledState(isDisabled: boolean) {
+      this.disabled = isDisabled;
+    }
 }
 
 

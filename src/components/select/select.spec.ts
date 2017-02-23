@@ -1,6 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { MdlSelectModule, MdlSelectComponent } from './select';
 import { Component } from '@angular/core';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 describe('MdlSelect', () => {
@@ -79,6 +80,33 @@ describe('MdlSelect', () => {
 
     });
 
+    describe('disabled', () => {
+
+        let fixture: ComponentFixture<TestDisabledComponent>;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [MdlSelectModule.forRoot(), ReactiveFormsModule],
+                declarations: [TestDisabledComponent]
+            });
+
+            TestBed.compileComponents().then( () => {
+                fixture = TestBed.createComponent(TestDisabledComponent);
+                fixture.detectChanges();
+            });
+        }));
+
+        it('should create the component and make it disabled', async(() => {
+
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            fixture.whenStable().then(() => {
+                expect(selectComponent.disabled)
+                  .toBe(true, 'select field should be disabled');
+            });
+        }))
+    })
+
     describe('multiple', () => {
 
         let fixture: ComponentFixture<TestMultipleComponent>;
@@ -102,7 +130,7 @@ describe('MdlSelect', () => {
             let selectNativeElement = selectComponent.nativeElement;
 
             expect(selectNativeElement.classList.contains('mdl-select'))
-              .toBe(true, 'did not has css class mdl-select')
+              .toBe(true, 'did not have css class mdl-select')
 
         }));
 
@@ -185,6 +213,33 @@ describe('MdlSelect', () => {
         }));
     });
 });
+
+@Component({
+  selector: 'test-disabled-component',
+  template: `
+    <form [formGroup]="form">
+      <mdl-select formControlName="personId">
+        <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
+      </mdl-select>
+    </form>
+  `
+})
+
+class TestDisabledComponent {
+  form: FormGroup;
+  personId: FormControl = new FormControl({value: 1, disabled: true});
+  people: any[] = [
+      {id: 1, name: 'Bryan Cranston'},
+      {id: 2, name: 'Aaron Paul'},
+      {id: 3, name: 'Bob Odenkirk'},
+  ];
+
+  constructor() {
+    this.form = new FormGroup({
+      personId: this.personId
+    });
+  }
+}
 
 @Component({
     selector: 'test-single-component',
