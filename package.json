@@ -49,7 +49,7 @@
     "coveralls": "2.11.16",
     "cross-env": "3.1.4",
     "css-loader": "0.26.2",
-    "extract-text-webpack-plugin": "2.0.0-beta.4",
+    "extract-text-webpack-plugin": "2.0.0",
     "glob": "7.0.6",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.1",
