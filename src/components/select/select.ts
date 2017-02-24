@@ -101,7 +101,10 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     public ngAfterViewInit() {
         this.bindOptions();
         this.renderValue(this.ngModel);
-        this.optionComponents.changes.subscribe(() => this.bindOptions());
+        this.optionComponents.changes.subscribe(() => {
+            this.bindOptions();
+            this.renderValue(this.ngModel);
+        });
     }
 
     @HostListener('document:keydown', ['$event'])
