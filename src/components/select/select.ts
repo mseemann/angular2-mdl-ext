@@ -307,6 +307,10 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     public registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
     }
+
+    public setDisabledState(isDisabled: boolean) {
+      this.disabled = isDisabled;
+    }
 }
 
 
