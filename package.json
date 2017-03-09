@@ -77,7 +77,7 @@
     "raw-loader": "0.5.1",
     "remap-istanbul": "0.9.1",
     "rimraf": "2.6.1",
-    "rollup": "0.41.4",
+    "rollup": "0.41.5",
     "run-sequence": "1.2.2",
     "sass-loader": "6.0.3",
     "string-replace-loader": "1.0.5",
