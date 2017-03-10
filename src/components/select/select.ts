@@ -1,7 +1,9 @@
 import {
+    AfterContentInit,
     Component,
     ChangeDetectorRef,
     ContentChildren,
+    ElementRef,
     EventEmitter,
     forwardRef,
     Input,
@@ -73,9 +75,10 @@ export class SearchableComponent {
     encapsulation: ViewEncapsulation.None,
     providers: [MDL_SELECT_VALUE_ACCESSOR]
 })
-export class MdlSelectComponent extends SearchableComponent implements ControlValueAccessor {
+export class MdlSelectComponent extends SearchableComponent implements ControlValueAccessor, AfterContentInit {
     @Input() ngModel: any;
     @Input() disabled: boolean = false;
+    @Input() autocomplete: boolean = false;
     @Input() public label: string = '';
     @Input('floating-label')
     get isFloatingLabel() { return this._isFloatingLabel; }
@@ -83,6 +86,8 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     @Input() placeholder: string = '';
     @Input() multiple: boolean = false;
     @Output() private change: EventEmitter<any> = new EventEmitter(true);
+    @Output() private inputChange: EventEmitter<any> = new EventEmitter(true);
+    @ViewChild('selectInput') selectInput: ElementRef;
     @ViewChild(MdlPopoverComponent) public popoverComponent: MdlPopoverComponent;
     @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
     private _isFloatingLabel: boolean = false;
@@ -98,7 +103,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         this.textfieldId = `mdl-textfield-${randomId()}`;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterContentInit() {
         this.bindOptions();
         this.renderValue(this.ngModel);
         this.optionComponents.changes.subscribe(() => {
@@ -126,25 +131,63 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         }
     }
 
+    private onInputBlur() {
+        if (this.autocomplete) {
+            let autoSelectedValue = this.getAutoSelection();
+
+            if (autoSelectedValue) {
+                this.writeValue(autoSelectedValue);
+                this.change.emit(this.ngModel);
+            } else if (this.ngModel) {
+                this.text = this.selectInput.nativeElement.value;
+                this.changeDetectionRef.detectChanges();
+                this.renderValue(this.ngModel);
+            }
+        }
+    }
+
+    private isDirty(): boolean {
+        return Boolean(this.selectInput.nativeElement.value);
+    }
+
+    private onInputChange($event: Event) {
+        const inputField = $event.target as HTMLInputElement,
+            inputValue = inputField.value;
+
+        this.inputChange.emit(inputValue);
+    }
+
     private onCharacterKeydown($event : KeyboardEvent) : void {
         this.updateSearchQuery($event);
-        let optionsList = this.optionComponents.toArray();
 
+        if (!this.autocomplete) {
+            let autoSelectedValue = this.getAutoSelection();
+
+            if (autoSelectedValue) {
+                this.onSelect($event, autoSelectedValue);
+            }
+
+            $event.preventDefault();
+        }
+    }
+
+    private getAutoSelection(): any {
+        let optionsList = this.optionComponents.toArray();
         const filteredOptions = optionsList.filter(option => {
             return option.text.toLowerCase().startsWith(this.getSearchQuery());
         });
 
         const selectedOption = optionsList.find(option => option.selected);
-                        
+
         if (filteredOptions.length > 0) {
             const selectedOptionInFiltered = filteredOptions.indexOf(selectedOption) != -1;
 
             if(!selectedOptionInFiltered && !filteredOptions[0].selected){
-                this.onSelect($event, filteredOptions[0].value);
+                return filteredOptions[0].value;
             }
         }
 
-        $event.preventDefault();
+        return null;
     }
 
     private onArrowUp($event: KeyboardEvent) {

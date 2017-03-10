@@ -18,6 +18,21 @@
    ]]>
 </pre>
 
+<h5>autocomplete example</h5>
+
+<mdl-select label="{{countryLabel}}" [autocomplete]="true" floating-label (inputChange)="onAutocompleteChange($event)" [(ngModel)]="autoselectCountryCode">
+  <mdl-option *ngFor="let c of autoselectCountries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+
+<pre prism ngNonBindable>
+  <![CDATA[
+<mdl-select label="{{countryLabel}}" [autocomplete]="true" floating-label (inputChange)="onAutocompleteChange($event)" [(ngModel)]="autoselectCountryCode">
+  <mdl-option *ngFor="let c of autoselectCountries" [value]="c.code">{{c.name}}</mdl-option>
+</mdl-select>
+   ]]>
+</pre>
+
+
 <h5>ngModel with floating label</h5>
 
 <h6>without initial value</h6>

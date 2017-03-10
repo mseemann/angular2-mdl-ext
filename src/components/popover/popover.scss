@@ -1,3 +1,7 @@
+@import "../../../node_modules/angular2-mdl/scss/variables";
+$input-text-focus-border-width: 2px;
+$popover-direction-up-bottom-offset: $input-text-vertical-spacing + $input-text-focus-border-width;
+
 .mdl-popover {
   background: #fff;
   border: none;
@@ -13,6 +17,6 @@
     z-index: 999;
   }
   &.direction-up {
-    bottom: 22px;
+    bottom: $popover-direction-up-bottom-offset;
   }
 }

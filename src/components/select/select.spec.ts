@@ -1,8 +1,9 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { MdlSelectModule, MdlSelectComponent } from './select';
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+
 
 function dispatchKeydownEvent(element: HTMLElement, keyCode: number): any {
   let event: any = document.createEvent('KeyboardEvent');
@@ -250,6 +251,100 @@ describe('MdlSelect', () => {
             });
         }))
     })
+
+    describe('autocomplete', () => {
+        let fixture: ComponentFixture<TestAutoCompleteComponent>;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [MdlSelectModule.forRoot()],
+                declarations: [TestAutoCompleteComponent],
+            });
+
+            TestBed.compileComponents().then( () => {
+                fixture = TestBed.createComponent(TestAutoCompleteComponent);
+                fixture.detectChanges();
+            });
+        }));
+
+        it('should not make autoselection when it\'s on', async(() => {
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+
+            let selectComponentInstance = selectComponent.componentInstance;
+
+            spyOn(selectComponentInstance, 'onSelect').and.callThrough();
+            spyOn(selectComponentInstance, 'onCharacterKeydown').and.callThrough();
+
+            selectNativeElement.querySelector("input").focus();
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.ngModel).toBeNull();
+            dispatchKeydownEvent(document.body, 66); // 'B' key
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.ngModel).toBeNull();
+        }));
+
+        it('should make autoselection on blur when it\'s on', async(() => {
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+
+            let selectComponentInstance = selectComponent.componentInstance;
+
+            spyOn(selectComponentInstance, 'onSelect').and.callThrough();
+            spyOn(selectComponentInstance, 'onCharacterKeydown').and.callThrough();
+
+            selectNativeElement.querySelector("input").focus();
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.ngModel).toBeNull();
+
+            dispatchKeydownEvent(document.body, 66); // 'B' key
+            selectNativeElement.querySelector("input").blur();
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.ngModel).toEqual(1);
+            selectNativeElement.querySelector("input").focus();
+            dispatchKeydownEvent(document.body, 66); // 'B' key
+            selectNativeElement.querySelector("input").blur();
+
+            fixture.detectChanges();
+            expect(selectComponentInstance.ngModel).toEqual(1);
+        }));
+
+        it('should still make autoselection on blur from input even when it\'s off', async(() => {
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+
+            let selectComponentInstance = selectComponent.componentInstance;
+
+            spyOn(selectComponentInstance, 'onSelect').and.callThrough();
+            spyOn(selectComponentInstance, 'onCharacterKeydown').and.callThrough();
+
+            selectNativeElement.querySelector("input").focus();
+
+            dispatchKeydownEvent(document.body, 66); // 'B' key
+            fixture.detectChanges();
+
+            expect(selectComponentInstance.ngModel).toBeNull();
+
+            selectNativeElement.querySelector("input").blur();
+            fixture.detectChanges();
+            expect(selectComponentInstance.ngModel).toEqual(1);
+        }));
+
+        it('should make input writable when autoselection is off', async(() => {
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+
+            expect(selectNativeElement.querySelector("input").readonly).toBeFalsy();
+        }));
+    });
 
     describe('multiple', () => {
 
@@ -526,6 +621,24 @@ class TestDisabledComponent {
       personId: this.personId
     });
   }
+}
+
+@Component({
+    selector: 'test-single-component',
+    template: `
+        <mdl-select label="{{label}}" floating-label [autocomplete]="true" [(ngModel)]="selectedValue">
+          <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
+        </mdl-select>
+    `
+})
+class TestAutoCompleteComponent {
+    selectedValue: any = null;
+    label: string = 'floating label';
+    people: any[] = [
+        {id: 1, name: 'Bryan Cranston'},
+        {id: 2, name: 'Aaron Paul'},
+        {id: 3, name: 'Bob Odenkirk'},
+    ];
 }
 
 @Component({
