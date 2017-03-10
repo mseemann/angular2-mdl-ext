@@ -41,7 +41,7 @@
     "@types/gulp": "4.0.0",
     "@types/jasmine": "2.5.38",
     "@types/merge2": "0.3.29",
-    "@types/node": "7.0.7",
+    "@types/node": "7.0.8",
     "angular2-template-loader": "0.6.2",
     "awesome-typescript-loader": "3.1.0",
     "codeclimate-test-reporter": "0.4.1",
