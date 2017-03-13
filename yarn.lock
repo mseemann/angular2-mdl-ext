@@ -84,9 +84,13 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@7.0.7":
+"@types/node@*":
   version "7.0.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.7.tgz#92637c6c4844bfc9a0a686323e38f3e9319118c2"
+
+"@types/node@7.0.8":
+  version "7.0.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.8.tgz#25e4dd804b630c916ae671233e6d71f6ce18124a"
 
 "@types/orchestrator@*":
   version "0.0.30"
@@ -1069,9 +1073,9 @@ css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
 
-css-loader@0.26.2:
-  version "0.26.2"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.26.2.tgz#a9cd4c2b1a559b45d8efc04fc311ab5d2aaccb9d"
+css-loader@0.27.2:
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.27.2.tgz#1522fafc8dd2323414355e304b6f92a96cef7f40"
   dependencies:
     babel-code-frame "^6.11.0"
     css-selector-tokenizer "^0.7.0"
