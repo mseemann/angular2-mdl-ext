@@ -17,7 +17,7 @@ import {
   HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'mdl-expansion-panel-header',
@@ -205,7 +205,7 @@ const MDL_EXPANSION_PANEL_DIRECTIVES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, BrowserAnimationsModule ],
+  imports: [CommonModule, NoopAnimationsModule ],
   exports: MDL_EXPANSION_PANEL_DIRECTIVES,
   declarations: MDL_EXPANSION_PANEL_DIRECTIVES,
 })

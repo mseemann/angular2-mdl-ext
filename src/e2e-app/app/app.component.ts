@@ -7,7 +7,7 @@ import '../css/style.scss';
 import { PopoverDemo } from './popover/popover.component';
 import { SelectDemo } from './select/select.component';
 import { ExpansionPanelDemo } from './expansion-panel/expansion-panel.component';
-import { MdlLayoutComponent } from 'angular2-mdl';
+import { MdlLayoutComponent } from '@angular-mdl/core';
 
 
 @Component({

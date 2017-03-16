@@ -5,8 +5,9 @@ import '@angular/core';
 import '@angular/common';
 import '@angular/http';
 import '@angular/router';
+import '@angular/animations';
 // RxJS
 import 'rxjs';
 // angular2-mdl
-import 'angular2-mdl';
+import '@angular-mdl/core';
 import '@mseemann/prism';

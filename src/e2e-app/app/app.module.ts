@@ -2,7 +2,7 @@ import { NgModule, ApplicationRef, ApplicationInitStatus } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule }  from '@angular/platform-browser';
 import { AppComponent, appRoutes, Home } from './app.component';
-import { MdlModule } from 'angular2-mdl';
+import { MdlModule } from '@angular-mdl/core';
 import { RouterModule } from '@angular/router';
 import { PopoverDemo } from './popover/popover.component';
 import { SelectDemo } from './select/select.component';
@@ -11,6 +11,7 @@ import { MdlPopoverModule } from '../../components/popover/popover';
 import { MdlSelectModule } from '../../components/select/select';
 import { MdlExpansionPanelModule } from '../../components/expansion-panel/expansion-panel.component';
 import { PrismDirective } from '@mseemann/prism';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { PrismDirective } from '@mseemann/prism';
     RouterModule.forRoot(appRoutes),
     MdlPopoverModule,
     MdlSelectModule,
-    MdlExpansionPanelModule
+    MdlExpansionPanelModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,

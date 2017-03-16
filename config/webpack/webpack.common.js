@@ -12,7 +12,7 @@ module.exports = {
 	},
 
 	resolve: {
-		extensions: ['', '.js', '.ts'],
+		extensions: ['.js', '.ts'],
 		mainFields: ["module", "main", "browser"]
 	},
 
@@ -23,38 +23,53 @@ module.exports = {
 	},
 
 	module: {
-		preLoaders: [
+		rules: [
 			{
+				enforce: 'pre',
 				test: /.ts$/,
 				loader: 'string-replace-loader',
-				query: {
+				options: {
 					search: 'moduleId: module.id,',
 					replace: '',
 					flags: 'g'
 				}
 			},
-		],
-		loaders: [
 			{
 				test: /\.ts$/,
-				loaders: ['awesome-typescript-loader?configFileName=./src/e2e-app/tsconfig.json', 'angular2-template-loader']
+				exclude: [
+					/\.(spec)\.ts$/
+				],
+				use: [
+					{
+						loader: 'awesome-typescript-loader',
+						options: {
+							configFileName: './src/e2e-app/tsconfig.json'
+						}
+					},
+					{
+						loader: 'angular2-template-loader'
+					}
+				]
 			},
 			{
 				test: /\.html$/,
-				loader: 'html'
+				loader: 'html-loader'
 			},
 			{
 				test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-				loader: 'file?name=assets/[name].[hash].[ext]'
+				loader: 'file-loader',
+				options: {
+					name: 'assets/[name].[hash].[ext]'
+				}
 			},
 			{
 				test: /\.scss$/,
 				exclude: [util.root('src', 'e2e-app', 'app'), util.root('src', 'components')],
-				loaders: [
-					ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' }),
-					'css-loader',
-					'postcss-loader',
-					'sass-loader']
+				use: ExtractTextPlugin.extract({
+					use: ["css-loader", "postcss-loader", "sass-loader"],
+					// use style-loader in development
+					fallback: "style-loader"
+				})
 			},
 			{
 				test: /\.scss$/,
@@ -63,34 +78,32 @@ module.exports = {
 			},
 			{
 				test: /\.hbs$/,
-				loader: 'handlebars'
+				loader: 'handlebars-loader'
 			}
 		]
 	},
-
-	postcss: function () {
-		return [autoprefixer];
-	},
-
 	plugins: [
-		// should fix: https://github.com/angular/angular/issues/11580
+		// avoid: WARNING in ./~/@angular/core/@angular/core.es5.js
+		// 3702:272-293 Critical dependency: the request of a dependency is an expression
 		new webpack.ContextReplacementPlugin(
 			// The (\\|\/) piece accounts for path separators in *nix and Windows
-			/angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-			util.root('src')
+			/@angular(\\|\/)core(\\|\/)@angular/,
+			util.root('src') // location of your src
 		),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: ['app', 'vendor', 'polyfills']
 		}),
-
+		new webpack.LoaderOptionsPlugin({
+			options: {
+				postcss: function () {
+					return [autoprefixer];
+				}
+			}
+		}),
 		new HtmlWebpackPlugin({
-			template: '!!handlebars!src/e2e-app/index.hbs',
+			template: '!!handlebars-loader!src/e2e-app/index.hbs',
 			baseUrl: process.env.NODE_ENV == 'production' ? '/angular2-mdl-ext/' : '/',
 			production: process.env.NODE_ENV == 'production' ? true : false
 		})
-	],
-
-	sassLoader: {
-		includePaths: [util.root('node_modules', '@angular-mdl', 'core', 'scss')]
-	}
+	]
 };

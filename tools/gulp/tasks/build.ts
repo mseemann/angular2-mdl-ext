@@ -115,7 +115,9 @@ function createUmdBundle(component: string){
     '@angular/common': 'ng.common',
     '@angular/forms': 'ng.forms',
     '@angular/platform-browser': 'ng.platformBrowser',
-    'angular2-mdl': 'angular2Mdl',
+    '@angular/animations': 'ng.animations',
+    '@angular/platform-browser/animations': 'ng.platformBrowser.animations',
+    '@angular-mdl/core': 'angularMdl',
     'rxjs/Subject': 'Rx',
     'rxjs/Observable': 'Rx'
   };
