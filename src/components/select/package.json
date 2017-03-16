@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/mseemann/angular2-mdl-ext#readme",
   "peerDependencies": {
-    "angular2-mdl": "^2.0.0",
+    "@angular-mdl/core": "^3.0.0",
     "@angular2-mdl-ext/popover": "*"
   }
 }

@@ -18,24 +18,25 @@
     "url": "git+https://github.com/mseemann/angular2-mdl-ext.git"
   },
   "dependencies": {
-    "@angular/common": "2.4.9",
-    "@angular/compiler": "2.4.9",
-    "@angular/core": "2.4.9",
-    "@angular/forms": "2.4.9",
-    "@angular/http": "2.4.9",
-    "@angular/platform-browser": "2.4.9",
-    "@angular/platform-browser-dynamic": "2.4.9",
-    "@angular/router": "3.4.9",
+    "@angular/animations": "4.0.0-rc.3",
+    "@angular/common": "4.0.0-rc.3",
+    "@angular/compiler": "4.0.0-rc.3",
+    "@angular/core": "4.0.0-rc.3",
+    "@angular/forms": "4.0.0-rc.3",
+    "@angular/http": "4.0.0-rc.3",
+    "@angular/platform-browser": "4.0.0-rc.3",
+    "@angular/platform-browser-dynamic": "4.0.0-rc.3",
+    "@angular/router": "4.0.0-rc.3",
     "@mseemann/prism": "0.0.1",
-    "angular2-mdl": "2.13.2",
+    "@angular-mdl/core": "3.0.0-beta.7",
     "core-js": "2.4.1",
     "rxjs": "5.2.0",
     "systemjs": "0.20.9",
-    "zone.js": "0.8.2"
+    "zone.js": "0.8.4"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "2.4.9",
-    "@angular/platform-server": "2.4.9",
+    "@angular/compiler-cli": "4.0.0-rc.3",
+    "@angular/platform-server": "4.0.0-rc.3",
     "@types/chai": "3.4.35",
     "@types/core-js": "0.9.36",
     "@types/gulp": "4.0.0",
@@ -85,11 +86,11 @@
     "ts-helpers": "1.1.2",
     "ts-node": "2.1.0",
     "tslint": "4.5.1",
-    "typescript": "2.0.10",
+    "typescript": "2.1.5",
     "typings": "2.1.0",
-    "webpack": "2.1.0-beta.22",
-    "webpack-dev-server": "2.1.0-beta.4",
-    "webpack-merge": "4.0.0"
+    "webpack": "2.2.1",
+    "webpack-dev-server": "2.4.2",
+    "webpack-merge": "4.1.0"
   },
   "keywords": [
     "angular2",

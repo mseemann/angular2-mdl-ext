@@ -24,8 +24,6 @@ module.exports = webpackMerge(commonConfig, {
 	plugins: [
 		new CopyWebpackPlugin([{ from: util.root('src', 'e2e-app', '404.html') }], {copyUnmodified: true}),
 		new webpack.NoErrorsPlugin(),
-		// waiting for fix: https://github.com/webpack/webpack/issues/2644
-		// new webpack.optimize.DedupePlugin(),
 		new webpack.LoaderOptionsPlugin({
 			minimize: true,
 			debug: false

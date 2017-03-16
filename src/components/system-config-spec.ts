@@ -13,7 +13,8 @@ const angularPackages = [
     'platform-browser',
     'platform-browser-dynamic',
     'http',
-    'router'
+    'router',
+    'animations'
 ];
 
 const vendorPackages: any = {};
@@ -22,6 +23,9 @@ angularPackages.forEach(name => {
     vendorPackages[`@angular/${name}`] = { main: `bundles/${name}.umd.js` };
     vendorPackages[`@angular/${name}/testing`] = { main: `../bundles/${name}-testing.umd.js` };
 });
+
+vendorPackages[`@angular/platform-browser/animations`] = { main: `../bundles/platform-browser-animations.umd.js` };
+
 
 
 vendorPackages['rxjs'] = { main: 'index.js' };
