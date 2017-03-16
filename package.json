@@ -39,7 +39,7 @@
     "@angular/platform-server": "4.0.0-rc.3",
     "@types/chai": "3.4.35",
     "@types/core-js": "0.9.36",
-    "@types/gulp": "4.0.0",
+    "@types/gulp": "4.0.2",
     "@types/jasmine": "2.5.45",
     "@types/merge2": "0.3.29",
     "@types/node": "7.0.8",
