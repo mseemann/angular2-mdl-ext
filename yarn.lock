@@ -75,9 +75,9 @@
   version "0.9.36"
   resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-0.9.36.tgz#d721e7cc0007d10ce66ad263ebf478a4071c53f4"
 
-"@types/gulp@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@types/gulp/-/gulp-4.0.0.tgz#b7eac5414397028cc0efc084c3af74af4b471c79"
+"@types/gulp@4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@types/gulp/-/gulp-4.0.2.tgz#71133c16a3c6f5ed17ee8094694be7824ed7d6f3"
   dependencies:
     "@types/node" "*"
     "@types/orchestrator" "*"
@@ -87,9 +87,9 @@
   version "2.5.45"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.45.tgz#58928a621d014ce6ab59c5a9c41071f7328b0ca9"
 
-"@types/merge2@0.3.29":
-  version "0.3.29"
-  resolved "https://registry.yarnpkg.com/@types/merge2/-/merge2-0.3.29.tgz#cb552e9826ca3c08d9e6549de9ecd8f15417f06d"
+"@types/merge2@0.3.30":
+  version "0.3.30"
+  resolved "https://registry.yarnpkg.com/@types/merge2/-/merge2-0.3.30.tgz#9e39d04f6fe4f36fa7477566cad1faf80b2a671f"
   dependencies:
     "@types/node" "*"
 

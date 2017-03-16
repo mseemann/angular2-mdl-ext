@@ -32,7 +32,7 @@ module.exports = function (config) {
 
       { pattern: 'dist/vendor/**/*', included: false, watched: false },
 
-      { pattern: 'dist/@angular2-mdl-ext/**/*', included: false, watched: true }
+      { pattern: 'dist/@angular-mdl/**/*', included: false, watched: true }
 
     ],
     exclude: [
@@ -40,7 +40,7 @@ module.exports = function (config) {
       'dist/vendor/**/*.spec.js'
     ],
     preprocessors: {
-      'dist/@angular2-mdl-ext/**/!(*spec|*vendor).js': ['coverage']
+      'dist/@angular-mdl/**/!(*spec|*vendor).js': ['coverage']
     },
     coverageReporter: {
       dir : 'coverage/',

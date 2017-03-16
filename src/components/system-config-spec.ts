@@ -49,7 +49,7 @@ const map: any = {};
 const packages: any = {};
 
 components.forEach(name => {
-    packages[`@angular2-mdl-ext/${name}`] = {
+    packages[`@angular-mdl/${name}`] = {
         format: 'cjs',
         defaultExtension: 'js',
         main: 'index'
