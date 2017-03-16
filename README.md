@@ -1,5 +1,8 @@
-# angular2-mdl-ext
-Additional components for angular2-mdl that are not part of material design lite
+# @angular-mdl/*
+Additional components for @angular-mdl/core that are not part of material design lite
+
+**The master is under active development to support angular 4. If you are looking 
+for a angular 2 compatible version please refer to this branch: https://github.com/mseemann/angular2-mdl-ext/tree/angular2**
 
 [![Build Status](https://travis-ci.org/mseemann/angular2-mdl-ext.svg?branch=master)](https://travis-ci.org/mseemann/angular2-mdl-ext)
 [![Coverage Status](https://coveralls.io/repos/github/mseemann/angular2-mdl-ext/badge.svg?branch=master)](https://coveralls.io/github/mseemann/angular2-mdl-ext?branch=master)
@@ -33,7 +36,7 @@ the components you want to use.
 If you are using webpack you may use the special webpack import syntax for node_modules:
 
 ```
-@import '~angular2-mdl/scss/color-definitions';
+@import '~@angular-mdl/core/scss/color-definitions';
 
 $color-primary: $palette-blue-500;
 $color-primary-dark: $palette-blue-700;
@@ -41,10 +44,10 @@ $color-accent: $palette-amber-A200;
 $color-primary-contrast: $color-dark-contrast;
 $color-accent-contrast: $color-dark-contrast;
 
-@import '~angular2-mdl/src/scss-mdl/material-design-lite';
+@import '~@angular-mdl/core/src/scss-mdl/material-design-lite';
 
-@import '~@angular2-mdl-ext/popover/popover';
-@import '~@angular2-mdl-ext/select/select';
+@import '~@angular-mdl/popover/popover';
+@import '~@angular-mdl/select/select';
 ```
 
 An other way is to include each component folder in the search path for your scss preprocessor. For example webpack:
@@ -52,8 +55,8 @@ An other way is to include each component folder in the search path for your scs
 ```
 	sassLoader: {
 		includePaths: [
-			'node_modules/@angular2-mdl-ext/popover',
-			'node_modules/@angular2-mdl-ext/select'
+			'node_modules/@angular-mdl/popover',
+			'node_modules/@angular-mdl/select'
 		]
 	}
 ```

@@ -90,7 +90,7 @@ gulp.task(':build:components:ngc', (done: () => void) => {
 
 gulp.task(':build:components:scss', () => {
 
-    const mdlScss = path.join(PROJECT_ROOT, 'node_modules/angular2-mdl/scss');
+    const mdlScss = path.join(PROJECT_ROOT, 'node_modules/@angular-mdl/core/scss');
 
     const sassOptions = {includePaths: [mdlScss]};
 
@@ -129,7 +129,7 @@ function createUmdBundle(component: string){
   }).then((bundle: { generate: any }) => {
     const result = bundle.generate({
         // remove - from the name - otherwise the umd name is not a valid name
-      moduleName: 'angular2Mdl.'+component.replace(/-/g, ""),
+      moduleName: 'angularMdl.'+component.replace(/-/g, ""),
       format: 'umd',
       globals,
       sourceMap: true,

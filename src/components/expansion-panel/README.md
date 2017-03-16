@@ -2,9 +2,9 @@
 
 ### Installing
 
-    npm i --save @angular2-mdl-ext/expansion-panel
+    npm i --save @angular-mdl/expansion-panel
 
-    import { MdlExpansionPanelModule } from '@angular2-mdl-ext/expansion-panel';
+    import { MdlExpansionPanelModule } from '@angular-mdl/expansion-panel';
 
 ### Usage & API
 

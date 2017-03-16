@@ -9,7 +9,7 @@
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noImplicitAny": true,
-    "outDir": "../../dist/@angular2-mdl-ext",
+    "outDir": "../../dist/@angular-mdl",
     "rootDir": ".",
     "target": "es5",
     "stripInternal": true,
@@ -22,7 +22,7 @@
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,
-    "genDir": "../../dist/@angular2-mdl-ext",
+    "genDir": "../../dist/@angular-mdl",
     "skipTemplateCodegen": true,
     "debug": true
   }

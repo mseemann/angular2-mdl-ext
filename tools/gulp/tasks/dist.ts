@@ -7,15 +7,15 @@ const replace = require('gulp-string-replace');
 const glob = require('glob');
 const fs = require('fs');
 
-// make sure the npm user is angular2-mdl-ext to publish all components
+// make sure the npm user is angular-mdl to publish all components
 gulp.task(':dist:checknpmuser', (cb: (err?: any) => void) => {
   exec('npm whoami', (error: Error, stdout: Buffer, stderr: Buffer) => {
     if(error){
       cb(error);
     }
     const username = stdout.toString().replace(/^\s+|\s+$/g, '');
-    if (username !== 'angular2-mdl-ext'){
-      cb('not loged in as npm user angular2-mdl-ext');
+    if (username !== 'angular-mdl'){
+      cb('not loged in as npm user angular-mdl');
     }
     console.log(`npm user is ${username}`);
     cb();

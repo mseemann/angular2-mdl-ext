@@ -2,9 +2,9 @@
 
 ### Installing
 
-    npm i --save @angular2-mdl-ext/popover
+    npm i --save @angular-mdl/popover
 
-    import { MdlPopoverModule } from '@angular2-mdl-ext/popover';
+    import { MdlPopoverModule } from '@angular-mdl/popover';
 
 ### Usage example
 
