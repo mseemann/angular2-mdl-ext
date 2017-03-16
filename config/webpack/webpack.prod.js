@@ -16,10 +16,10 @@ module.exports = webpackMerge(commonConfig, {
 		filename: '[name].[hash].js',
 		chunkFilename: '[id].[hash].chunk.js'
 	},
-
-	htmlLoader: {
-		minimize: false // workaround for ng2
-	},
+	//
+	// htmlLoader: {
+	// 	minimize: false // workaround for ng2
+	// },
 
 	plugins: [
 		new CopyWebpackPlugin([{ from: util.root('src', 'e2e-app', '404.html') }], {copyUnmodified: true}),
