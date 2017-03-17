@@ -75,7 +75,7 @@ export class MdlExpansionPanelHeaderSecondaryContentComponent { }
   ]
 })
 export class MdlExpansionPanelContentComponent {
-  isExpanded: boolean = false;
+  isExpanded: string = 'false';
 }
 
 @Component({
@@ -138,7 +138,7 @@ export class MdlExpansionPanelComponent implements AfterContentInit {
 
   _toggle(isExpanded: boolean) {
     this.isExpanded = isExpanded;
-    this.content.isExpanded = isExpanded;
+    this.content.isExpanded = `${isExpanded}`;
     this.header.isExpanded = isExpanded;
     this.onChange.emit(isExpanded);
   }
