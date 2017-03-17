@@ -1,6 +1,6 @@
 {
   "name": "@angular-mdl/popover",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Angular 2 Material Design Lite - Popover Component",
   "main": "./index.umd.js",
   "module": "./index.js",
@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/mseemann/angular2-mdl-ext#readme",
   "peerDependencies": {
-    "@angular-mdl/core": "^3.0.0"
+    "@angular-mdl/core": ">=3.0.0"
   }
 }

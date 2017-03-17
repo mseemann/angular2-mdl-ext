@@ -25,7 +25,7 @@ angularPackages.forEach(name => {
 });
 
 vendorPackages[`@angular/platform-browser/animations`] = { main: `../bundles/platform-browser-animations.umd.js` };
-
+vendorPackages[`@angular/animations/browser`] = { main: `../bundles/animations-browser.umd.js` };
 
 
 vendorPackages['rxjs'] = { main: 'index.js' };
