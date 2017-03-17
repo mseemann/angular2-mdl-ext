@@ -18,7 +18,7 @@
     "url": "git+https://github.com/mseemann/angular2-mdl-ext.git"
   },
   "dependencies": {
-    "@angular/animations": "4.0.0-rc.4",
+    "@angular/animations": "4.0.0-rc.5",
     "@angular/common": "4.0.0-rc.4",
     "@angular/compiler": "4.0.0-rc.4",
     "@angular/core": "4.0.0-rc.4",
