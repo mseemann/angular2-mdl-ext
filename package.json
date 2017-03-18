@@ -55,7 +55,7 @@
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.1",
     "gulp-clean": "0.3.2",
-    "gulp-clean-css": "3.0.3",
+    "gulp-clean-css": "3.0.4",
     "gulp-print": "2.0.1",
     "gulp-sass": "3.1.0",
     "gulp-string-replace": "0.4.0",
