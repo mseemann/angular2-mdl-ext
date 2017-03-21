@@ -82,7 +82,7 @@
     "run-sequence": "1.2.2",
     "sass-loader": "6.0.3",
     "string-replace-loader": "1.0.5",
-    "style-loader": "0.14.1",
+    "style-loader": "0.15.0",
     "ts-helpers": "1.1.2",
     "ts-node": "3.0.0",
     "tslint": "4.5.1",
