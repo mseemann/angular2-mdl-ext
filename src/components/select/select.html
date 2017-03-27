@@ -13,8 +13,9 @@
       [readonly]="!autocomplete"
       class="mdl-textfield__input"
       (click)="toggle($event)"
-      (keyup)="onInputChange($event)"
-      (blur)="onInputBlur()"
+      (keyup)="onKeyUp($event)"
+      (change)="$event.stopPropagation()"
+      (blur)="onInputBlur($event)"
       [placeholder]="placeholder ? placeholder : ''"
       [attr.id]="textfieldId"
       [value]="text">
@@ -25,7 +26,7 @@
   </span>
   <label class="mdl-textfield__label" [attr.for]="textfieldId">{{ label }}</label>
   <span class="mdl-textfield__error"></span>
-  <mdl-popover [class.mdl-popover--above]="autocomplete" hide-on-click="!multiple" [style.width.%]="100">
+  <mdl-popover #popover tabindex="-1" [class.mdl-popover--above]="autocomplete" hide-on-click="!multiple" [style.width.%]="100">
     <div class="mdl-list mdl-shadow--6dp">
       <ng-content></ng-content>
     </div>

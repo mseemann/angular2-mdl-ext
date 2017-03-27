@@ -38,6 +38,7 @@ export class SelectDemo {
   countryCode: string = 'FR';
   countryLabel: string = 'Country';
   autoselectCountryCode: string = null;
+  aautoselectCountryCode: string = null;
   otherCountryCode: string = null;
   otherCountryCode2: string = null;
   countryCodes: string[] = ['FR', 'DE', 'IT'];
@@ -51,6 +52,7 @@ export class SelectDemo {
     {name: 'United Kingdom', code: 'UK'},
   ];
   autoselectCountries: any = [];
+  aautoselectCountries: any = [];
 
   color: string = "all";
   colors: any = [
@@ -79,6 +81,9 @@ export class SelectDemo {
   arrayForm: FormGroup;
   locationControl = new FormControl('');
   onAutocompleteChange: Function;
+  onAAutocompleteChange: Function;
+  resetAutcomplete: Function;
+  resetAAutcomplete: Function;
 
   cityCoordinates: any = [
     {name: 'İstanbul', latitude:'41.0055005',longitude:'28.7319952'},
@@ -93,6 +98,7 @@ export class SelectDemo {
 
   ngOnInit() {
     this.autoselectCountries = this.countries.slice(0);
+    this.aautoselectCountries = this.countries.slice(0);
 
     this.form = new FormGroup({
       personId: this.personId
@@ -102,9 +108,21 @@ export class SelectDemo {
       this.autoselectCountries = this.countries.filter((country: any) => country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
     };
 
+    this.onAAutocompleteChange = (value: string) => {
+      this.aautoselectCountries = this.countries.filter((country: any) => country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    };
+
+    this.resetAutcomplete = () => {
+      this.autoselectCountries = this.countries;
+    };
+
+    this.resetAAutcomplete = () => {
+      this.aautoselectCountries = this.countries;
+    };
+
     this.arrayForm = new FormGroup({
       locations: this.locationControl
-    })
+    });
 
     this.locationControl.valueChanges
       .subscribe((value: any) => {
