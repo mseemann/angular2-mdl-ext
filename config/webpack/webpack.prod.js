@@ -25,7 +25,7 @@ module.exports = webpackMerge(commonConfig, {
 		new CopyWebpackPlugin([{ from: util.root('src', 'e2e-app', '404.html') }], {copyUnmodified: true}),
 		new webpack.NoErrorsPlugin(),
 		new webpack.LoaderOptionsPlugin({
-			minimize: true,
+			minimize: false,
 			debug: false
 		}),
 		new webpack.optimize.UglifyJsPlugin(),
