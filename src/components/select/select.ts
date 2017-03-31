@@ -91,12 +91,12 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     @ViewChild(MdlPopoverComponent) public popoverComponent: MdlPopoverComponent;
     @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
     private _isFloatingLabel: boolean = false;
-    private textfieldId: string;
-    private text: string = '';
+    textfieldId: string;
+    text: string = '';
     private textByValue: any = {};
     private onChange: any = Function.prototype;
     private onTouched: any = Function.prototype;
-    private focused: boolean = false;
+    focused: boolean = false;
 
     constructor(private changeDetectionRef: ChangeDetectorRef) {
         super();
@@ -131,7 +131,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         }
     }
 
-    private onInputBlur() {
+    onInputBlur() {
         if (this.autocomplete) {
             let autoSelectedValue = this.getAutoSelection();
 
@@ -146,11 +146,11 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         }
     }
 
-    private isDirty(): boolean {
+    isDirty(): boolean {
         return Boolean(this.selectInput.nativeElement.value);
     }
 
-    private onInputChange($event: Event) {
+    onInputChange($event: Event) {
         const inputField = $event.target as HTMLInputElement,
             inputValue = inputField.value;
 
@@ -222,11 +222,11 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         $event.preventDefault();
     }
 
-    private addFocus(): void {
+    addFocus(): void {
         this.focused = true;
     }
 
-    private removeFocus(): void {
+    removeFocus(): void {
         this.focused = false;
     }
 
@@ -278,7 +278,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         }
     }
 
-    private toggle($event: Event) {
+    toggle($event: Event) {
         if (!this.disabled) {
             this.popoverComponent.toggle($event);
             $event.stopPropagation();
