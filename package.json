@@ -81,7 +81,7 @@
     "rollup": "0.41.6",
     "run-sequence": "1.2.2",
     "sass-loader": "6.0.3",
-    "string-replace-loader": "1.1.0",
+    "string-replace-loader": "1.2.0",
     "style-loader": "0.16.1",
     "ts-helpers": "1.1.2",
     "ts-node": "3.0.2",
