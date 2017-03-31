@@ -1,11 +1,11 @@
 # @angular-mdl/*
 Additional components for @angular-mdl/core that are not part of material design lite
 
-**The master is under active development to support angular 4. If you are looking 
-for a angular 2 compatible version please refer to this branch: https://github.com/mseemann/angular2-mdl-ext/tree/angular2**
+**The master supports angular 4. If you are looking 
+for an angular 2 compatible version please refer to this branch: https://github.com/mseemann/angular2-mdl-ext/tree/angular2**
 
-* current angular version: 4.0.0-rc.5
-* current angular-mdl version: 3.0.0-rc.5
+* current angular version: 4
+* current angular-mdl version: 4
 
 [![Build Status](https://travis-ci.org/mseemann/angular2-mdl-ext.svg?branch=master)](https://travis-ci.org/mseemann/angular2-mdl-ext)
 [![Coverage Status](https://coveralls.io/repos/github/mseemann/angular2-mdl-ext/badge.svg?branch=master)](https://coveralls.io/github/mseemann/angular2-mdl-ext?branch=master)
