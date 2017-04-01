@@ -23,7 +23,7 @@ module.exports = webpackMerge(commonConfig, {
 
 	plugins: [
 		new CopyWebpackPlugin([{ from: util.root('src', 'e2e-app', '404.html') }], {copyUnmodified: true}),
-		new webpack.NoErrorsPlugin(),
+		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.LoaderOptionsPlugin({
 			minimize: false,
 			debug: false
