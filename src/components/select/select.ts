@@ -85,8 +85,8 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     set isFloatingLabel(value) { this._isFloatingLabel = toBoolean(value); }
     @Input() placeholder: string = '';
     @Input() multiple: boolean = false;
-    @Output() private change: EventEmitter<any> = new EventEmitter(true);
-    @Output() private inputChange: EventEmitter<any> = new EventEmitter(true);
+    @Output() change: EventEmitter<any> = new EventEmitter(true);
+    @Output() inputChange: EventEmitter<any> = new EventEmitter(true);
     @ViewChild('selectInput') selectInput: ElementRef;
     @ViewChild(MdlPopoverComponent) public popoverComponent: MdlPopoverComponent;
     @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
