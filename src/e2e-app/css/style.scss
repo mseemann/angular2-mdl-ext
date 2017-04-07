@@ -8,6 +8,7 @@ $color-accent-contrast: $color-dark-contrast;
 
 @import "../../../node_modules/@angular-mdl/core/scss/material-design-lite";
 
+@import '../../components/datepicker/datepicker';
 @import '../../components/popover/popover';
 @import '../../components/select/select';
 @import '../../components/expansion-panel/expansion-panel';

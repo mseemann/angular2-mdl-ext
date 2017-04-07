@@ -10,6 +10,7 @@ gulp.task(':build:test:vendor', () => {
 
     const npmVendorFiles = [
         '@angular',
+        '@angular-mdl/core',
         'core-js/client',
         'rxjs',
         'systemjs/dist',

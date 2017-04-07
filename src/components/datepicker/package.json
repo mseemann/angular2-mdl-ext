@@ -1,0 +1,26 @@
+{
+  "name": "@angular-mdl/datepicker",
+  "version": "0.0.1",
+  "description": "Angular Material Design Lite - Date Picker Component",
+  "main": "./index.umd.js",
+  "module": "./index.js",
+  "typings": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mseemann/angular2-mdl-ext.git"
+  },
+  "keywords": [
+    "angular2",
+    "angular",
+    "material design lite",
+    "datepicker"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mseemann/angular2-mdl-ext/issues"
+  },
+  "homepage": "https://github.com/mseemann/angular2-mdl-ext#readme",
+  "peerDependencies": {
+    "@angular-mdl/core": ">=4.0.0"
+  }
+}
