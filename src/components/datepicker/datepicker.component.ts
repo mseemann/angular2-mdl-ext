@@ -1,4 +1,7 @@
-import { Component, HostListener, Inject, InjectionToken, OpaqueToken, ViewChild } from '@angular/core';
+import {
+  Component, HostListener, Inject, InjectionToken, OpaqueToken, ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { MdlButtonComponent, MdlDialogReference } from '@angular-mdl/core';
 
 export const CURRENT_DATE = new InjectionToken<Date>('current-date');
@@ -6,7 +9,8 @@ export const CURRENT_DATE = new InjectionToken<Date>('current-date');
 @Component({
   moduleId: module.id,
   selector: 'datepicker',
-  templateUrl: 'datepicker.component.html'
+  templateUrl: 'datepicker.component.html',
+  encapsulation: ViewEncapsulation.None
 })
 export class DatePickerDialogComponent {
 
