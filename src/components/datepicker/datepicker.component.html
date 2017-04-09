@@ -1,13 +1,47 @@
-<h3 class="mdl-dialog__title">Title</h3>
-<div class="mdl-dialog__content">content</div>
+<div class="mdl-datepicker-header">
+  <div class="mdl-datepicker-header-year">{{mDate.format('YYYY')}}</div>
+  <h3 class="mdl-datepicker-header-day-month">{{mDate.format('ddd, MMM DD ')}}</h3>
+</div>
+
+<div class="mdl-dialog__content">
+  <div class="mdl-datepicker-month-navigation-buttons">
+    <button [disabled]="!prevEnabled" (click)="prevMonth()" class="mdl-datepicker-prev-month" mdl-button mdl-button-type="icon"><mdl-icon>keyboard_arrow_left</mdl-icon></button>
+    <button [disabled]="!nextEnabled" (click)="nextMonth()" class="mdl-datepicker-next-month" mdl-button mdl-button-type="icon"><mdl-icon>keyboard_arrow_right</mdl-icon></button>
+  </div>
+  <div class="mdl-datepicker-month">
+    <div class="mdl-datepicker-month-title">{{mCurrentMonth.format('MMMM YYYY')}}</div>
+    <div class="mdl-datepicker-weekdays">
+       <div class="mdl-datepicker-weekday" *ngFor="let wd of monthGridWeekDays">{{wd}}</div>
+    </div>
+    <div class="mdl-datepicker-monthgrid">
+
+      <div class="mdl-datepicker-weekdays" *ngFor="let week of monthGridDays">
+        <div class="mdl-datepicker-weekday"
+             *ngFor="let day of week.days">
+          <button
+                  [disabled]="isNotCurrentMonth(day)"
+                  mdl-button
+                  mdl-ripple
+                  mdl-button
+                  class="day"
+                  [ngClass]="{'actual': isActualDate(day)}"
+                  (click)="setCurrentDay(day)"
+          >{{day.date()}}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
 <div class="mdl-dialog__actions">
   <button #okButton
           mdl-button mdl-colored="primary"
           type="button"
           (click)="onOk()"
-          class="close">OK</button>
+          class="close">{{okLabel}}</button>
   <button
           mdl-button mdl-colored="primary"
           type="button"
-          (click)="onCancel()">Cancel</button>
+          (click)="onCancel()">{{cancelLabel}}</button>
 </div>
