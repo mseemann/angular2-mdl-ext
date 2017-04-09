@@ -107,22 +107,29 @@ export class DatePickerDialogComponent {
 
   }
 
-  private createMonthRow(mDate, week: number) {
+  private createMonthRow(mDate: any, week: number) {
     return {
       week: week,
-      days: Array(7).fill(0).map((n, i) => mDate.week(week).startOf('week').clone().add(n + i, 'day'))
+      days: Array(7).fill(0).map((n, i) => {
+        var mDay = mDate.week(week).startOf('week').clone().add(n + i, 'day');
+        return {
+          day: mDay,
+          isActual: this.isActualDate(mDay),
+          isCurrentMonth: !this.isCurrentMonth(mDay)
+        };
+      })
     }
   }
 
-  public isActualDate( day ) : boolean {
+  private isActualDate( day: any ) : boolean {
     return this.mDate.isSame(day, 'day');
   }
 
-  public isNotCurrentMonth(day) : boolean {
-    return !this.mCurrentMonth.isSame(day, 'month');
+  private isCurrentMonth(day: any) : boolean {
+    return this.mCurrentMonth.isSame(day, 'month');
   }
 
-  public setCurrentDay(day) {
+  public setCurrentDay(day: any) {
     this.mDate = day;
   }
 }

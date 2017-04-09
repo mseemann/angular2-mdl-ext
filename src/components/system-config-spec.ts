@@ -30,6 +30,7 @@ vendorPackages[`@angular/animations/browser`] = { main: `../bundles/animations-b
 vendorPackages[`@angular-mdl/core`] = { main: `bundle/core.js` };
 
 vendorPackages['rxjs'] = { main: 'index.js' };
+vendorPackages['moment'] = { main: 'min/moment.min.js'};
 
 /** Type declaration for ambient System. */
 declare var System: any;
@@ -39,7 +40,8 @@ System.config({
     map: {
         '@angular': 'vendor/@angular',
         '@angular-mdl/core': 'vendor/@angular-mdl/core',
-        'rxjs': 'vendor/rxjs'
+        'rxjs': 'vendor/rxjs',
+        'moment': 'vendor/moment'
     },
     packages: vendorPackages
 });

@@ -14,7 +14,8 @@ gulp.task(':build:test:vendor', () => {
         'core-js/client',
         'rxjs',
         'systemjs/dist',
-        'zone.js/dist'
+        'zone.js/dist',
+        'moment'
     ];
 
     return gulpMerge(

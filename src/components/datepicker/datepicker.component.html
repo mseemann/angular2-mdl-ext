@@ -17,16 +17,16 @@
 
       <div class="mdl-datepicker-weekdays" *ngFor="let week of monthGridDays">
         <div class="mdl-datepicker-weekday"
-             *ngFor="let day of week.days">
+             *ngFor="let dayInfo of week.days">
           <button
-                  [disabled]="isNotCurrentMonth(day)"
+                  [disabled]="!dayInfo.isCurrentMonth"
                   mdl-button
                   mdl-ripple
                   mdl-button
                   class="day"
-                  [ngClass]="{'actual': isActualDate(day)}"
-                  (click)="setCurrentDay(day)"
-          >{{day.date()}}</button>
+                  [ngClass]="{'actual': dayInfo.isActual}"
+                  (click)="setCurrentDay(dayInfo.day)"
+          >{{dayInfo.day.date()}}</button>
         </div>
       </div>
 
