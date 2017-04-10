@@ -1,5 +1,6 @@
 // here you need to add your component - e.g the name of the folder in the components directorty
 const components = [
+    'datepicker',
     'expansion-panel',
     'popover',
     'select'
@@ -26,9 +27,10 @@ angularPackages.forEach(name => {
 
 vendorPackages[`@angular/platform-browser/animations`] = { main: `../bundles/platform-browser-animations.umd.js` };
 vendorPackages[`@angular/animations/browser`] = { main: `../bundles/animations-browser.umd.js` };
-
+vendorPackages[`@angular-mdl/core`] = { main: `bundle/core.js` };
 
 vendorPackages['rxjs'] = { main: 'index.js' };
+vendorPackages['moment'] = { main: 'min/moment.min.js'};
 
 /** Type declaration for ambient System. */
 declare var System: any;
@@ -37,7 +39,9 @@ declare var System: any;
 System.config({
     map: {
         '@angular': 'vendor/@angular',
-        'rxjs': 'vendor/rxjs'
+        '@angular-mdl/core': 'vendor/@angular-mdl/core',
+        'rxjs': 'vendor/rxjs',
+        'moment': 'vendor/moment'
     },
     packages: vendorPackages
 });

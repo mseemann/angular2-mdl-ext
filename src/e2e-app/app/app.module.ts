@@ -12,6 +12,8 @@ import { MdlSelectModule } from '../../components/select/select';
 import { MdlExpansionPanelModule } from '../../components/expansion-panel/expansion-panel.component';
 import { PrismDirective } from '@mseemann/prism';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatepickerDemo } from './datepicker/datepicker.component';
+import { MdlDatePickerModule } from '../../components/datepicker/index';
 
 @NgModule({
   imports: [
@@ -23,11 +25,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MdlPopoverModule,
     MdlSelectModule,
     MdlExpansionPanelModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MdlDatePickerModule
   ],
   declarations: [
     AppComponent,
     Home,
+    DatepickerDemo,
     PopoverDemo,
     SelectDemo,
     ExpansionPanelDemo,

@@ -10,10 +10,12 @@ gulp.task(':build:test:vendor', () => {
 
     const npmVendorFiles = [
         '@angular',
+        '@angular-mdl/core',
         'core-js/client',
         'rxjs',
         'systemjs/dist',
-        'zone.js/dist'
+        'zone.js/dist',
+        'moment'
     ];
 
     return gulpMerge(
