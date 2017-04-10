@@ -1,6 +1,6 @@
 <div class="mdl-datepicker-header">
   <div class="mdl-datepicker-header-year">{{mDate.format('YYYY')}}</div>
-  <h3 class="mdl-datepicker-header-day-month">{{mDate.format('ddd, MMM DD ')}}</h3>
+  <h3 class="mdl-datepicker-header-day-month">{{mDate.format('ddd, MMM DD')}}</h3>
 </div>
 
 <div class="mdl-dialog__content">
@@ -24,7 +24,7 @@
                   mdl-ripple
                   mdl-button
                   class="day"
-                  [ngClass]="{'actual': dayInfo.isActual}"
+                  [ngClass]="{'actual': isActualDate(dayInfo.day)}"
                   (click)="setCurrentDay(dayInfo.day)"
           >{{dayInfo.day.date()}}</button>
         </div>

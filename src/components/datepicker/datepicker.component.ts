@@ -1,5 +1,5 @@
 import {
-  Component, HostListener, Inject, InjectionToken, OpaqueToken, ViewChild,
+  Component, HostListener, Inject, InjectionToken, ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { MdlButtonComponent, MdlDialogReference } from '@angular-mdl/core';
@@ -22,8 +22,8 @@ export class DatePickerDialogComponent {
   public okLabel: string;
   public cancelLabel: string;
 
-  public mDate: any;
-  private _mCurrentMonth: any;
+  public mDate: moment.Moment;
+  private _mCurrentMonth: moment.Moment;
   get mCurrentMonth() {
     return this._mCurrentMonth;
   }
@@ -44,7 +44,19 @@ export class DatePickerDialogComponent {
     @Inject(DATEPICKER_CONFIG) private options: DatePickerOptions) {
 
     this.mDate = moment(initialDate || new Date());
-    this.mCurrentMonth = moment(this.mDate);
+    this.mCurrentMonth = this.mDate.clone();
+
+    const startOfWeek = moment().startOf('week');
+    const endOfWeek = moment().endOf('week');
+
+    this.monthGridWeekDays = [];
+    let day = startOfWeek;
+    while (day <= endOfWeek) {
+      this.monthGridWeekDays.push(moment.weekdaysMin(day.day()));
+      day = day.clone().add(1, 'd');
+    }
+
+
     this.okLabel = options.okLabel || 'Ok';
     this.cancelLabel = options.cancelLabel || 'Cancel';
 
@@ -75,19 +87,9 @@ export class DatePickerDialogComponent {
   }
 
   private calculateMonthGrid() {
-    const startOfWeek = moment().startOf('week');
-    const endOfWeek = moment().endOf('week');
-
-    this.monthGridWeekDays = [];
-    var day = startOfWeek;
-    while (day <= endOfWeek) {
-      this.monthGridWeekDays.push(moment.weekdaysMin(day.day()));
-      day = day.clone().add(1, 'd');
-    }
-
-    let startDateOfMonth = this.mCurrentMonth.startOf('month').clone();
+    let startDateOfMonth = this.mCurrentMonth.clone().startOf('month').clone();
     const startWeek = startDateOfMonth.week();
-    const endWeek = this.mCurrentMonth.endOf('month').week();
+    const endWeek = this.mCurrentMonth.clone().endOf('month').week();
 
     // caveat year switch
     // 52 - 5
@@ -102,34 +104,32 @@ export class DatePickerDialogComponent {
     do {
       let firstDayInWeek = startDateOfMonth.add(1, 'week');
       week = firstDayInWeek.week();
-      this.monthGridDays.push(this.createMonthRow(this.mCurrentMonth, week));
-    } while (week != endWeek)
-
+      this.monthGridDays.push(this.createMonthRow(this.mCurrentMonth.clone(), week));
+    } while (week != endWeek);
   }
 
   private createMonthRow(mDate: any, week: number) {
     return {
       week: week,
       days: Array(7).fill(0).map((n, i) => {
-        var mDay = mDate.week(week).startOf('week').clone().add(n + i, 'day');
+        const mDay = mDate.week(week).startOf('week').clone().add(n + i, 'day');
         return {
           day: mDay,
-          isActual: this.isActualDate(mDay),
-          isCurrentMonth: !this.isCurrentMonth(mDay)
+          isCurrentMonth: this.isCurrentMonth(mDay)
         };
       })
     }
   }
 
-  private isActualDate( day: any ) : boolean {
+  public isActualDate( day: moment.Moment ) : boolean {
     return this.mDate.isSame(day, 'day');
   }
 
-  private isCurrentMonth(day: any) : boolean {
+  private isCurrentMonth(day: moment.Moment) : boolean {
     return this.mCurrentMonth.isSame(day, 'month');
   }
 
-  public setCurrentDay(day: any) {
+  public setCurrentDay(day: moment.Moment) {
     this.mDate = day;
   }
 }
