@@ -8,7 +8,7 @@
   .mdl-datepicker-header {
     background-color: unquote("rgb(#{$color-primary})");
     color: unquote("rgb(#{$color-dark-contrast})");
-    padding: 1em;
+    padding: 1em 1em 0.25em 1em;
   }
 
   .mdl-datepicker-header-day-month {
@@ -16,7 +16,7 @@
   }
 
   .mdl-dialog__content {
-    padding: 20px 16px 24px 16px;
+    padding: 8px 8px 0 8px;
   }
 
   .mdl-datepicker-month-navigation-buttons {
@@ -33,6 +33,9 @@
   }
 
   .mdl-datepicker-month {
+
+    // avoid flickering if the count of weeks per month changed
+    min-height: 21.5em;
 
     .mdl-datepicker-month-title {
       font-weight: bold;

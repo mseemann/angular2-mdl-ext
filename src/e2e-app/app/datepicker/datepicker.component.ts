@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { MdlDatePickerService } from '../../../components/datepicker/datepicker.service';
 import * as moment from 'moment';
-//import 'moment/locale/de';
+import 'moment/locale/en-gb';
 
 @Component({
   selector: 'datepicker-demo',

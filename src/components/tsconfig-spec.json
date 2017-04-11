@@ -16,7 +16,8 @@
     "stripInternal": true,
     "baseUrl": "",
     "types": [
-      "jasmine"
+      "jasmine",
+      "node"
     ]
   }
 }
