@@ -1,24 +1,4 @@
-import { NgModule } from '@angular/core';
-import { MdlDatePickerService } from './datepicker.service';
-import { DatePickerDialogComponent } from './datepicker.component';
-import { MdlButtonModule, MdlDialogModule, MdlDialogService, MdlIconModule, MdlRippleModule } from '@angular-mdl/core';
-import { CommonModule } from '@angular/common';
+export * from './datepicker.component';
+export * from './datepicker.service';
 
-@NgModule({
-  imports: [
-    CommonModule,
-    MdlButtonModule,
-    MdlIconModule,
-    MdlRippleModule,
-    MdlDialogModule
-  ],
-  exports: [],
-  declarations: [ DatePickerDialogComponent ],
-  entryComponents: [DatePickerDialogComponent],
-  providers: [
-    MdlDatePickerService,
-    MdlDialogService
-  ]
-})
-export class MdlDatePickerModule {
-}
+

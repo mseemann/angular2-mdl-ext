@@ -25,7 +25,7 @@ gulp.task(':watch:components:spec', () => {
 
 gulp.task(':build:components:assets', () => {
 
-    return gulp.src(path.join(componentsDir, '**/*.!(ts|spec.ts)'))
+    return gulp.src([path.join(componentsDir, '**/*.*'), '!**/*.ts'])
         .pipe( <WritableStream> gulp.dest(DIST_COMPONENTS_ROOT));
 
 });

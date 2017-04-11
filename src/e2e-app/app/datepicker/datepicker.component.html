@@ -9,8 +9,33 @@
 </button>
 <span>{{ selectedDate?.format('LL') }}</span>
 
-<pre prism>
+<pre prism ngNonBindable>
   <![CDATA[
+<button
+        mdl-button
+        (click)="pickADate($event)"
+        mdl-button-type="icon"
+        mdl-ripple>
+  <mdl-icon>event</mdl-icon>
+</button>
+<span>{{ selectedDate?.format('LL') }}</span>
+  ]]>
+</pre>
+
+<pre prism ngNonBindable>
+  <![CDATA[
+export class DatepickerDemo {
+
+  public selectedDate: any;
+
+  constructor(private datePicker: MdlDatePickerService) {}
+
+  public pickADate($event: MouseEvent) {
+    this.datePicker.selectDate(this.selectedDate, {openFrom: $event}).subscribe( (selectedDate: Date) => {
+      this.selectedDate = selectedDate ? moment(selectedDate) : null;
+    });
+  }
+}
 
   ]]>
 </pre>

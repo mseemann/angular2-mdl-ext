@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { MdlDialogReference, MdlDialogService } from '@angular-mdl/core';
+import { MdlDialogReference } from '@angular-mdl/core';
 import { CURRENT_DATE, DATEPICKER_CONFIG, DatePickerDialogComponent } from './datepicker.component';
-
+import { NgModule } from '@angular/core';
+import { MdlButtonModule, MdlDialogModule, MdlDialogService, MdlIconModule, MdlRippleModule } from '@angular-mdl/core';
+import { CommonModule } from '@angular/common';
 
 export interface DatePickerOptions {
   openFrom?: MouseEvent;
@@ -38,4 +40,23 @@ export class MdlDatePickerService {
 
     return subject.asObservable();
   }
+}
+
+@NgModule({
+  imports: [
+    CommonModule,
+    MdlButtonModule,
+    MdlIconModule,
+    MdlRippleModule,
+    MdlDialogModule
+  ],
+  exports: [],
+  declarations: [ DatePickerDialogComponent ],
+  entryComponents: [DatePickerDialogComponent],
+  providers: [
+    MdlDatePickerService,
+    MdlDialogService
+  ]
+})
+export class MdlDatePickerModule {
 }

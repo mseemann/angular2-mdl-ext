@@ -1,6 +1,6 @@
 {
   "name": "@angular-mdl/datepicker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Angular Material Design Lite - Date Picker Component",
   "main": "./index.umd.js",
   "module": "./index.js",
