@@ -10,7 +10,6 @@ import {
     NgModule,
     ViewEncapsulation
 } from '@angular/core';
-import { Element } from '@angular/compiler';
 
 type Direction = 'top' | 'bottom' | 'right' | 'left' | 'bottomRight' | 'bottomLeft' | 'topRight' | 'topLeft';
 
@@ -100,7 +99,7 @@ export class MdlPopoverComponent implements AfterViewInit {
         });
     }
 
-    private getRelativePositionToInitiator(initiatorBounds, elementRefBounds, nativeEl) {
+    private getRelativePositionToInitiator(initiatorBounds: ClientRect, elementRefBounds: ClientRect, nativeEl: HTMLElement) {
 
         switch (this.direction) {
         case 'right':
