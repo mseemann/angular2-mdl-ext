@@ -10,7 +10,7 @@
   <mdl-icon>more_vert</mdl-icon>
 </button>
 
-<mdl-popover #myPopover [hide-on-click]="true" [style.width.px]="300">
+<mdl-popover #myPopover [direction]="'right'" [hide-on-click]="true" [style.width.px]="300">
   <div mdl-shadow="6" style="padding: 1rem;">
     <b>This is example popover</b> you can put any HTML content here.
   </div>
@@ -27,7 +27,7 @@
   <mdl-icon>more_vert</mdl-icon>
   </button>
 
-  <mdl-popover #myPopover [hide-on-click]="true" [style.width.px]="300">
+  <mdl-popover  #myPopover [hide-on-click]="true" [style.width.px]="300">
     <div mdl-shadow="6" style="padding: 1rem;">
       <b>This is example popover</b> you can put any HTML content here.
     </div>
@@ -46,7 +46,7 @@
   <mdl-icon>more_vert</mdl-icon>
 </button>
 
-<mdl-popover #card>
+<mdl-popover #card [direction]="'bottom'">
   <mdl-card mdl-shadow="6">
     <mdl-card-title>
       <h2 mdl-card-title-text>Welcome</h2>
