@@ -17,7 +17,7 @@ import {
   HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'mdl-expansion-panel-header',
@@ -68,9 +68,14 @@ export class MdlExpansionPanelHeaderSecondaryContentComponent { }
   },
   animations: [
     trigger('isExpanded', [
-      state('true', style({ height: '*' })),
-      state('false', style({ height: '0px' })),
-      transition('* => *', animate('250ms ease-in'))
+      state('true', style({ minHeight: '85px', overflow: 'auto' })),
+      state('false', style({ height: '0'})),
+	    transition('true => false', [
+	  	  animate('250ms ease-in', style({ height: '0' })),
+	    ]),
+	    transition('false => true', [
+	  	  animate('250ms ease-out', style({ minHeight: '85px' })),
+	    ])
     ])
   ]
 })
@@ -205,7 +210,7 @@ const MDL_EXPANSION_PANEL_DIRECTIVES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, NoopAnimationsModule ],
+  imports: [CommonModule, BrowserAnimationsModule ],
   exports: MDL_EXPANSION_PANEL_DIRECTIVES,
   declarations: MDL_EXPANSION_PANEL_DIRECTIVES,
 })
