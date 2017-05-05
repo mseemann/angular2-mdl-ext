@@ -2,6 +2,7 @@ import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { MdlExpansionPanelModule } from './expansion-panel.component';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MdlExpansionPanel', () => {
 
@@ -11,7 +12,7 @@ describe('MdlExpansionPanel', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [MdlExpansionPanelModule.forRoot()],
+        imports: [MdlExpansionPanelModule.forRoot(), NoopAnimationsModule],
         declarations: [TestSinglePanelComponent],
       });
 
@@ -72,7 +73,7 @@ describe('MdlExpansionPanel', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [MdlExpansionPanelModule.forRoot()],
+        imports: [MdlExpansionPanelModule.forRoot(), NoopAnimationsModule],
         declarations: [TestGroupPanelComponent],
       });
 
