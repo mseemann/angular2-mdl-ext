@@ -26,7 +26,7 @@
     "@angular/forms": "4.1.1",
     "@angular/http": "4.1.1",
     "@angular/platform-browser": "4.1.1",
-    "@angular/platform-browser-dynamic": "4.1.1",
+    "@angular/platform-browser-dynamic": "4.1.2",
     "@angular/router": "4.1.1",
     "@mseemann/prism": "0.0.1",
     "core-js": "2.4.1",
