@@ -1,7 +1,7 @@
 # @angular-mdl/*
 Additional components for @angular-mdl/core that are not part of material design lite
 
-**The master supports angular 4. If you are looking 
+**The master supports angular 4. If you are looking
 for an angular 2 compatible version please refer to this branch: https://github.com/mseemann/angular2-mdl-ext/tree/angular2**
 
 * current angular version: 4
@@ -32,8 +32,8 @@ These components support AOT and TreeShaking!
 
 ### How to use the components
 Install the components via npm. Please checkout the individual readme for each component from the table above.
- 
-Starting with version 0.2.0 every component has no css styles imported by default. You need to setup your build pipeline 
+
+Starting with version 0.2.0 every component has no css styles imported by default. You need to setup your build pipeline
 to include the scss files from each component you want to use. This makes it possible to configure the theming for
 the components you want to use.
 
@@ -69,6 +69,6 @@ An other way is to include each component folder in the search path for your scs
 
 * npm start - local dev server
 * npm build - build a production release
-* npm start test - run the unit tests
+* npm test - run the unit tests
 
 The coverage report is stored under: coverage/coverage-remap/index.html
