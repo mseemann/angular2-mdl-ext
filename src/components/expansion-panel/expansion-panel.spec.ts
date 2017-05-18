@@ -1,5 +1,5 @@
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { MdlExpansionPanelModule } from './expansion-panel.component';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -109,6 +109,38 @@ describe('MdlExpansionPanel', () => {
     }));
   });
 
+
+  describe("customized initialization", () => {
+
+    let fixture: ComponentFixture<TestGroupPanelComponent>;
+    let panel: DebugElement;
+
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        imports: [MdlExpansionPanelModule.forRoot(), NoopAnimationsModule],
+        declarations: [TestPanelHostComponent],
+      });
+
+      TestBed.compileComponents().then(() => {
+        fixture = TestBed.createComponent(TestPanelHostComponent);
+        fixture.detectChanges();
+
+        panel = fixture.debugElement.query(By.css("mdl-expansion-panel"));
+      });
+    }));
+
+    it("should be disabled depending on input", () => {
+      expect(panel.classes).toEqual(
+        jasmine.objectContaining({disabled: true}),
+      );
+    });
+
+    it("should be expanded depending on input", () => {
+      expect(panel.classes).toEqual(
+        jasmine.objectContaining({expanded: true}),
+      );
+    });
+  });
 });
 
 @Component({
@@ -135,3 +167,17 @@ class TestSinglePanelComponent {}
   `
 })
 class TestGroupPanelComponent {}
+
+@Component({
+  selector: 'test-host-component',
+  template: `
+      <mdl-expansion-panel [disabled]="disabled" [expanded]="expanded">
+        <mdl-expansion-panel-header></mdl-expansion-panel-header>
+        <mdl-expansion-panel-content><p>body</p></mdl-expansion-panel-content>
+      </mdl-expansion-panel>
+  `
+})
+class TestPanelHostComponent {
+  public disabled: boolean = true;
+  public expanded: boolean = true;
+}

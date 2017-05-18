@@ -57,13 +57,42 @@
 </section>
 
 <section>
+  <h5>Single expansion panel - expanded initially </h5>
+  <mdl-expansion-panel [expanded]="true">
+    <mdl-expansion-panel-header>
+      <mdl-expansion-panel-header-list-content>Primary Title</mdl-expansion-panel-header-list-content>
+      <mdl-expansion-panel-header-secondary-content>Secondary value</mdl-expansion-panel-header-secondary-content>
+    </mdl-expansion-panel-header>
+    <mdl-expansion-panel-content>
+      <mdl-expansion-panel-body>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      </mdl-expansion-panel-body>
+    </mdl-expansion-panel-content>
+  </mdl-expansion-panel>
+  <pre prism>
+    <![CDATA[
+<mdl-expansion-panel [expanded]="true">
+  <mdl-expansion-panel-header>
+    <mdl-expansion-panel-header-list-content>Primary Title</mdl-expansion-panel-header-list-content>
+    <mdl-expansion-panel-header-secondary-content>Secondary value</mdl-expansion-panel-header-secondary-content>
+  </mdl-expansion-panel-header>
+  <mdl-expansion-panel-content>
+    <mdl-expansion-panel-body>
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </mdl-expansion-panel-body>
+  </mdl-expansion-panel-content>
+</mdl-expansion-panel>
+    ]]>
+  </pre>
+</section>
+
+<section>
   <h5>Expansion panel group</h5>
   <p>Individual panel in a group can be focused by TAB key. Panels can be toggled by pressing ENTER key when focused.</p>
   <mdl-expansion-panel-group #panelGroup>
     <mdl-expansion-panel *ngFor="let i of [1,2,3]">
       <mdl-expansion-panel-header>
         <mdl-expansion-panel-header-list-content>Primary Title {{i}}</mdl-expansion-panel-header-list-content>
-        <mdl-expansion-panel-header-secondary-content>Secondary Value {{i}}</mdl-expansion-panel-header-secondary-content>
       </mdl-expansion-panel-header>
       <mdl-expansion-panel-content>
         <mdl-expansion-panel-body>
@@ -89,7 +118,6 @@
   <mdl-expansion-panel>
     <mdl-expansion-panel-header>
       <mdl-expansion-panel-header-list-content>Primary Title {x{i}}</mdl-expansion-panel-header-list-content>
-      <mdl-expansion-panel-header-secondary-content>Secondary Value {x{i}}</mdl-expansion-panel-header-secondary-content>
     </mdl-expansion-panel-header>
     <mdl-expansion-panel-content>
       <mdl-expansion-panel-body>
@@ -193,6 +221,31 @@
         <td>none</td>
         <td>void</td>
       </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h5>Inputs for MdlExpansionPanelComponent</h5>
+  <table class="docu" mdl-shadow="2">
+    <thead>
+    <tr>
+      <th>Property</th>
+      <th>Params</th>
+      <th>Explanation</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>disabled</td>
+      <td>boolean</td>
+      <td>Panel initializes in disabled state</td>
+    </tr>
+    <tr>
+      <td>expanded</td>
+      <td>boolean</td>
+      <td>Panel initializes in expanded state</td>
+    </tr>
     </tbody>
   </table>
 </section>
