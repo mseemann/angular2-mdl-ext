@@ -9,7 +9,8 @@ import {
   Output,
   Input,
   QueryList,
-  HostListener
+  HostListener,
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -106,12 +107,20 @@ export class MdlExpansionPanelFooterComponent { }
     '[tabindex]': '0'
   }
 })
-export class MdlExpansionPanelComponent implements AfterContentInit {
+export class MdlExpansionPanelComponent implements AfterContentInit, OnInit {
   @ContentChild(MdlExpansionPanelHeaderComponent) header: MdlExpansionPanelHeaderComponent;
   @ContentChild(MdlExpansionPanelContentComponent) content: MdlExpansionPanelContentComponent;
   @Input() disabled: boolean = false;
+  @Input() expanded: boolean = false;
   @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  isExpanded: boolean = false;
+
+  private isExpanded: boolean = false;
+
+  ngOnInit() {
+    if (this.expanded) {
+      this.expand();
+    }
+  }
 
   ngAfterContentInit() {
     this.header.onChange.subscribe(() => {
