@@ -90,7 +90,7 @@
   <h5>Expansion panel group</h5>
   <p>Individual panel in a group can be focused by TAB key. Panels can be toggled by pressing ENTER key when focused.</p>
   <mdl-expansion-panel-group #panelGroup>
-    <mdl-expansion-panel *ngFor="let i of [1,2,3]">
+    <mdl-expansion-panel *ngFor="let i of [1,2,3]" [expanded]="true">
       <mdl-expansion-panel-header>
         <mdl-expansion-panel-header-list-content>Primary Title {{i}}</mdl-expansion-panel-header-list-content>
       </mdl-expansion-panel-header>

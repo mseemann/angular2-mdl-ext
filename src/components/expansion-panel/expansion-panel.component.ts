@@ -145,19 +145,19 @@ export class MdlExpansionPanelComponent implements AfterContentInit, OnInit {
     this._toggle(false);
   }
 
-  _toggle(isExpanded: boolean) {
-    this.isExpanded = isExpanded;
-    this.content.isExpanded = `${isExpanded}`;
-    this.header.isExpanded = isExpanded;
-    this.onChange.emit(isExpanded);
-  }
-
   disableToggle() {
     this.disabled = true;
   }
 
   enableToggle() {
     this.disabled = false;
+  }
+
+  private _toggle(isExpanded: boolean) {
+    this.isExpanded = isExpanded;
+    this.content.isExpanded = `${isExpanded}`;
+    this.header.isExpanded = isExpanded;
+    this.onChange.emit(isExpanded);
   }
 }
 
@@ -173,12 +173,23 @@ export class MdlExpansionPanelGroupComponent implements AfterContentInit {
   expandedIndex: number = -1;
 
   ngAfterContentInit() {
-    /**
-     * Expand the panel and collapse previously
-     * expanded panel.
-     * Save the new expanded panel.
-     */
     this.panels.forEach((panel, i) => {
+      /**
+       * Collapse all panels except the last of all panels which are
+       * initialized in expanded state.
+       */
+      if (panel.expanded) {
+        if (this.expandedIndex > -1) {
+          this.panels.toArray()[this.expandedIndex].collapse();
+        }
+        this.expandedIndex = i;
+      }
+
+      /**
+       * Expand the panel and collapse previously
+       * expanded panel when a panel is toggled.
+       * Save the new expanded panel.
+       */
       panel.onChange.subscribe((isExpanded: boolean) => {
         if (isExpanded) {
           if (i !== this.expandedIndex && this.expandedIndex >= 0) {

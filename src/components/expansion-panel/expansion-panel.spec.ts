@@ -107,6 +107,21 @@ describe('MdlExpansionPanel', () => {
                   .toContain('expanded');
         });
     }));
+
+    it('should allow ONE panel which is initialized in expanded state', async(() => {
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(fixture.debugElement.nativeElement
+          .querySelector('.mdl-expansion-panel:nth-child(1)').getAttribute('class'))
+          .not.toContain('expanded');
+        expect(fixture.debugElement.nativeElement
+          .querySelector('.mdl-expansion-panel:nth-child(2)').getAttribute('class'))
+          .not.toContain('expanded');
+        expect(fixture.debugElement.nativeElement
+          .querySelector('.mdl-expansion-panel:nth-child(3)').getAttribute('class'))
+          .toContain('expanded');
+      });
+    }));
   });
 
 
@@ -156,10 +171,10 @@ describe('MdlExpansionPanel', () => {
 class TestSinglePanelComponent {}
 
 @Component({
-  selector: 'test-component',
+  selector: 'test-group-component',
   template: `
     <mdl-expansion-panel-group #panelGroup>
-      <mdl-expansion-panel *ngFor="let i of [1,2,3]">
+      <mdl-expansion-panel *ngFor="let i of [1,2,3]" [expanded]="true">
         <mdl-expansion-panel-header></mdl-expansion-panel-header>
         <mdl-expansion-panel-content><p>body</p></mdl-expansion-panel-content>
       </mdl-expansion-panel>
