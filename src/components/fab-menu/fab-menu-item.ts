@@ -1,19 +1,19 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
-import {FabMenuComponent} from './fab-menu'
+import {MdlFabMenuComponent} from './fab-menu'
 
 @Component({
   selector: 'mdl-fab-menu-item',
   templateUrl: './fab-menu-item.html',
   styleUrls: ['./fab-menu-item.scss']
 })
-export class FabMenuItemComponent implements OnInit {
+export class MdlFabMenuItemComponent implements OnInit {
 
   @Input()
   label: string
   @Input()
   icon: string
   @Input()
-  fabMenu: FabMenuComponent
+  fabMenu: MdlFabMenuComponent
 
   @Output('menu-clicked')
   menuClick: EventEmitter<any> = new EventEmitter()

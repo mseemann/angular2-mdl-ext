@@ -32,7 +32,7 @@
 ```
 #### forcing the tooltips to be displayed
 ```angular2html
-<mdl-fab-menu #mainFabMenu [alwaysShowToolTips]="true">
+<mdl-fab-menu #mainFabMenu [alwaysShowTooltips]="true">
     ...
 </mdl-fab-menu>
 ```
@@ -43,7 +43,7 @@
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `[alwaysShowToolTips]` | boolean | decide if either or not the tooltips should always be displayed (let it unbinds to always display them on touch screens and on mouseover on "mouse-screen")
+| `[alwaysShowTooltips]` | boolean | decide if either or not the tooltips should always be displayed (let it unbinds to always display them on touch screens and on mouseover on "mouse-screen")
 
 #### mdl-fab-menu-item
 
