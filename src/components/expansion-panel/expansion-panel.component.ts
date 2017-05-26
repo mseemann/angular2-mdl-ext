@@ -10,7 +10,6 @@ import {
   Input,
   QueryList,
   HostListener,
-  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -102,24 +101,24 @@ export class MdlExpansionPanelFooterComponent { }
   template: '<ng-content></ng-content>',
   host: {
     '[class.mdl-expansion-panel]': 'true',
-    '[class.expanded]': 'isExpanded',
+    '[class.expanded]': 'expanded',
     '[class.disabled]': 'disabled',
     '[tabindex]': '0'
   }
 })
-export class MdlExpansionPanelComponent implements AfterContentInit, OnInit {
+export class MdlExpansionPanelComponent implements AfterContentInit {
   @ContentChild(MdlExpansionPanelHeaderComponent) header: MdlExpansionPanelHeaderComponent;
   @ContentChild(MdlExpansionPanelContentComponent) content: MdlExpansionPanelContentComponent;
-  @Input() disabled: boolean = false;
-  @Input() expanded: boolean = false;
   @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() disabled: boolean = false;
 
+  // expanded property is getter/setter for the internal 'isExpanded' flag
+  @Input() public set expanded(bool: boolean) {
+    this._toggle(bool);
+  };
   private isExpanded: boolean = false;
-
-  ngOnInit() {
-    if (this.expanded) {
-      this.expand();
-    }
+  public get expanded() {
+    return this.isExpanded;
   }
 
   ngAfterContentInit() {
@@ -162,7 +161,7 @@ export class MdlExpansionPanelComponent implements AfterContentInit, OnInit {
 }
 
 @Component({
-  selector: '<mdl-expansion-panel-group></mdl-expansion-panel-group>',
+  selector: 'mdl-expansion-panel-group',
   template: '<ng-content></ng-content>',
   host: {
     '[class.mdl-expansion-panel-group]': 'true'
@@ -175,12 +174,19 @@ export class MdlExpansionPanelGroupComponent implements AfterContentInit {
   ngAfterContentInit() {
     this.panels.forEach((panel, i) => {
       /**
-       * Collapse all panels except the last of all panels which are
-       * initialized in expanded state.
+       * Set the expanded index to the panel index which is initialized in expanded state
+       *
+       * Having more than one of the panels being initialized in expanded state
+       * is NOT supported
        */
       if (panel.expanded) {
         if (this.expandedIndex > -1) {
-          this.panels.toArray()[this.expandedIndex].collapse();
+          const errorMessage = `
+            PanelGroup does not support more than one Panel to be expanded initially.
+            
+            Make sure only one <mdl-expansion-panel> receives input like [expanded]="true".
+            `;
+          this.throw(errorMessage);
         }
         this.expandedIndex = i;
       }
@@ -188,7 +194,7 @@ export class MdlExpansionPanelGroupComponent implements AfterContentInit {
       /**
        * Expand the panel and collapse previously
        * expanded panel when a panel is toggled.
-       * Save the new expanded panel.
+       * Save the new expanded panel index.
        */
       panel.onChange.subscribe((isExpanded: boolean) => {
         if (isExpanded) {
@@ -210,6 +216,10 @@ export class MdlExpansionPanelGroupComponent implements AfterContentInit {
 
   getPanel(index: number): MdlExpansionPanelComponent {
     return this.panels.toArray()[index];
+  }
+
+  private throw(message: string) {
+    throw new Error(message);
   }
 }
 
