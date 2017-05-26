@@ -35,6 +35,7 @@ export class MdlDatePickerService {
     pDialog.subscribe( (dialogReference: MdlDialogReference) => {
      dialogReference.onHide().subscribe( (date: Date) => {
        subject.next(date);
+       subject.complete();
      });
     });
 
