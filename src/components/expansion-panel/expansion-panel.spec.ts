@@ -68,18 +68,37 @@ describe('MdlExpansionPanel', () => {
   });
 
   describe('group', () => {
-
     let fixture: ComponentFixture<TestGroupPanelComponent>;
+    let fixtureWithError: ComponentFixture<TestGroupPanelError>;
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [MdlExpansionPanelModule.forRoot(), NoopAnimationsModule],
-        declarations: [TestGroupPanelComponent],
+        declarations: [
+          TestGroupPanelComponent,
+          TestGroupPanelError
+        ],
       });
 
       TestBed.compileComponents().then( () => {
         fixture = TestBed.createComponent(TestGroupPanelComponent);
+        fixtureWithError = TestBed.createComponent(TestGroupPanelError);
         fixture.detectChanges();
+      });
+    }));
+
+    it('should allow one panel which is initialized in expanded state', async(() => {
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(fixture.debugElement.nativeElement
+          .querySelector('.mdl-expansion-panel:nth-child(1)').getAttribute('class'))
+          .toContain('expanded');
+        expect(fixture.debugElement.nativeElement
+          .querySelector('.mdl-expansion-panel:nth-child(2)').getAttribute('class'))
+          .not.toContain('expanded');
+        expect(fixture.debugElement.nativeElement
+          .querySelector('.mdl-expansion-panel:nth-child(3)').getAttribute('class'))
+          .not.toContain('expanded');
       });
     }));
 
@@ -87,17 +106,10 @@ describe('MdlExpansionPanel', () => {
       fixture
         .debugElement
         .nativeElement
-        .querySelector('.mdl-expansion-panel:nth-child(1) .mdl-expansion-panel__header--expand-icon')
+        .querySelector('.mdl-expansion-panel:nth-child(2) .mdl-expansion-panel__header--expand-icon')
         .click();
       fixture.detectChanges();
       fixture.whenStable()
-        .then(() => {
-          fixture.debugElement.nativeElement
-            .querySelector('.mdl-expansion-panel:nth-child(2) .mdl-expansion-panel__header--expand-icon')
-            .click();
-          fixture.detectChanges();
-          return fixture.whenStable();
-        })
         .then(() => {
           expect(fixture.debugElement.nativeElement
                   .querySelector('.mdl-expansion-panel:nth-child(1)').getAttribute('class'))
@@ -107,6 +119,17 @@ describe('MdlExpansionPanel', () => {
                   .toContain('expanded');
         });
     }));
+
+    it('throws if panel group panels are initialized incorrectly', () => {
+      let error;
+      try {
+        fixtureWithError.detectChanges();
+      } catch (e) {
+        error = e;
+      }
+      expect(error).toBeDefined();
+      expect(error instanceof Error).toBe(true);
+    })
   });
 
 
@@ -156,10 +179,10 @@ describe('MdlExpansionPanel', () => {
 class TestSinglePanelComponent {}
 
 @Component({
-  selector: 'test-component',
+  selector: 'test-group-component',
   template: `
     <mdl-expansion-panel-group #panelGroup>
-      <mdl-expansion-panel *ngFor="let i of [1,2,3]">
+      <mdl-expansion-panel *ngFor="let i of [1,2,3]; let isFirst = first" [expanded]="isFirst">
         <mdl-expansion-panel-header></mdl-expansion-panel-header>
         <mdl-expansion-panel-content><p>body</p></mdl-expansion-panel-content>
       </mdl-expansion-panel>
@@ -167,6 +190,19 @@ class TestSinglePanelComponent {}
   `
 })
 class TestGroupPanelComponent {}
+
+@Component({
+  selector: 'test-group-error',
+  template: `
+    <mdl-expansion-panel-group>
+      <mdl-expansion-panel *ngFor="let i of [1,2,3]" [expanded]="true">
+        <mdl-expansion-panel-header></mdl-expansion-panel-header>
+        <mdl-expansion-panel-content><p>body</p></mdl-expansion-panel-content>
+      </mdl-expansion-panel>
+    </mdl-expansion-panel-group>
+  `
+})
+class TestGroupPanelError {}
 
 @Component({
   selector: 'test-host-component',
