@@ -85,7 +85,7 @@
     "string-replace-loader": "1.2.0",
     "style-loader": "0.18.2",
     "ts-helpers": "1.1.2",
-    "ts-node": "3.0.4",
+    "ts-node": "3.0.5",
     "tslint": "5.4.2",
     "typescript": "2.1.5",
     "typings": "2.1.1",
