@@ -65,6 +65,20 @@ An other way is to include each component folder in the search path for your scs
 	}
 ```
 
+If you are using an angular cli project you want to add the two lines of code to the angular-cli.json
+
+```
+{
+    "apps": [{
+            "styles": [
+              "../node_modules/@angular2-mdl-ext/popover/popover.scss", <-- add this
+              "../node_modules/@angular2-mdl-ext/select/select.scss" <-- add this
+            ],
+        }],
+}
+
+```
+
 ### Development
 
 * npm start - local dev server
