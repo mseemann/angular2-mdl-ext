@@ -76,6 +76,7 @@ $gutter-horizontal: 24px;
   display: block;
   .mdl-expansion-panel {
     margin: 0px;
+    transition: margin 250ms ease-in;
     &:focus {
       background-color: unquote("rgb(#{$palette-grey-200})");
       .mdl-expansion-panel__header--expand-icon {
