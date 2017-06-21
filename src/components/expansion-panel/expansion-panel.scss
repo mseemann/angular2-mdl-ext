@@ -23,6 +23,7 @@ $gutter-horizontal: 24px;
     padding: 0px $gutter-horizontal;
     align-items: center;
     line-height: 48px;
+    transition: line-height 250ms ease-in;
     @include divider();
     &--list-content {
       flex-grow: 1;
