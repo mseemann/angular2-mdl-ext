@@ -11,8 +11,9 @@ import {By} from '@angular/platform-browser'
 describe('MdlFabMenuComponent', () => {
 
 
-    let fixture: ComponentFixture<MdlFabMenuComponent>;
+    let fixture: ComponentFixture<TestMdlFabMenuComponent>;
 
+/*
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [
@@ -31,6 +32,28 @@ describe('MdlFabMenuComponent', () => {
             fixture.detectChanges();
         });
     }));
+*/
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          MdlFabMenuModule.forRoot()
+        ],
+        declarations: [TestMdlFabMenuComponent
+        ],
+        providers: [
+        ]
+      }).overrideComponent(MdlFabMenuItemComponent, {
+        set: {
+          templateUrl: '/Users/dad/Documents/freelance/surstrosti/angular2-mdl-ext/dist/@angular-mdl/fab-menu/fab-menu-item.html'
+        }}
+      );
+
+      TestBed.compileComponents().then(() => {
+        fixture = TestBed.createComponent(TestMdlFabMenuComponent);
+        fixture.detectChanges();
+      });
+    }));
+
 
     afterEach(()=>{fixture=null})
 
@@ -74,30 +97,43 @@ describe('MdlFabMenuComponent', () => {
 
         }));
 
-        it('should have the menu collapsed after the user click on one item', async(() => {
-            let buttonComponent = fixture.debugElement.query(By.css('.mdl-button'))
+      fit('should have the menu collapsed after the user click on one item', async(() => {
 
-            let popoverComponent = fixture.debugElement.query(By.css('.mdl-popover'))
-            let popoverComponentInstance = popoverComponent.componentInstance;
+        let popoverComponent = fixture.debugElement.query(By.css('.mdl-popover'))
 
-            spyOn(popoverComponentInstance, 'toggle').and.callThrough();
-            spyOn(popoverComponentInstance, 'show').and.callThrough();
+        let popoverNativeElement = popoverComponent.nativeElement;
 
-            buttonComponent.nativeElement.click();
+        let buttonNativeElement = fixture.debugElement.query(By.css('.mdl-button')).nativeElement;
 
-            expect(popoverComponentInstance.show)
-                .toHaveBeenCalled();
+        let popoverComponentInstance = popoverComponent.componentInstance;
 
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-
-                expect(popoverComponentInstance.isVisible).toBeTruthy();
-
-            });
+        let itemDebugElement: DebugElement = fixture.debugElement.query(By.css('#itemNotAlwaysTooltip > .mdl-button'))
 
 
+        spyOn(popoverComponentInstance, 'toggle').and.callThrough();
+        spyOn(popoverComponentInstance, 'hide').and.callThrough();
 
-        }));
+        buttonNativeElement.click();
+
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+
+          itemDebugElement.nativeElement.click()
+          fixture.detectChanges();
+
+          expect(popoverComponentInstance.hide)
+              .toHaveBeenCalled();
+          expect(popoverComponentInstance.isVisible)
+              .toEqual(false, 'isVisible is not false');
+
+          expect(popoverNativeElement.classList.contains('is-visible'))
+              .toBe(false, 'did has css class is-visible');
+
+        });
+
+
+      }));
 
 
         it('should toggle popover on button click', async(() => {
@@ -145,7 +181,7 @@ describe('MdlFabMenuComponent', () => {
 
     });
 
-    xdescribe('item tooltips', () => {
+    describe('item tooltips', () => {
 
 
 
@@ -177,15 +213,22 @@ describe('MdlFabMenuComponent', () => {
 
           let tooltipNotAlwaysElement: HTMLElement = tooltipNotAlwaysDebugElement.nativeElement
 
+          let itemDebugElement: HTMLElement = fixture.debugElement.query(By.css('#itemNotAlwaysTooltip > .mdl-button')).nativeElement
+
           buttonComponent.nativeElement.click();
 
 
           fixture.detectChanges();
           fixture.whenStable().then(() => {
 
-              const event = new Event('mouseenter')
-              tooltipNotAlwaysElement.dispatchEvent(event)
-              expect(tooltipNotAlwaysElement.hidden).toBe(true);
+            const eventover = new Event('mouseover')
+            itemDebugElement.dispatchEvent(eventover)
+            fixture.detectChanges()
+            expect(tooltipNotAlwaysElement.hidden).toBe(false);
+            const eventleave = new Event('mouseleave')
+            itemDebugElement.dispatchEvent(eventleave)
+            fixture.detectChanges()
+            expect(tooltipNotAlwaysElement.hidden).toBe(true);
 
           });
 

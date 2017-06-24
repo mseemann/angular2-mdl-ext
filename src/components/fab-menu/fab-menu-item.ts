@@ -3,8 +3,8 @@ import {MdlFabMenuComponent} from './fab-menu'
 
 @Component({
   selector: 'mdl-fab-menu-item',
-  templateUrl: './fab-menu-item.html',
-  styleUrls: ['./fab-menu-item.scss']
+  templateUrl: './fab-menu-item.html'
+//  styleUrls: ['./fab-menu-item.scss']
 })
 export class MdlFabMenuItemComponent implements OnInit {
 
