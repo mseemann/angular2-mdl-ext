@@ -11,9 +11,9 @@ import {By} from '@angular/platform-browser'
 describe('MdlFabMenuComponent', () => {
 
 
-    let fixture: ComponentFixture<TestMdlFabMenuComponent>;
+    let fixture: ComponentFixture<MdlFabMenuComponent>;
 
-/*
+
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [
@@ -32,7 +32,8 @@ describe('MdlFabMenuComponent', () => {
             fixture.detectChanges();
         });
     }));
-*/
+
+/*
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [
@@ -53,7 +54,7 @@ describe('MdlFabMenuComponent', () => {
         fixture.detectChanges();
       });
     }));
-
+*/
 
     afterEach(()=>{fixture=null})
 
@@ -97,43 +98,43 @@ describe('MdlFabMenuComponent', () => {
 
         }));
 
-      fit('should have the menu collapsed after the user click on one item', async(() => {
+        xit('should have the menu collapsed after the user click on one item', async(() => {
 
-        let popoverComponent = fixture.debugElement.query(By.css('.mdl-popover'))
+          let popoverComponent = fixture.debugElement.query(By.css('.mdl-popover'))
 
-        let popoverNativeElement = popoverComponent.nativeElement;
+          let popoverNativeElement = popoverComponent.nativeElement;
 
-        let buttonNativeElement = fixture.debugElement.query(By.css('.mdl-button')).nativeElement;
+          let buttonNativeElement = fixture.debugElement.query(By.css('.mdl-button')).nativeElement;
 
-        let popoverComponentInstance = popoverComponent.componentInstance;
+          let popoverComponentInstance = popoverComponent.componentInstance;
 
-        let itemDebugElement: DebugElement = fixture.debugElement.query(By.css('#itemNotAlwaysTooltip > .mdl-button'))
-
-
-        spyOn(popoverComponentInstance, 'toggle').and.callThrough();
-        spyOn(popoverComponentInstance, 'hide').and.callThrough();
-
-        buttonNativeElement.click();
+          let itemDebugElement: DebugElement = fixture.debugElement.query(By.css('#itemNotAlwaysTooltip > .mdl-button'))
 
 
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+          spyOn(popoverComponentInstance, 'toggle').and.callThrough();
+          spyOn(popoverComponentInstance, 'hide').and.callThrough();
 
-          itemDebugElement.nativeElement.click()
+          buttonNativeElement.click();
+
+
           fixture.detectChanges();
+          fixture.whenStable().then(() => {
 
-          expect(popoverComponentInstance.hide)
-              .toHaveBeenCalled();
-          expect(popoverComponentInstance.isVisible)
-              .toEqual(false, 'isVisible is not false');
+            itemDebugElement.nativeElement.click()
+            fixture.detectChanges();
 
-          expect(popoverNativeElement.classList.contains('is-visible'))
-              .toBe(false, 'did has css class is-visible');
+            expect(popoverComponentInstance.hide)
+                .toHaveBeenCalled();
+            expect(popoverComponentInstance.isVisible)
+                .toEqual(false, 'isVisible is not false');
 
-        });
+            expect(popoverNativeElement.classList.contains('is-visible'))
+                .toBe(false, 'did has css class is-visible');
+
+          });
 
 
-      }));
+       }));
 
 
         it('should toggle popover on button click', async(() => {
@@ -181,7 +182,7 @@ describe('MdlFabMenuComponent', () => {
 
     });
 
-    describe('item tooltips', () => {
+    xdescribe('item tooltips', () => {
 
 
 
@@ -243,6 +244,28 @@ describe('MdlFabMenuComponent', () => {
         let tooltipAlwaysElement: HTMLElement = fixture.debugElement.query(By.css('#itemAlwaysTooltip > mdl-chip')).nativeElement
 
         buttonComponent.nativeElement.click();
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+
+          expect(tooltipAlwaysElement.hidden).toBe(false);
+
+        });
+
+
+
+      }));
+
+      it('should display tooltips after touch start on the FAB', async(() => {
+
+        let buttonElement = fixture.debugElement.query(By.css('.mdl-button')).nativeElement
+
+        let tooltipAlwaysElement: HTMLElement = fixture.debugElement.query(By.css('#itemNotAlwaysTooltip > mdl-chip')).nativeElement
+
+        const touchevent = new Event('touchstart')
+        buttonElement.dispatchEvent(touchevent)
+        fixture.detectChanges()
+        buttonElement.click();
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
