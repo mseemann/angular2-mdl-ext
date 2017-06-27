@@ -7,8 +7,8 @@ import {MdlModule} from '@angular-mdl/core'
 @Component({
   moduleId: module.id,
   selector: 'mdl-fab-menu',
-  templateUrl: './fab-menu.html',
-  styleUrls: ['./fab-menu.scss']
+  templateUrl: 'fab-menu.html',
+  styleUrls: ['fab-menu.scss']
 })
 export class MdlFabMenuComponent implements OnInit {
 

@@ -2,9 +2,10 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 import {MdlFabMenuComponent} from './fab-menu'
 
 @Component({
+  moduleId: module.id,
   selector: 'mdl-fab-menu-item',
-  templateUrl: './fab-menu-item.html',
-  styleUrls: ['./fab-menu-item.scss']
+  templateUrl: 'fab-menu-item.html',
+  styleUrls: ['fab-menu-item.scss']
 })
 export class MdlFabMenuItemComponent implements OnInit {
 
