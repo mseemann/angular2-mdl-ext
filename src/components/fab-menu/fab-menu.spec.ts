@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing'
 import {MdlFabMenuComponent, MdlFabMenuModule} from './fab-menu'
 import {Component, DebugElement} from '@angular/core'
-import {MdlFabMenuItemComponent} from './fab-menu-item'
 import {By} from '@angular/platform-browser'
 
 
@@ -284,13 +283,13 @@ describe('MdlFabMenuComponent', () => {
                              [fabMenu]="mainFabMenu"
                              icon="note_add"
                              label="make a note"
-                             (menu-clicked)="alert('we need to do something here')">
+                             (menu-clicked)="window.console.log('use want to make a note')">
           </mdl-fab-menu-item>
           <mdl-fab-menu-item
                   [fabMenu]="mainFabMenu"
                   icon="refresh"
                   label="refresh"
-                  (menu-clicked)="alert('user elected to refresh!')">
+                  (menu-clicked)="window.console.log('user elected to refresh!')">
           </mdl-fab-menu-item>
       </mdl-fab-menu>
       <mdl-fab-menu #mainFabMenu2 [alwaysShowTooltips]="true">
@@ -298,13 +297,13 @@ describe('MdlFabMenuComponent', () => {
                              [fabMenu]="mainFabMenu2"
                              icon="note_add"
                              label="make a note"
-                             (menu-clicked)="alert('we need to do something here')">
+                             (menu-clicked)="window.console.log('use want to make a note')">
           </mdl-fab-menu-item>
           <mdl-fab-menu-item
                   [fabMenu]="mainFabMenu2"
                   icon="refresh"
                   label="refresh"
-                  (menu-clicked)="alert('user elected to refresh!')">
+                  (menu-clicked)="window.console.log('user elected to refresh!')">
           </mdl-fab-menu-item>
       </mdl-fab-menu>
   `
