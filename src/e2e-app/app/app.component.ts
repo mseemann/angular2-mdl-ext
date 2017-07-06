@@ -9,6 +9,7 @@ import { SelectDemo } from './select/select.component';
 import { ExpansionPanelDemo } from './expansion-panel/expansion-panel.component';
 import { MdlLayoutComponent } from '@angular-mdl/core';
 import { DatepickerDemo } from './datepicker/datepicker.component';
+import {FabMenuDemo} from './fab-menu/fab-menu-demo.component';
 
 
 @Component({
@@ -25,6 +26,7 @@ export const appRoutes: Routes = [
   { path: 'popover', component: PopoverDemo, data: {title: 'Popover'} },
   { path: 'select', component: SelectDemo, data: {title: 'Select'} },
   { path: 'expansion-panel', component: ExpansionPanelDemo, data: {title: 'Expanion Panel'} },
+  { path: 'fab-menu', component: FabMenuDemo, data: {title: 'FAB Menu'} },
   { path: '**', redirectTo: '' }
 ];
 
