@@ -5,15 +5,16 @@ $popover-direction-up-bottom-offset: $input-text-vertical-spacing + $input-text-
 .mdl-popover {
   background: #fff;
   border: none;
-  display: none;
+  display: block;
   margin: 0;
   overflow: visible;
   padding: 0;
   position: absolute;
+  visibility: hidden;
 
   &.is-visible,
   &.is-animating {
-    display: block;
+    visibility: visible;
     z-index: 999;
   }
   &.direction-up {
