@@ -9,11 +9,13 @@ import { SelectDemo } from './select/select.component';
 import { ExpansionPanelDemo } from './expansion-panel/expansion-panel.component';
 import { MdlPopoverModule } from '../../components/popover/popover';
 import { MdlSelectModule } from '../../components/select/select';
+import { MdlFabMenuModule } from '../../components/fab-menu/fab-menu';
 import { MdlExpansionPanelModule } from '../../components/expansion-panel/expansion-panel.component';
 import { PrismDirective } from '@mseemann/prism';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatepickerDemo } from './datepicker/datepicker.component';
 import { MdlDatePickerModule } from '../../components/datepicker/index';
+import { FabMenuDemo } from './fab-menu/fab-menu-demo.component';
 
 @NgModule({
   imports: [
@@ -24,12 +26,14 @@ import { MdlDatePickerModule } from '../../components/datepicker/index';
     RouterModule.forRoot(appRoutes),
     MdlPopoverModule,
     MdlSelectModule,
+    MdlFabMenuModule,
     MdlExpansionPanelModule,
     BrowserAnimationsModule,
     MdlDatePickerModule
   ],
   declarations: [
     AppComponent,
+    FabMenuDemo,
     Home,
     DatepickerDemo,
     PopoverDemo,

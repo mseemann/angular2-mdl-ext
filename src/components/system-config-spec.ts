@@ -2,6 +2,7 @@
 const components = [
     'datepicker',
     'expansion-panel',
+    'fab-menu',
     'popover',
     'select'
 ];
