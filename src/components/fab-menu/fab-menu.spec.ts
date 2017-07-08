@@ -9,28 +9,6 @@ describe('MdlFabMenuComponent', () => {
 
   let fixture: ComponentFixture<TestMdlFabMenuComponent>;
 
-  /*
-
-   beforeEach(async(() => {
-   TestBed.configureTestingModule({
-   imports: [
-   CommonModule,
-   MdlModule,
-   MdlPopoverModule.forRoot()
-   ],
-   declarations: [MdlFabMenuComponent
-   ],
-   providers: [
-   ]
-   });
-
-   TestBed.compileComponents().then(() => {
-   fixture = TestBed.createComponent(MdlFabMenuComponent);
-   fixture.detectChanges();
-   });
-   }));
-   */
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -39,12 +17,7 @@ describe('MdlFabMenuComponent', () => {
       declarations: [TestMdlFabMenuComponent
       ],
       providers: []
-    })/*.overrideComponent(MdlFabMenuItemComponent, {
-          set: {
-            templateUrl: '/Users/dad/Documents/freelance/surstrosti/angular2-mdl-ext/dist/@angular-mdl/fab-menu/fab-menu-item.html'
-          }
-        }
-    )*/;
+    })
 
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(TestMdlFabMenuComponent);
@@ -283,13 +256,13 @@ describe('MdlFabMenuComponent', () => {
                              [fabMenu]="mainFabMenu"
                              icon="note_add"
                              label="make a note"
-                             (menu-clicked)="window.console.log('use want to make a note')">
+                             (menu-clicked)="logMessage('use want to make a note')">
           </mdl-fab-menu-item>
           <mdl-fab-menu-item
                   [fabMenu]="mainFabMenu"
                   icon="refresh"
                   label="refresh"
-                  (menu-clicked)="window.console.log('user elected to refresh!')">
+                  (menu-clicked)="logMessage('user elected to refresh!')">
           </mdl-fab-menu-item>
       </mdl-fab-menu>
       <mdl-fab-menu #mainFabMenu2 [alwaysShowTooltips]="true">
@@ -297,16 +270,19 @@ describe('MdlFabMenuComponent', () => {
                              [fabMenu]="mainFabMenu2"
                              icon="note_add"
                              label="make a note"
-                             (menu-clicked)="window.console.log('use want to make a note')">
+                             (menu-clicked)="logMessage('use want to make a note')">
           </mdl-fab-menu-item>
           <mdl-fab-menu-item
                   [fabMenu]="mainFabMenu2"
                   icon="refresh"
                   label="refresh"
-                  (menu-clicked)="window.console.log('user elected to refresh!')">
+                  (menu-clicked)="logMessage('user elected to refresh!')">
           </mdl-fab-menu-item>
       </mdl-fab-menu>
   `
 })
 class TestMdlFabMenuComponent {
+  logMessage (msg: string) {
+    console.log(msg)
+  }
 }
