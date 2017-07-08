@@ -5,4 +5,10 @@ import {Component} from '@angular/core'
   templateUrl: 'fab-menu-demo.component.html',
   styleUrls: ['fab-menu-demo.component.scss']
 })
-export class FabMenuDemo {}
+export class FabMenuDemo {
+
+  alert(msg: string){
+    console.log(msg);
+  }
+
+}
