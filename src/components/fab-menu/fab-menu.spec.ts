@@ -9,28 +9,6 @@ describe('MdlFabMenuComponent', () => {
 
   let fixture: ComponentFixture<TestMdlFabMenuComponent>;
 
-  /*
-
-   beforeEach(async(() => {
-   TestBed.configureTestingModule({
-   imports: [
-   CommonModule,
-   MdlModule,
-   MdlPopoverModule.forRoot()
-   ],
-   declarations: [MdlFabMenuComponent
-   ],
-   providers: [
-   ]
-   });
-
-   TestBed.compileComponents().then(() => {
-   fixture = TestBed.createComponent(MdlFabMenuComponent);
-   fixture.detectChanges();
-   });
-   }));
-   */
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -39,12 +17,7 @@ describe('MdlFabMenuComponent', () => {
       declarations: [TestMdlFabMenuComponent
       ],
       providers: []
-    })/*.overrideComponent(MdlFabMenuItemComponent, {
-     set: {
-     templateUrl: '/Users/dad/Documents/freelance/surstrosti/angular2-mdl-ext/dist/@angular-mdl/fab-menu/fab-menu-item.html'
-     }
-     }
-     )*/;
+    })
 
     TestBed.compileComponents().then(() => {
       fixture = TestBed.createComponent(TestMdlFabMenuComponent);
