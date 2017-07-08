@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "4.2.5",
-    "@angular/platform-server": "4.2.5",
+    "@angular/platform-server": "4.2.6",
     "@types/chai": "3.5.0",
     "@types/core-js": "0.9.42",
     "@types/gulp": "4.0.3",
