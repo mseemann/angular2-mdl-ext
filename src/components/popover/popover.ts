@@ -42,7 +42,7 @@ export class MdlPopoverComponent implements AfterViewInit {
     }
 
     public ngOnDestroy() {
-        this.elementRef.nativeElement.removeEventListener('hide');
+        this.elementRef.nativeElement.removeEventListener(this, 'hide');
     }
 
     public toggle(event: Event) {
