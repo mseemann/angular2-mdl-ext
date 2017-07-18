@@ -25,12 +25,16 @@ export class MdlPopoverComponent implements AfterViewInit {
     @Input('hide-on-click') public hideOnClick: boolean = false;
     @HostBinding('class.is-visible') public isVisible = false;
     @HostBinding('class.direction-up') public directionUp = false;
+
+    private listener: any;
+
     constructor(private changeDetectionRef: ChangeDetectorRef,
                 public elementRef: ElementRef) {}
 
     public ngAfterViewInit() {
         // Add a hide listener to native element
-        this.elementRef.nativeElement.addEventListener('hide', this.hide.bind(this));
+        this.listener = this.hide.bind(this);
+        this.elementRef.nativeElement.addEventListener('hide', this.listener);
     }
 
     @HostListener('document:click', ['$event'])
@@ -42,7 +46,7 @@ export class MdlPopoverComponent implements AfterViewInit {
     }
 
     public ngOnDestroy() {
-        this.elementRef.nativeElement.removeEventListener('hide');
+       this.elementRef.nativeElement.removeEventListener('hide', this.listener);
     }
 
     public toggle(event: Event) {
