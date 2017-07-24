@@ -11,7 +11,7 @@
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "../tmp/src",
-    "typeRoots": ["./../node_modules/@types"],
+    "typeRoots": ["../../node_modules/@types"],
     "types": [
       "node",
       "jasmine"
