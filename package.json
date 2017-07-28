@@ -89,8 +89,8 @@
     "tslint": "5.5.0",
     "typescript": "2.1.5",
     "typings": "2.1.1",
-    "webpack": "2.6.1",
-    "webpack-dev-server": "2.4.5",
+    "webpack": "3.4.1",
+    "webpack-dev-server": "2.6.1",
     "webpack-merge": "4.1.0"
   },
   "keywords": [
