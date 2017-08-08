@@ -42,7 +42,7 @@
     "@types/core-js": "0.9.42",
     "@types/gulp": "4.0.3",
     "@types/jasmine": "2.5.53",
-    "@types/merge2": "1.1.0",
+    "@types/merge2": "1.1.1",
     "@types/node": "8.0.19",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "3.2.2",
