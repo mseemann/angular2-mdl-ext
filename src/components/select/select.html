@@ -1,10 +1,10 @@
 <div
   class="mdl-textfield is-upgraded"
-  [class.is-focused]="this.popoverComponent.isVisible || this.focused"
-  [class.is-disabled]="this.disabled"
+  [class.is-focused]="popoverComponent.isVisible || focused"
+  [class.is-disabled]="disabled"
   [class.is-dirty]="isDirty()">
   <span
-      [attr.tabindex]="!this.disabled ? 0 : null"
+      [attr.tabindex]="!disabled ? 0 : null"
       (focus)="open($event);addFocus();"
       (blur)="removeFocus()">
     <!-- don't want click to also trigger focus -->
@@ -27,7 +27,7 @@
   <span class="mdl-textfield__error"></span>
   <mdl-popover [class.mdl-popover--above]="autocomplete" hide-on-click="!multiple" [style.width.%]="100">
     <div class="mdl-list mdl-shadow--6dp">
-      <ng-content></ng-content>
+      <ng-content *ngIf="popoverComponent.isVisible"></ng-content>
     </div>
   </mdl-popover>
 </div>
