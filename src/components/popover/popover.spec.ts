@@ -86,18 +86,68 @@ describe('MdlPopover', () => {
 
             expect(popoverNativeElement.classList.contains('is-visible'))
               .toBe(true, 'did not has css class is-visible');
-
         });
-
     }));
 
+    it('should toggle popover on another popover opening', async(() => {
+
+        let popoverComponent = fixture.debugElement.query(By.directive(MdlPopoverComponent));
+        let popoverNativeElement = popoverComponent.nativeElement;
+        let buttonNativeElement = fixture.debugElement.query(By.css('button')).nativeElement;
+        let popoverComponentInstance = popoverComponent.componentInstance;
+        let anotherButtonNativeElement = fixture.debugElement.query(By.css('#anotherButton')).nativeElement;
+        let anotherPopoverComponentInstance = fixture.debugElement.query(By.css('#anotherPopover')).componentInstance;
+
+        expect(popoverComponentInstance.isVisible)
+          .toEqual(false, 'isVisible is not false');
+
+        expect(popoverNativeElement.classList.contains('is-visible'))
+          .toBe(false, 'did has css class is-visible');
+
+        spyOn(popoverComponentInstance, 'toggle').and.callThrough();
+
+        spyOn(popoverComponentInstance, 'hideAllPopovers').and.callThrough();
+
+        spyOn(popoverComponentInstance, 'updateDirection').and.callThrough();
+
+        buttonNativeElement.click();
+
+        expect(popoverComponentInstance.toggle).toHaveBeenCalled();
+
+        expect(popoverComponentInstance.hideAllPopovers).toHaveBeenCalled();
+
+        expect(popoverComponentInstance.updateDirection).toHaveBeenCalled();
+
+        expect(popoverComponentInstance.isVisible)
+          .toEqual(true, 'toggle did not update isVisible to true');
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+
+            expect(popoverNativeElement.classList.contains('is-visible'))
+              .toBe(true, 'did not has css class is-visible');
+        });
+
+        let hideAllPopoversSpy = spyOn(anotherPopoverComponentInstance, 'hideAllPopovers').and.callThrough();
+
+        anotherButtonNativeElement.click();
+
+        fixture.whenStable().then(() => {
+            expect(hideAllPopoversSpy).toHaveBeenCalled();
+            expect(anotherPopoverComponentInstance.isVisible).toBe(true, 'second popover did not show');
+            expect(popoverComponentInstance.isVisible).toBe(false, 'main popover did not hide');
+        });
+    }));
 });
 
 @Component({
     selector: 'test-component',
     template: `
-      <button (click)="popover.toggle($event)">button</button>
-      <mdl-popover #popover>popover content</mdl-popover>
+      <button id="mainButton" (click)="popover.toggle($event)">button</button>
+      <mdl-popover id="mainPopover" #popover>popover content</mdl-popover>
+
+      <button (click)="anotherPopover.toggle($event)" id="anotherButton">button</button>
+      <mdl-popover id="anotherPopover" #anotherPopover>fubar</mdl-popover>
     `
 })
 class TestComponent {}

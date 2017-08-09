@@ -66,7 +66,7 @@ export class MdlPopoverComponent implements AfterViewInit {
     private hideAllPopovers() {
       let nodeList = document.querySelectorAll('.mdl-popover.is-visible');
       for(let i=0; i < nodeList.length;++i) {
-        nodeList[i].dispatchEvent(new Event('hide'));
+          nodeList[i].dispatchEvent(new CustomEvent('hide'));
       }
     }
 
