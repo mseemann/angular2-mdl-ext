@@ -6,6 +6,9 @@
 
     import { MdlSelectModule } from '@angular-mdl/select';
 
+If you need to support IE11 please add https://www.npmjs.com/package/custom-event-polyfill
+to your polyfills.
+
 ### Usage example
 
 ```js
