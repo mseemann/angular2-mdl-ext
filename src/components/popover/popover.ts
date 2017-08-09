@@ -1,16 +1,46 @@
 import {
-    AfterViewInit,
     ChangeDetectorRef,
     Component,
     ElementRef,
     HostBinding,
     HostListener,
+    Inject,
+    Injectable,
     Input,
     ModuleWithProviders,
     NgModule,
     ViewEncapsulation
 } from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
 
+@Injectable()
+export class MdlPopoverRegistry {
+    private popoverComponents: any[] = [];
+
+    constructor(@Inject(DOCUMENT) private doc: any) {
+        this.doc.addEventListener('click', () => {
+            this.popoverComponents
+                .filter((component: MdlPopoverComponent) => component.isVisible)
+                .forEach((component: MdlPopoverComponent) => component.hide());
+        });
+    };
+
+    public add(popoverComponent: MdlPopoverComponent) {
+        this.popoverComponents.push(popoverComponent);
+    }
+
+    public remove(popoverComponent: MdlPopoverComponent) {
+        this.popoverComponents.slice(this.popoverComponents.indexOf(popoverComponent), 1);
+    }
+
+    public hideAllExcept(popoverComponent: MdlPopoverComponent) {
+        this.popoverComponents.forEach( (component) => {
+            if (component !== popoverComponent) {
+                component.hide();
+            }
+        });
+    }
+}
 
 @Component({
     moduleId: module.id,
@@ -21,39 +51,30 @@ import {
     templateUrl: 'popover.html',
     encapsulation: ViewEncapsulation.None,
 })
-export class MdlPopoverComponent implements AfterViewInit {
+export class MdlPopoverComponent {
     @Input('hide-on-click') public hideOnClick: boolean = false;
     @HostBinding('class.is-visible') public isVisible = false;
     @HostBinding('class.direction-up') public directionUp = false;
-
-    private listener: any;
-
-    constructor(private changeDetectionRef: ChangeDetectorRef,
-                public elementRef: ElementRef) {}
-
-    public ngAfterViewInit() {
-        // Add a hide listener to native element
-        this.listener = this.hide.bind(this);
-        this.elementRef.nativeElement.addEventListener('hide', this.listener);
-    }
-
-    @HostListener('document:click', ['$event'])
-    onDocumentClick(event: Event) {
-        if (this.isVisible &&
-          (this.hideOnClick || !this.elementRef.nativeElement.contains(<Node>event.target))) {
-            this.hide();
+    @HostListener('click', ['$event']) onClick(event: Event) {
+        if (!this.hideOnClick) {
+            event.stopPropagation();
         }
     }
 
+    constructor(private changeDetectionRef: ChangeDetectorRef,
+                public elementRef: ElementRef,
+                private popoverRegistry: MdlPopoverRegistry) {
+        this.popoverRegistry.add(this);
+    }
+
     public ngOnDestroy() {
-       this.elementRef.nativeElement.removeEventListener('hide', this.listener);
+       this.popoverRegistry.remove(this);
     }
 
     public toggle(event: Event) {
         if (this.isVisible) {
             this.hide();
         } else {
-            this.hideAllPopovers();
             this.show(event);
         }
     }
@@ -64,13 +85,11 @@ export class MdlPopoverComponent implements AfterViewInit {
     }
 
     private hideAllPopovers() {
-      let nodeList = document.querySelectorAll('.mdl-popover.is-visible');
-      for(let i=0; i < nodeList.length;++i) {
-          nodeList[i].dispatchEvent(new CustomEvent('hide'));
-      }
+        this.popoverRegistry.hideAllExcept(this);
     }
 
     public show(event: Event) {
+        this.hideAllPopovers();
         event.stopPropagation();
         this.isVisible = true;
         this.updateDirection(event);
@@ -100,6 +119,7 @@ export class MdlPopoverComponent implements AfterViewInit {
     imports: [],
     exports: [MdlPopoverComponent],
     declarations: [MdlPopoverComponent],
+    providers: [MdlPopoverRegistry],
 })
 export class MdlPopoverModule {
     static forRoot(): ModuleWithProviders {
