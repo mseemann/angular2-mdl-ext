@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@angular-mdl/core": "4.0.8",
-    "@angular/animations": "4.3.3",
+    "@angular/animations": "4.3.4",
     "@angular/common": "4.3.3",
     "@angular/compiler": "4.3.3",
     "@angular/core": "4.3.3",
