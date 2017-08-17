@@ -37,7 +37,7 @@
     "zone.js": "0.8.16"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "4.3.3",
+    "@angular/compiler-cli": "4.3.5",
     "@angular/platform-server": "4.3.3",
     "@types/chai": "3.5.0",
     "@types/core-js": "0.9.42",
