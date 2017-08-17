@@ -626,7 +626,7 @@ class TestDisabledComponent {
 @Component({
     selector: 'test-single-component',
     template: `
-        <mdl-select label="{{label}}" floating-label [autocomplete]="true" [(ngModel)]="selectedValue">
+        <mdl-select label="{{label}}" floating-label [autoselectOnBlur]="true" [autocomplete]="true" [(ngModel)]="selectedValue">
           <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
         </mdl-select>
     `
