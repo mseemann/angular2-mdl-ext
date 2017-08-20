@@ -33,7 +33,7 @@
     "custom-event-polyfill": "^0.3.0",
     "moment": "^2.18.1",
     "rxjs": "5.4.3",
-    "systemjs": "0.20.17",
+    "systemjs": "0.20.18",
     "zone.js": "0.8.16"
   },
   "devDependencies": {
