@@ -11,6 +11,7 @@ yarn.lock
 # IDEs and editors
 /.idea
 /.vscode
+/*.iml
 
 # misc
 /.sass-cache
