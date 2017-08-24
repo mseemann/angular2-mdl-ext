@@ -6,6 +6,7 @@ import { MdlModule } from '@angular-mdl/core';
 import { RouterModule } from '@angular/router';
 import { PopoverDemo } from './popover/popover.component';
 import { SelectDemo } from './select/select.component';
+import { FilterByPipe } from './select/filterBy.pipe';
 import { ExpansionPanelDemo } from './expansion-panel/expansion-panel.component';
 import { MdlPopoverModule } from '../../components/popover/popover';
 import { MdlSelectModule } from '../../components/select/select';
@@ -38,8 +39,9 @@ import { FabMenuDemo } from './fab-menu/fab-menu-demo.component';
     DatepickerDemo,
     PopoverDemo,
     SelectDemo,
+    FilterByPipe,
     ExpansionPanelDemo,
-    PrismDirective
+    PrismDirective,
   ],
   entryComponents: [AppComponent],
   bootstrap: []
