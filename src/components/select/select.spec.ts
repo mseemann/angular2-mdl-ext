@@ -3,20 +3,41 @@ import { MdlSelectModule, MdlSelectComponent } from './select';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { Key } from './keyboard';
 
+// based on @angular/cdk
+export function createKeyboardEvent(type: string, keyCode: number, target?: Element) {
+    let event = document.createEvent('KeyboardEvent') as any;
+    // Firefox does not support `initKeyboardEvent`, but supports `initKeyEvent`.
+    let initEventFn = (event.initKeyEvent || event.initKeyboardEvent).bind(event);
+    let originalPreventDefault = event.preventDefault;
 
-function dispatchKeydownEvent(element: HTMLElement, keyCode: number): any {
-  let event: any = document.createEvent('KeyboardEvent');
+    initEventFn(type, true, true, window, 0, 0, 0, 0, 0, keyCode);
 
-  (event.initKeyEvent || event.initKeyboardEvent).bind(event)(
-      'keydown', true, true, window, 0, 0, 0, 0, 0, keyCode);
+    // Webkit Browsers don't set the keyCode when calling the init function.
+    // See related bug https://bugs.webkit.org/show_bug.cgi?id=16735
+    Object.defineProperties(event, {
+        keyCode: { get: () => keyCode },
+        target: { get: () => target }
+    });
 
-  Object.defineProperty(event, 'keyCode', {
-    get: () => keyCode
-  });
+    // IE won't set `defaultPrevented` on synthetic events so we need to do it manually.
+    event.preventDefault = function() {
+        Object.defineProperty(event, 'defaultPrevented', { get: () => true });
+        return originalPreventDefault.apply(this, arguments);
+    };
 
-  element.dispatchEvent(event);
-  return event;
+    return event;
+}
+
+// based on @angular/cdk
+export function dispatchEvent(node: Node | Window, event: Event): Event {
+    node.dispatchEvent(event);
+    return event;
+}
+
+export function dispatchKeydownEvent(node: any, keycode: number) {
+    return dispatchEvent(node, createKeyboardEvent('keydown', keycode, node));
 }
 
 describe('MdlSelect', () => {
@@ -124,6 +145,9 @@ describe('MdlSelect', () => {
 
         it('focus should have keyboard events', async(() => {
 
+            jasmine.clock().uninstall();
+            jasmine.clock().install();
+
             let testInstance = fixture.componentInstance;
 
             let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
@@ -132,49 +156,38 @@ describe('MdlSelect', () => {
 
             let selectComponentInstance = selectComponent.componentInstance;
 
-            spyOn(selectComponentInstance, 'onKeydown').and.callThrough();
+            spyOn(selectComponentInstance, 'onKeyDown').and.callThrough();
 
-            spyOn(selectComponentInstance, 'onArrowUp').and.callThrough();
-
-            spyOn(selectComponentInstance, 'onArrowDown').and.callThrough();
-
-            spyOn(selectComponentInstance, 'addFocus').and.callThrough();
-
-            spyOn(selectComponentInstance, 'removeFocus').and.callThrough();
+            spyOn(selectComponentInstance, 'onArrow').and.callThrough();
             
             //console.log(selectNativeElement.querySelector("span[tabindex]"));
             //document.body.appendChild(selectNativeElement);
 
             selectNativeElement.querySelector("span[tabindex]").focus();
+            jasmine.clock().tick(500); // onFocus timeout is cleared
             fixture.detectChanges();
 
             expect(selectComponentInstance.popoverComponent.isVisible)
                 .toEqual(true, 'toggle did not update isVisible to true');
 
-            document.dispatchEvent(new KeyboardEvent('keydown', { key: "ArrowDown" })); // 40, 38, 9
-            fixture.detectChanges();
-            
-            document.dispatchEvent(new KeyboardEvent('keydown', { key: "ArrowUp" })); // 40, 38, 9
+            dispatchKeydownEvent(selectNativeElement.querySelector("span"), Key.DownArrow);
+
+            dispatchKeydownEvent(selectNativeElement.querySelector("span"), Key.UpArrow);
+
+            dispatchKeydownEvent(selectNativeElement.querySelector("span"), Key.Tab);
+
             fixture.detectChanges();
 
-            document.dispatchEvent(new KeyboardEvent('keydown', { key: "Tab" })); // 40, 38, 9
-            fixture.detectChanges();
-
-            selectNativeElement.querySelector("span[tabindex]").blur();
+            fixture.debugElement.nativeElement.click(); // click outside select to close
             fixture.detectChanges();
 
             expect(selectComponentInstance.popoverComponent.isVisible)
                 .toEqual(false, 'toggle did not update isVisible to false');
 
-            expect(selectComponentInstance.onKeydown).toHaveBeenCalled();
+            expect(selectComponentInstance.onKeyDown).toHaveBeenCalled();
+            expect(selectComponentInstance.onArrow.calls.allArgs().map((args: any) => args[1])).toEqual([1, -1]);
 
-            expect(selectComponentInstance.onArrowUp).toHaveBeenCalled();
-
-            expect(selectComponentInstance.onArrowDown).toHaveBeenCalled();
-
-            expect(selectComponentInstance.addFocus).toHaveBeenCalled();
-
-            expect(selectComponentInstance.removeFocus).toHaveBeenCalled();
+            jasmine.clock().uninstall();
         }));
 
          it('should auto-select searched options', async(() => {
@@ -194,27 +207,29 @@ describe('MdlSelect', () => {
             spyOn(selectComponentInstance, 'onCharacterKeydown').and.callThrough();
 
             selectNativeElement.querySelector("span[tabindex]").focus();
+            jasmine.clock().tick(500); // onFocus timeout is cleared
             fixture.detectChanges();
 
             expect(selectComponentInstance.ngModel).toEqual(1);
-            dispatchKeydownEvent(document.body, 66); // 'B' key
+            dispatchKeydownEvent(selectNativeElement, Key.B);
             fixture.detectChanges();
 
             expect(selectComponentInstance.onSelect).not.toHaveBeenCalled();
             expect(selectComponentInstance.onCharacterKeydown).toHaveBeenCalled();
             expect(selectComponentInstance.ngModel).toEqual(1);
 
-            dispatchKeydownEvent(document.body, 79); // 'O' key
+            dispatchKeydownEvent(selectNativeElement, Key.O);
             fixture.detectChanges();
 
             expect(selectComponentInstance.onSelect).toHaveBeenCalled();
+            expect(selectComponentInstance.searchQuery).toEqual('bo');
             expect(selectComponentInstance.ngModel).toEqual(3); // B and O typed, so 'Bob Odenkirk' selected
 
             jasmine.clock().tick(300); // search query timeout is cleared
 
-            expect(selectComponentInstance.getSearchQuery()).toEqual('');
+            expect(selectComponentInstance.searchQuery).toEqual('');
 
-            dispatchKeydownEvent(document.body, 65); // 'A' key
+            dispatchKeydownEvent(selectNativeElement, Key.A);
             fixture.detectChanges();
 
             expect(selectComponentInstance.onSelect).toHaveBeenCalled();
@@ -281,58 +296,33 @@ describe('MdlSelect', () => {
             fixture.detectChanges();
 
             expect(selectComponentInstance.ngModel).toBeNull();
-            dispatchKeydownEvent(document.body, 66); // 'B' key
+            dispatchKeydownEvent(selectNativeElement, Key.B);
             fixture.detectChanges();
 
             expect(selectComponentInstance.ngModel).toBeNull();
         }));
 
-        it('should make autoselection on blur when it\'s on', async(() => {
+        it('should make autoselection on enter', async(() => {
             let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
 
             let selectNativeElement = selectComponent.nativeElement;
 
             let selectComponentInstance = selectComponent.componentInstance;
 
-            spyOn(selectComponentInstance, 'onSelect').and.callThrough();
-            spyOn(selectComponentInstance, 'onCharacterKeydown').and.callThrough();
-
-            selectNativeElement.querySelector("input").focus();
-            fixture.detectChanges();
-
-            expect(selectComponentInstance.ngModel).toBeNull();
-
-            dispatchKeydownEvent(document.body, 66); // 'B' key
-            selectNativeElement.querySelector("input").blur();
-            fixture.detectChanges();
-
-            expect(selectComponentInstance.ngModel).toEqual(1);
-            selectNativeElement.querySelector("input").focus();
-            dispatchKeydownEvent(document.body, 66); // 'B' key
-            selectNativeElement.querySelector("input").blur();
-
-            fixture.detectChanges();
-            expect(selectComponentInstance.ngModel).toEqual(1);
-        }));
-
-        it('should still make autoselection on blur from input even when it\'s off', async(() => {
-            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
-
-            let selectNativeElement = selectComponent.nativeElement;
-
-            let selectComponentInstance = selectComponent.componentInstance;
+            let input = selectNativeElement.querySelector("input");
 
             spyOn(selectComponentInstance, 'onSelect').and.callThrough();
             spyOn(selectComponentInstance, 'onCharacterKeydown').and.callThrough();
+            input.focus();
 
-            selectNativeElement.querySelector("input").focus();
-
-            dispatchKeydownEvent(document.body, 66); // 'B' key
             fixture.detectChanges();
-
             expect(selectComponentInstance.ngModel).toBeNull();
 
-            selectNativeElement.querySelector("input").blur();
+            dispatchEvent(input, createKeyboardEvent('keyup', Key.B, input));
+            fixture.detectChanges();
+            expect(selectComponentInstance.ngModel).toBeNull();
+
+            dispatchEvent(input, createKeyboardEvent('keyup', Key.Enter, input));
             fixture.detectChanges();
             expect(selectComponentInstance.ngModel).toEqual(1);
         }));
@@ -418,15 +408,10 @@ describe('MdlSelect', () => {
 
             let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
 
-            const event = <Event>jasmine.createSpyObj('event', ['stopPropagation']);
-
             expect(selectComponentInstance.multiple)
               .toBe(true, 'is not multiple');
 
-            selectComponentInstance.onSelect(event, 3);
-
-            expect(event.stopPropagation)
-              .toHaveBeenCalled();
+            selectComponentInstance.onSelect(3);
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -434,7 +419,7 @@ describe('MdlSelect', () => {
                 expect(selectComponentInstance.ngModel)
                   .toEqual([ 1, 2, 3 ], 'did not update ngModel on select 3');
 
-                selectComponentInstance.onSelect(event, 3);
+                selectComponentInstance.onSelect(3);
 
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -530,17 +515,12 @@ describe('MdlSelect', () => {
 
             let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
 
-            const event = <Event>jasmine.createSpyObj('event', ['stopPropagation']);
-
             let arrWith3Obj = [{i: 1, n: 'Bryan Cranston'}, {i: 2, n: 'Aaron Paul'}, {i: 3, n: 'Bob Odenkirk'}];
 
             expect(selectComponentInstance.multiple)
               .toBe(true, 'is not multiple');
 
-            selectComponentInstance.onSelect(event, arrWith3Obj[2]);
-
-            expect(event.stopPropagation)
-              .toHaveBeenCalled();
+            selectComponentInstance.onSelect(arrWith3Obj[2]);
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -548,7 +528,7 @@ describe('MdlSelect', () => {
                 expect(selectComponentInstance.ngModel)
                   .toEqual( arrWith3Obj, 'did not update ngModel on select 3');
 
-                selectComponentInstance.onSelect(event, arrWith3Obj[2]);
+                selectComponentInstance.onSelect(arrWith3Obj[2]);
 
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -556,7 +536,7 @@ describe('MdlSelect', () => {
                     expect(selectComponentInstance.ngModel)
                       .toEqual( [arrWith3Obj[0], arrWith3Obj[1]], 'did not update ngModel on deselect 3');
 
-                    selectComponentInstance.onSelect(event, arrWith3Obj[1]);
+                    selectComponentInstance.onSelect(arrWith3Obj[1]);
 
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
@@ -626,7 +606,7 @@ class TestDisabledComponent {
 @Component({
     selector: 'test-single-component',
     template: `
-        <mdl-select label="{{label}}" floating-label [autoselectOnBlur]="true" [autocomplete]="true" [(ngModel)]="selectedValue">
+        <mdl-select label="{{label}}" floating-label [autocomplete]="true" [(ngModel)]="selectedValue">
           <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
         </mdl-select>
     `

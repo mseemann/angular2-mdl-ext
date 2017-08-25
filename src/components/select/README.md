@@ -42,6 +42,7 @@ to your polyfills.
 | `[label]` | string | Label text
 | `[floating-label]` | any | If present or true the ```label``` will be floating on ```focus``` event
 | `[multiple]` | boolean | Multiselect mode
+| `[autocomplete]` | boolean | Autocomplete mode
 
 #### mdl-option
 
