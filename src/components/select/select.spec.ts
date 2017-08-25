@@ -297,6 +297,7 @@ describe('MdlSelect', () => {
             spyOn(selectComponentInstance, 'onSelect').and.callThrough();
             spyOn(selectComponentInstance, 'onCharacterKeydown').and.callThrough();
 
+            selectNativeElement.querySelector("span[tabindex]").focus();
             selectNativeElement.querySelector("input").focus();
             fixture.detectChanges();
 
@@ -325,6 +326,7 @@ describe('MdlSelect', () => {
             spyOn(selectComponentInstance, 'onSelect').and.callThrough();
             spyOn(selectComponentInstance, 'onCharacterKeydown').and.callThrough();
 
+            selectNativeElement.querySelector("span[tabindex]").focus();
             selectNativeElement.querySelector("input").focus();
 
             dispatchKeydownEvent(document.body, 66); // 'B' key

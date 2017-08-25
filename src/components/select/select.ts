@@ -172,12 +172,17 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     }
 
     private getAutoSelection(): any {
-        let optionsList = this.optionComponents.toArray();
+        const searchQuery = this.getSearchQuery();
+        const optionsList = this.optionComponents.toArray();
         const filteredOptions = optionsList.filter(option => {
-            return option.text.toLowerCase().startsWith(this.getSearchQuery());
+            return option.text.toLowerCase().startsWith(searchQuery);
         });
 
         const selectedOption = optionsList.find(option => option.selected);
+
+        if (!searchQuery) {
+            return null;
+        }
 
         if (filteredOptions.length > 0) {
             const selectedOptionInFiltered = filteredOptions.indexOf(selectedOption) != -1;
