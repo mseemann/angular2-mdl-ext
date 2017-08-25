@@ -12,4 +12,12 @@ import {
   templateUrl: 'popover.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PopoverDemo {}
+export class PopoverDemo {
+    onShow() {
+      console.log('onShow');
+    }
+
+    onHide() {
+        console.log('onHide');
+    }
+}
