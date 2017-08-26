@@ -12985,6 +12985,8 @@ _:-ms-input-placeholder, :root .mdl-slider.mdl-slider.is-upgraded {
   padding-right: 1.5rem;
   text-overflow: ellipsis;
   white-space: nowrap; }
+  .mdl-select .mdl-textfield__input:focus {
+    outline: none; }
 
 .mdl-select .mdl-textfield.is-focused .mdl-select__toggle {
   color: rgb(33,150,243); }
@@ -13325,4 +13327,4 @@ table.docu {
     opacity: 0.8;
     font-size: 16px; }
 
-/*# sourceMappingURL=app.3566842468a6eb92e1f4.css.map*/
+/*# sourceMappingURL=app.88beb10335beea748ba5.css.map*/
