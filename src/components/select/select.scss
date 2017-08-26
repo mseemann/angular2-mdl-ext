@@ -47,6 +47,10 @@
       padding-right: 1.5rem;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     &.is-focused {

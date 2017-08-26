@@ -11,6 +11,7 @@ yarn.lock
 # IDEs and editors
 /.idea
 /.vscode
+/*.iml
 
 # misc
 /.sass-cache
@@ -25,3 +26,4 @@ npm-debug.log
 #System Files
 .DS_Store
 Thumbs.db
+/package-lock.json

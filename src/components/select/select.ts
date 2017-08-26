@@ -19,8 +19,12 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MdlPopoverModule, MdlPopoverComponent } from '../popover/index';
 import { MdlOptionComponent } from './option';
+import { Key, isKey, isCharacterKey, keyboardEventKey } from './keyboard';
+import 'rxjs/operator/debounceTime';
 
 const uniq = (array: any[]) => Array.from(new Set(array));
+
+const isEqual = (a: any, b: any) => JSON.stringify(a) === JSON.stringify(b);
 
 function toBoolean (value:any): boolean {
   return value != null && `${value}` !== 'false';
@@ -38,28 +42,20 @@ const MDL_SELECT_VALUE_ACCESSOR: any = {
 };
 
 export class SearchableComponent {
+    public searchQuery : string = '';
     private clearTimeout : any = null;
-    private query : string = '';
-    private searchTimeout: number;
 
-    constructor(searchTimeout = 300) {
-        this.searchTimeout = searchTimeout;
-    }
-
-    protected updateSearchQuery(event : any) {
+    // short search query will be cleared after 300 ms
+    protected updateShortSearchQuery($event : KeyboardEvent) {
         if(this.clearTimeout){
             clearTimeout(this.clearTimeout);
         }
 
         this.clearTimeout = setTimeout(() => {
-            this.query = '';
-        }, this.searchTimeout);
+            this.searchQuery = '';
+        }, 300);
 
-        this.query += String.fromCharCode(event.keyCode).toLowerCase();
-    }
-
-    protected getSearchQuery() : string {
-        return this.query;
+        this.searchQuery += keyboardEventKey($event).toLowerCase();
     }
 }
 
@@ -110,71 +106,85 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
             this.bindOptions();
             this.renderValue(this.ngModel);
         });
+        this.popoverComponent.onShow.subscribe(() => this.onOpen());
+        this.popoverComponent.onHide.subscribe(() => this.onClose());
     }
 
-    @HostListener('document:keydown', ['$event'])
-    public onKeydown($event: KeyboardEvent): void {
-        if (!this.disabled && this.popoverComponent.isVisible) {
-            let closeKeys: Array<string> = ["Escape", "Tab", "Enter"];
-            let closeKeyCodes: Array<Number> = [13, 27, 9];
-            if (closeKeyCodes.indexOf($event.keyCode) != -1 || ($event.key && closeKeys.indexOf($event.key) != -1)) {
-                this.popoverComponent.hide();
-            } else if (!this.multiple) {
-                if ($event.keyCode == 38 || ($event.key && $event.key == "ArrowUp")) {
-                    this.onArrowUp($event);
-                } else if ($event.keyCode == 40 || ($event.key && $event.key == "ArrowDown")) {
-                    this.onArrowDown($event);
-                } else if ($event.keyCode >= 31 && $event.keyCode <= 90) {
-                    this.onCharacterKeydown($event); 
-                }
+    @HostListener('keydown', ['$event'])
+    private onKeyDown($event: KeyboardEvent) {
+        if (!this.disabled && this.popoverComponent.isVisible && !this.multiple) {
+            if (isKey($event, Key.UpArrow)) {
+                this.onArrow($event, -1);
+            } else if (isKey($event, Key.DownArrow)) {
+                this.onArrow($event, 1);
+            } else if (!this.autocomplete && isCharacterKey($event)) {
+                this.onCharacterKeydown($event);
             }
         }
     }
 
-    onInputBlur() {
-        if (this.autocomplete) {
-            let autoSelectedValue = this.getAutoSelection();
+    @HostListener('keyup', ['$event'])
+    private onKeyUp($event: KeyboardEvent) {
+        const inputField = $event.target as HTMLInputElement;
+        const inputValue = inputField.value;
 
-            if (autoSelectedValue) {
-                this.writeValue(autoSelectedValue);
-                this.change.emit(this.ngModel);
-            } else if (this.ngModel) {
-                this.text = this.selectInput.nativeElement.value;
-                this.changeDetectionRef.detectChanges();
-                this.renderValue(this.ngModel);
+        if (!this.multiple && isKey($event, Key.Enter, Key.Escape, Key.Tab)) {
+            this.searchQuery = '';
+            if (isKey($event, Key.Enter)) {
+                this.setCurrentOptionValue();
+            } else {
+                inputField.value = this.text;
             }
+            inputField.blur();
+            this.popoverComponent.hide();
+        } else if (this.autocomplete && !isKey($event, Key.DownArrow, Key.UpArrow)) {
+            this.inputChange.emit(inputValue);
+            this.searchQuery = inputValue;
+        }
+
+        $event.preventDefault();
+    }
+
+    private setCurrentOptionValue() {
+        const currentOption = this.getCurrentOption(),
+            autoSelectedValue = this.getAutoSelection(),
+            value = autoSelectedValue || (currentOption ? currentOption.value : this.ngModel);
+
+        this.resetText();
+
+        if (!isEqual(this.ngModel, value)) {
+            this.writeValue(value);
+            this.change.emit(value);
         }
     }
 
-    isDirty(): boolean {
+    private resetText() {
+        this.text = this.selectInput.nativeElement.value;
+        this.changeDetectionRef.detectChanges();
+    }
+
+    private getCurrentOption() {
+        return this.optionComponents ? this.optionComponents.toArray().find(option => option.selected) : null;
+    }
+
+    public isDirty(): boolean {
         return Boolean(this.selectInput.nativeElement.value);
     }
 
-    onInputChange($event: Event) {
-        const inputField = $event.target as HTMLInputElement,
-            inputValue = inputField.value;
-
-        this.inputChange.emit(inputValue);
-    }
-
     private onCharacterKeydown($event : KeyboardEvent) : void {
-        this.updateSearchQuery($event);
-
-        if (!this.autocomplete) {
-            let autoSelectedValue = this.getAutoSelection();
-
-            if (autoSelectedValue) {
-                this.onSelect($event, autoSelectedValue);
-            }
-
-            $event.preventDefault();
+        this.updateShortSearchQuery($event);
+        let autoSelectedValue = this.getAutoSelection();
+        if (autoSelectedValue) {
+            this.onSelect(autoSelectedValue);
         }
+
+        $event.preventDefault();
     }
 
     private getAutoSelection(): any {
         let optionsList = this.optionComponents.toArray();
         const filteredOptions = optionsList.filter(option => {
-            return option.text.toLowerCase().startsWith(this.getSearchQuery());
+            return option.text.toLowerCase().startsWith(this.searchQuery);
         });
 
         const selectedOption = optionsList.find(option => option.selected);
@@ -190,44 +200,30 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         return null;
     }
 
-    private onArrowUp($event: KeyboardEvent) {
-        let arr = this.optionComponents.toArray();
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].selected) {
-                if (i - 1 >= 0) {
-                    this.onSelect($event, arr[i-1].value);
-                }
+    private onArrow($event: KeyboardEvent, offset: number) {
+        const arr = this.optionComponents.toArray(),
+            selectedOption = arr.find(option => option.selected),
+            selectedOptionIndex = arr.indexOf(selectedOption),
+            optionForSelection = selectedOption !== null
+                ? arr[selectedOptionIndex + offset]
+                : arr[offset > 0 ? -1 : 0];
 
-                break;
-            }
+        if (optionForSelection) {
+            const value = optionForSelection.value;
+            this.focusValue(value);
         }
 
         $event.preventDefault();
     }
 
-    private onArrowDown($event: KeyboardEvent) {
-        let arr = this.optionComponents.toArray();
+    private focusValue(value: any) {
+        this.scrollToValue(value);
 
-        const selectedOption = arr.find(option => option.selected);
-
-        if(selectedOption){
-            const selectedOptionIndex = arr.indexOf(selectedOption);
-            if (selectedOptionIndex + 1 < arr.length) {
-                this.onSelect($event, arr[selectedOptionIndex + 1].value);
-            }
-        }else {
-            this.onSelect($event, arr[0].value);
+        if (this.optionComponents) {
+            this.optionComponents.forEach((selectOptionComponent) => {
+                selectOptionComponent.updateSelected(value);
+            });
         }
-
-        $event.preventDefault();
-    }
-
-    addFocus(): void {
-        this.focused = true;
-    }
-
-    removeFocus(): void {
-        this.focused = false;
     }
 
     private isEmpty() {
@@ -264,8 +260,12 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         this.changeDetectionRef.detectChanges();
 
         if (this.optionComponents) {
+            const _value = (!this.multiple && this.optionComponents.length === 1)
+                ? this.optionComponents.toArray()[0].value
+                : value;
+
             this.optionComponents.forEach((selectOptionComponent) => {
-                selectOptionComponent.updateSelected(value);
+                selectOptionComponent.updateSelected(_value);
             });
         }
     }
@@ -278,50 +278,70 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         }
     }
 
-    toggle($event: Event) {
+    public toggle($event: Event) {
         if (!this.disabled) {
+            $event.stopPropagation();
             this.popoverComponent.toggle($event);
-            $event.stopPropagation();
         }
     }
 
-    public open($event: Event) {
-        if (!this.disabled && !this.popoverComponent.isVisible) {
-            this.popoverComponent.show($event);
-        }
-
-    }
-
-    public close($event: Event) {
-        if (!this.disabled && this.popoverComponent.isVisible) {
-            this.popoverComponent.hide();
+    private onFocus($event: Event) {
+        if (!this.popoverComponent.isVisible) {
+            setTimeout(() => {
+                this.popoverComponent.show($event);
+                this.selectInput.nativeElement.focus();
+            }, 200);
         }
     }
 
-    private onSelect($event: Event, value: any) {
-        if (this.multiple) {
-            // prevent popup close on click inside popover when selecting multiple
-            $event.stopPropagation();
-        } else {
-            let popover: any = this.popoverComponent.elementRef.nativeElement;
-            let list: any = popover.querySelector(".mdl-list");
-            let option: any = null;
+    private onInputFocus($event: Event) {
+        if (this.autocomplete) {
+            this.selectInput.nativeElement.select();
+        }
+    }
 
-            this.optionComponents.forEach(o => {
-                // not great for long lists because break is not available
-                if (o.value == value) {
-                    option = o.contentWrapper.nativeElement;
-                }
-            });
+    private onOpen() {
+        if (!this.disabled) {
+            this.focused = true;
+            this.focusValue(this.ngModel);
+        }
+    }
 
-            if (option) {
-                const selectedItemElem = option.parentElement;
-                const computedScrollTop = selectedItemElem.offsetTop - (list.clientHeight / 2) + (selectedItemElem.clientHeight / 2);
-                list.scrollTop =  Math.max(computedScrollTop, 0);
+    private onClose() {
+        if (!this.disabled) {
+            this.focused = false;
+            this.focusValue(this.ngModel);
+            this.selectInput.nativeElement.value = this.text;
+        }
+    }
+
+    private onSelect(value: any) {
+        if (!this.multiple) {
+            this.scrollToValue(value);
+        }
+        if (!isEqual(this.ngModel, value)) {
+            this.writeValue(value);
+            this.change.emit(value);
+        }
+    }
+
+    private scrollToValue(value: any) {
+        let popover: any = this.popoverComponent.elementRef.nativeElement;
+        let list: any = popover.querySelector(".mdl-list");
+        let option: any = null;
+
+        this.optionComponents.forEach(o => {
+            // not great for long lists because break is not available
+            if (o.value == value) {
+                option = o.contentWrapper.nativeElement;
             }
+        });
+
+        if (option) {
+            const selectedItemElem = option.parentElement;
+            const computedScrollTop = selectedItemElem.offsetTop - (list.clientHeight / 2) + (selectedItemElem.clientHeight / 2);
+            list.scrollTop =  Math.max(computedScrollTop, 0);
         }
-        this.writeValue(value);
-        this.change.emit(this.ngModel);
     }
 
     public writeValue(value: any): void {

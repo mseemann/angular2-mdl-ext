@@ -39,13 +39,15 @@ describe('MdlPopover', () => {
 
         popoverComponentInstance.isVisible = true;
 
-        spyOn(popoverComponentInstance, 'hide');
+        spyOn(popoverComponentInstance, 'hide').and.callThrough();
+
+        spyOn(popoverComponentInstance.onHide, 'emit').and.callThrough();
 
         fixture.debugElement.nativeElement.click();
 
-        expect(popoverComponentInstance.hide)
-          .toHaveBeenCalled();
+        expect(popoverComponentInstance.hide).toHaveBeenCalled();
 
+        expect(popoverComponentInstance.onHide.emit).toHaveBeenCalled();
     }));
 
     it('should toggle popover on button click', async(() => {
@@ -66,6 +68,10 @@ describe('MdlPopover', () => {
 
         spyOn(popoverComponentInstance, 'toggle').and.callThrough();
 
+        spyOn(popoverComponentInstance, 'show').and.callThrough();
+
+        spyOn(popoverComponentInstance.onShow, 'emit').and.callThrough();
+
         spyOn(popoverComponentInstance, 'hideAllPopovers').and.callThrough();
 
         spyOn(popoverComponentInstance, 'updateDirection').and.callThrough();
@@ -73,6 +79,10 @@ describe('MdlPopover', () => {
         buttonNativeElement.click();
 
         expect(popoverComponentInstance.toggle).toHaveBeenCalled();
+
+        expect(popoverComponentInstance.show).toHaveBeenCalled();
+
+        expect(popoverComponentInstance.onShow.emit).toHaveBeenCalled();
 
         expect(popoverComponentInstance.hideAllPopovers).toHaveBeenCalled();
 

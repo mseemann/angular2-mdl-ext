@@ -33,3 +33,5 @@ to your polyfills.
 | --- | --- | --- |
 | `[hide-on-click]` | boolean | Hide popover on clicking inside it, default `false`
 | `[style.*]` | ... | Styling i.e. `[style.width.px]="300"`
+| `(onHide)` | ... | on hide event 
+| `(onShow)` | ... | on show event 

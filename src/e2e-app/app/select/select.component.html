@@ -20,14 +20,20 @@
 
 <h5>autocomplete example</h5>
 
-<mdl-select label="{{countryLabel}}" [autocomplete]="true" floating-label (inputChange)="onAutocompleteChange($event)" [(ngModel)]="autoselectCountryCode">
-  <mdl-option *ngFor="let c of autoselectCountries" [value]="c.code">{{c.name}}</mdl-option>
+<mdl-select #autocompleteSelect label="{{countryLabel}}" floating-label
+            [autocomplete]="true"
+            (change)="onChange($event)"
+            [(ngModel)]="autocompleteCountryCode">
+  <mdl-option *ngFor="let c of countries | matchSorter:'name':autocompleteSelect.searchQuery" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
 <pre prism ngNonBindable>
   <![CDATA[
-<mdl-select label="{{countryLabel}}" [autocomplete]="true" floating-label (inputChange)="onAutocompleteChange($event)" [(ngModel)]="autoselectCountryCode">
-  <mdl-option *ngFor="let c of autoselectCountries" [value]="c.code">{{c.name}}</mdl-option>
+<mdl-select #autocompleteSelect label="{{countryLabel}}" floating-label
+            [autocomplete]="true"
+            (change)="onChange($event)"
+            [(ngModel)]="autocompleteCountryCode">
+  <mdl-option *ngFor="let c of countries | matchSorter:'name':autocompleteSelect.searchQuery" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
    ]]>
 </pre>

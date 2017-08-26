@@ -2,6 +2,7 @@ import {
     ChangeDetectorRef,
     Component,
     ElementRef,
+    EventEmitter,
     HostBinding,
     HostListener,
     Inject,
@@ -9,7 +10,8 @@ import {
     Input,
     ModuleWithProviders,
     NgModule,
-    ViewEncapsulation
+    Output,
+    ViewEncapsulation,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 
@@ -53,6 +55,8 @@ export class MdlPopoverRegistry {
 })
 export class MdlPopoverComponent {
     @Input('hide-on-click') public hideOnClick: boolean = false;
+    @Output() onShow: EventEmitter<any> = new EventEmitter();
+    @Output() onHide: EventEmitter<any> = new EventEmitter();
     @HostBinding('class.is-visible') public isVisible = false;
     @HostBinding('class.direction-up') public directionUp = false;
     @HostListener('click', ['$event']) onClick(event: Event) {
@@ -80,8 +84,11 @@ export class MdlPopoverComponent {
     }
 
     public hide() {
-        this.isVisible = false;
-        this.changeDetectionRef.markForCheck();
+        if (this.isVisible) {
+            this.onHide.emit(null);
+            this.isVisible = false;
+            this.changeDetectionRef.markForCheck();
+        }
     }
 
     private hideAllPopovers() {
@@ -91,8 +98,11 @@ export class MdlPopoverComponent {
     public show(event: Event) {
         this.hideAllPopovers();
         event.stopPropagation();
-        this.isVisible = true;
-        this.updateDirection(event);
+        if (!this.isVisible) {
+            this.onShow.emit(null);
+            this.isVisible = true;
+            this.updateDirection(event);
+        }
     }
 
     private updateDirection(event: Event) {
