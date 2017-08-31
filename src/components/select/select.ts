@@ -285,7 +285,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         }
     }
 
-    private onFocus($event: Event) {
+    public onFocus($event: Event) {
         if (!this.popoverComponent.isVisible) {
             setTimeout(() => {
                 this.popoverComponent.show($event);
@@ -294,7 +294,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         }
     }
 
-    private onInputFocus($event: Event) {
+    public onInputFocus($event: Event) {
         if (this.autocomplete) {
             this.selectInput.nativeElement.select();
         }
