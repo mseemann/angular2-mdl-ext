@@ -10,7 +10,7 @@ import {
     OnInit,
     HostBinding
 } from '@angular/core';
-import {VirtualScrollComponent} from 'angular2-virtual-scroll';
+import {VirtualScrollComponent, ChangeEvent} from 'angular2-virtual-scroll';
 import {MdlVirtualTableColumnComponent} from './column.component';
 
 @Component({
@@ -188,11 +188,11 @@ export class MdlVirtualTableComponent implements OnInit {
         });
     }
 
-    onListChange(event) {
+    onListChange(event: ChangeEvent) {
         this.fetch(event.start, (event.end - event.start));
     }
 
-    onRowClick(event, row, index) {
+    onRowClick(event: MouseEvent, row: any, index: number) {
         this.rowClick.emit({event, row, index});
     }
 
@@ -208,7 +208,7 @@ export class MdlVirtualTableComponent implements OnInit {
 
     refresh() {
 
-        this.fetchRowCount().subscribe((count) => {
+        this.fetchRowCount().subscribe((count: number) => {
             this._rowCount = count;
             this.values = new Array(count);
             this.virtualScroll.previousStart = undefined;
