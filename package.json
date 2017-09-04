@@ -89,7 +89,7 @@
     "ts-helpers": "1.1.2",
     "ts-node": "3.2.2",
     "tslint": "5.7.0",
-    "typescript": "2.1.5",
+    "typescript": "2.5.2",
     "webpack": "3.5.5",
     "webpack-dev-server": "2.7.1",
     "webpack-merge": "4.1.0"
