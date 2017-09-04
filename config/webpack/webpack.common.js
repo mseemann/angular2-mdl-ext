@@ -28,10 +28,10 @@ module.exports = {
 				enforce: 'pre',
 				test: /.ts$/,
 				loader: 'string-replace-loader',
-				options: {
-					search: 'moduleId: module.id,',
-					replace: '',
-					flags: 'g'
+				query: {
+					multiple: [
+						{search: new RegExp('moduleId: module.id,', 'g'), replace: ''}
+					]
 				}
 			},
 			{
