@@ -27,7 +27,7 @@
     "@angular/http": "4.3.6",
     "@angular/platform-browser": "4.3.6",
     "@angular/platform-browser-dynamic": "4.3.6",
-    "@angular/router": "4.3.6",
+    "@angular/router": "4.4.1",
     "@mseemann/prism": "0.0.1",
     "core-js": "2.5.1",
     "custom-event-polyfill": "^0.3.0",
