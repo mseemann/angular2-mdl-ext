@@ -34,7 +34,7 @@
     "match-sorter": "1.8.1",
     "moment": "^2.18.1",
     "rxjs": "5.4.3",
-    "systemjs": "0.20.18",
+    "systemjs": "0.20.19",
     "zone.js": "0.8.17"
   },
   "devDependencies": {
