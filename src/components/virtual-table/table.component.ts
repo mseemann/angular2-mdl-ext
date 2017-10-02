@@ -207,6 +207,10 @@ export class MdlVirtualTableComponent implements OnInit {
     }
 
     refresh() {
+        if(!this.fetchRowCount) {
+            // TODO maybe we should throw an error that tells the developer what is missing.
+            return;
+        }
 
         this.fetchRowCount().subscribe((count: number) => {
             this._rowCount = count;
