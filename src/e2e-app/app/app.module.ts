@@ -17,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatepickerDemo } from './datepicker/datepicker.component';
 import { MdlDatePickerModule } from '../../components/datepicker/index';
 import { FabMenuDemo } from './fab-menu/fab-menu-demo.component';
+import { MdlVirtualTableModule} from "../../components/virtual-table/index"
+import {VirtualTableDemo} from "./virtual-table/virtual-table.component";
 
 @NgModule({
   imports: [
@@ -30,7 +32,8 @@ import { FabMenuDemo } from './fab-menu/fab-menu-demo.component';
     MdlFabMenuModule,
     MdlExpansionPanelModule,
     BrowserAnimationsModule,
-    MdlDatePickerModule
+    MdlDatePickerModule,
+    MdlVirtualTableModule
   ],
   declarations: [
     AppComponent,
@@ -42,6 +45,7 @@ import { FabMenuDemo } from './fab-menu/fab-menu-demo.component';
     MatchSorterPipe,
     ExpansionPanelDemo,
     PrismDirective,
+    VirtualTableDemo
   ],
   entryComponents: [AppComponent],
   bootstrap: []

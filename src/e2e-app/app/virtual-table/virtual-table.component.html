@@ -1,0 +1,58 @@
+<div style="display: flex; flex-direction: column; min-height: 300px; max-height: calc(100vh - 104px); padding: 20px; 0">
+  <div>
+<h4>THE VIRTUAL TABLE</h4>
+
+<p>Light weight data table with smooth virtual scrolling.</p>
+
+<h5>Table</h5>
+
+  </div>
+
+    <mdl-virtual-table flex-height mdl-shadow="2" maxHeight="100%" [fetchRowData]="requestRowData" [fetchRowCount]="requestRowCount" (sort)="onSort($event)" (rowClick)="onRowClick($event)">
+      <mdl-column label="ID" sortable="true" field="_id" width="1%"></mdl-column>
+      <mdl-column label="Description" field="_label" width="1%">
+        <ng-template let-value><div style="text-align: right;">Title: {{value}}</div></ng-template>
+      </mdl-column>
+    </mdl-virtual-table>
+
+</div>
+
+<pre prism>
+  <![CDATA[
+   <mdl-virtual-table [fetchRowData]="requestRowData" [fetchRowCount]="requestRowCount" (sort)="onSort($event)" (rowClick)="onRowClick($event)">
+    <mdl-column label="ID" sortable="true" field="_id" width="1%"></mdl-column>
+    <mdl-column label="Description" field="_label" width="1%">
+      <ng-template let-value><div style="text-align: right;">Title: {value}</div></ng-template>
+    </mdl-column>
+   </mdl-virtual-table>
+  ]]>
+</pre>
+
+<pre prism>
+  <![CDATA[
+export class VirtualTableDemo {
+
+    onSort(data) {
+        console.log("sort data:", data);
+    }
+
+    onRowClick(event) {
+        console.log("on row click", event);
+    }
+
+    requestRowCount() {
+        return Observable.of(500).delay(1000);;
+    }
+
+    requestRowData(offset, limit) {
+        let rows = [];
+        for(var i = offset; i < (offset + limit); i++) {
+            rows.push({_id: i, _label: 'Test ' + i});
+        }
+
+        return Observable.of(rows).delay(1000);
+    }
+}
+  ]]>
+
+</pre>

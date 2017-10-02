@@ -4,7 +4,8 @@ const components = [
     'expansion-panel',
     'fab-menu',
     'popover',
-    'select'
+    'select',
+    'virtual-table'
 ];
 
 const angularPackages = [
@@ -42,7 +43,8 @@ System.config({
         '@angular': 'vendor/@angular',
         '@angular-mdl/core': 'vendor/@angular-mdl/core',
         'rxjs': 'vendor/rxjs',
-        'moment': 'vendor/moment'
+        'moment': 'vendor/moment',
+        'angular2-virtual-scroll': 'angular2-virtual-scroll'
     },
     packages: vendorPackages
 });
