@@ -112,22 +112,22 @@
 
 <h5>Multiple with initial value</h5>
 
-<mdl-select [(ngModel)]="countryCodes" multiple="true" placeholder="Select countries">
+<mdl-select [(ngModel)]="countryCodes" [multiple]="true" placeholder="Select countries">
   <mdl-option mdl-ripple *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
-<mdl-select [(ngModel)]="countryCodes" multiple="true" disabled="true" placeholder="Select countries">
+<mdl-select [(ngModel)]="countryCodes" [multiple]="true" disabled="true" placeholder="Select countries">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
 
 <pre prism ngNonBindable>
   <![CDATA[
-<mdl-select [(ngModel)]="countryCodes" multiple="true" placeholder="Select countries">
+<mdl-select [(ngModel)]="countryCodes" [multiple]="true" placeholder="Select countries">
   <mdl-option mdl-ripple *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
 
-<mdl-select [(ngModel)]="countryCodes" multiple="true" disabled="true" placeholder="Select countries">
+<mdl-select [(ngModel)]="countryCodes" [multiple]="true" disabled="true" placeholder="Select countries">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
    ]]>
@@ -145,7 +145,7 @@
   <mdl-option *ngFor="let c of foodCategories" [value]="c.id">{{ c.name }}</mdl-option>
 </mdl-select>
 
-<mdl-select #foodSelect [(ngModel)]="food" multiple="true" placeholder="Select food" (change)="onChange(food)">
+<mdl-select #foodSelect [(ngModel)]="food" [multiple]="true" placeholder="Select food" (change)="onChange(food)">
   <mdl-option mdl-ripple *ngFor="let foodName of foodByCategory[foodCategory]" [value]="foodName">{{ foodName }}</mdl-option>
 </mdl-select>
 
@@ -157,7 +157,7 @@
   <mdl-option *ngFor="let c of foodCategories" [value]="c.id">{{ c.name }}</mdl-option>
 </mdl-select>
 
-<mdl-select #foodSelect [(ngModel)]="food" multiple="true" placeholder="Select food" (change)="onChange(food)">
+<mdl-select #foodSelect [(ngModel)]="food" [multiple]="true" placeholder="Select food" (change)="onChange(food)">
   <mdl-option mdl-ripple *ngFor="let foodName of foodByCategory[foodCategory]" [value]="foodName">{{ foodName }}</mdl-option>
 </mdl-select>
    ]]>
@@ -169,7 +169,7 @@
   FormControl return array of coordinate object as value
 </p>
 <form [formGroup]="arrayForm">
-  <mdl-select [(ngModel)]="locations" formControlName="locations" multiple="true" placeholder="Select locations">
+  <mdl-select [(ngModel)]="locations" formControlName="locations" [multiple]="true" placeholder="Select locations">
     <mdl-option *ngFor="let c of cityCoordinates" [value]="{ latitude: c.latitude , longitude: c.longitude }">{{ c.name }}</mdl-option>
   </mdl-select>
 </form>
@@ -180,7 +180,7 @@
 <pre prism ngNonBindable>
   <![CDATA[
 <form [formGroup]="arrayForm">
-  <mdl-select [(ngModel)]="locations" formControlName="locations" multiple="true" placeholder="Select locations">
+  <mdl-select [(ngModel)]="locations" formControlName="locations" [multiple]="true" placeholder="Select locations">
     <mdl-option *ngFor="let c of cityCoordinates" [value]="{ latitude: c.latitude , longitude: c.longitude }">{{ c.name }}</mdl-option>
   </mdl-select>
 </form>
