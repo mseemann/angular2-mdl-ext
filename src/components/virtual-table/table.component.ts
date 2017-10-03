@@ -197,9 +197,18 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
     }
 
     refresh(withRowCount: boolean = false) {
+      
+      if(this.rowCountRequest.observers.length === 0) {
+        throw new Error("mdl-virtual-table component has no rowCountRequest Listener");
+      }
+      if(this.rowDataRequest.observers.length === 0) {
+        throw new Error("mdl-virtual-table component has no rowDataRequest Listener");
+      }
+
       if(withRowCount) {
         this.requestRowCountSubject.next();
       }
+      
       if(typeof(this.virtualScroll.previousStart) === 'number' 
         && typeof(this.virtualScroll.previousEnd) === 'number') {
         this.requestRowDataSubject.next({

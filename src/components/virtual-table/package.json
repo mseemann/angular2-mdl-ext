@@ -1,7 +1,7 @@
 {
   "name": "@angular-mdl/virtual-table",
-  "version": "0.11.1",
-  "description": "Angular 2 Material Design Lite - Select Component",
+  "version": "0.0.1",
+  "description": "Angular Material Design Lite - Virtual Table Component",
   "main": "./index.umd.js",
   "module": "./index.js",
   "typings": "./index.d.ts",
@@ -11,8 +11,10 @@
   },
   "keywords": [
     "angular2",
+    "angular4",
+    "angular",
     "material design lite",
-    "select"
+    "virtual table"
   ],
   "license": "MIT",
   "bugs": {

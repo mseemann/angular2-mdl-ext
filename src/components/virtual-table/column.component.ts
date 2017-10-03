@@ -9,6 +9,7 @@ export class MdlVirtualTableColumnComponent {
     @Input() field: string;
     @Input() width: string;
     @Input() set sortable(v: boolean) {
+        // TODO why did you compare with 'true'? if the type is boolean it musst be true or false.
         this._sortable = typeof(v) === 'boolean' ? v : (v === 'true');
     }
     get sortable(): boolean {

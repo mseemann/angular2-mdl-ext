@@ -33,6 +33,7 @@ vendorPackages[`@angular-mdl/core`] = { main: `bundle/core.js` };
 
 vendorPackages['rxjs'] = { main: 'index.js' };
 vendorPackages['moment'] = { main: 'min/moment.min.js'};
+vendorPackages['angular2-virtual-scroll'] = { main: 'dist/virtual-scroll.js'};
 
 /** Type declaration for ambient System. */
 declare var System: any;
