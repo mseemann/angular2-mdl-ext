@@ -1,0 +1,104 @@
+:host.flex-height,
+.flex-height virtual-scroll,
+.flex-height.table-container {
+    display: flex;
+}
+
+.flex-height.table-container {
+    flex-direction: column;
+}
+
+.table-container {
+    width: 100%;
+}
+.scrollbar-space {
+    padding-right: 16px;
+}
+
+virtual-scroll {
+      width: 100%;
+      display: block;
+}
+
+.table-header {
+  table-layout: fixed;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  display: table;
+  width: 100%;
+}
+.table {
+  width: 100%;
+  table-layout: fixed;
+  display: table;
+}
+.table-row {
+    display: table-row;
+    height: 30px;
+    width: 100%;
+}
+
+.table-cell {
+    display: table-cell;
+    position: relative;
+    height: 48px;
+    border-top: 1px solid rgba(0,0,0,.12);
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    padding: 12px 18px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    width: 100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}
+
+.table-row:first-child .cell {
+  border-top: none;
+}
+
+.table .table-row {
+  transition-duration: .28s;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-property: background-color;
+}
+
+.table .table-row:hover {
+  background-color: #eee;
+}
+
+.header-cell {
+  position: relative;
+  vertical-align: bottom;
+  text-overflow: ellipsis;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0;
+  height: 48px;
+  font-size: 12px;
+  color: rgba(0,0,0,.54);
+  padding-bottom: 8px;
+  box-sizing: border-box;
+  display: table-cell;
+  padding: 0 18px 12px 18px;
+  text-align: left;
+  width: 100%;
+}
+
+.header-cell.sortable {
+  cursor: pointer;
+}
+.header-cell.sortable:after {
+  font-family: 'Material Icons';
+  font-size: 20pt;
+  content: 'arrow_drop_down arrow_drop_up';
+  vertical-align: middle;
+  letter-spacing: -11px;
+  position: absolute;
+}
+
+.header-cell.sortable.desc:after {
+  content: 'arrow_drop_down';
+}
+.header-cell.sortable.asc:after {
+  content: 'arrow_drop_up';
+}

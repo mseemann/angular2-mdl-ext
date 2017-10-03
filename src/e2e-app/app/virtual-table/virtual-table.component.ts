@@ -11,6 +11,19 @@ import 'rxjs/add/observable/of';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VirtualTableDemo {
+	
+	private rowCountStream: Observable<number>;
+	private rowDataStream: Observable<{rows: any[], offset: number, limit: number}>;
+
+    onRowCountRequest() {
+        console.log("on row count request");
+        this.rowCountStream = this.requestRowCount();
+    }
+
+    onRowDataRequest(request) {
+        console.log("on row data request");
+        this.rowDataStream = this.requestRowData(request.offset, request.limit);
+    }
 
     onSort(data) {
         console.log("sort data:", data);
@@ -29,7 +42,6 @@ export class VirtualTableDemo {
         for(var i = offset; i < (offset + limit); i++) {
             rows.push({_id: i, _label: 'Test ' + i});
         }
-
-        return Observable.of(rows).delay(1000);
+        return Observable.of({rows, offset, limit}).delay(1000);
     }
 }

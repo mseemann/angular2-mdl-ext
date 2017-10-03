@@ -8,7 +8,10 @@
 
   </div>
 
-    <mdl-virtual-table flex-height mdl-shadow="2" maxHeight="100%" [fetchRowData]="requestRowData" [fetchRowCount]="requestRowCount" (sort)="onSort($event)" (rowClick)="onRowClick($event)">
+    <mdl-virtual-table flex-height mdl-shadow="2" maxHeight="100%" 
+    [rowDataStream]="rowDataStream" [rowCountStream]="rowCountStream" 
+    (rowCountRequest)="onRowCountRequest()" (rowDataRequest)="onRowDataRequest($event)"
+    (sort)="onSort($event)" (rowClick)="onRowClick($event)">
       <mdl-column label="ID" sortable="true" field="_id" width="1%"></mdl-column>
       <mdl-column label="Description" field="_label" width="1%">
         <ng-template let-value><div style="text-align: right;">Title: {{value}}</div></ng-template>
@@ -19,40 +22,55 @@
 
 <pre prism>
   <![CDATA[
-   <mdl-virtual-table [fetchRowData]="requestRowData" [fetchRowCount]="requestRowCount" (sort)="onSort($event)" (rowClick)="onRowClick($event)">
+  <mdl-virtual-table flex-height mdl-shadow="2" maxHeight="100%" 
+  [rowDataStream]="rowDataStream" [rowCountStream]="rowCountStream" 
+  (rowCountRequest)="onRowCountRequest()" (rowDataRequest)="onRowDataRequest($event)"
+  (sort)="onSort($event)" (rowClick)="onRowClick($event)">
     <mdl-column label="ID" sortable="true" field="_id" width="1%"></mdl-column>
     <mdl-column label="Description" field="_label" width="1%">
-      <ng-template let-value><div style="text-align: right;">Title: {value}</div></ng-template>
+      <ng-template let-value><div style="text-align: right;">Title: {{value}}</div></ng-template>
     </mdl-column>
-   </mdl-virtual-table>
+  </mdl-virtual-table>
   ]]>
 </pre>
 
 <pre prism>
   <![CDATA[
-export class VirtualTableDemo {
-
-    onSort(data) {
-        console.log("sort data:", data);
-    }
-
-    onRowClick(event) {
-        console.log("on row click", event);
-    }
-
-    requestRowCount() {
-        return Observable.of(500).delay(1000);;
-    }
-
-    requestRowData(offset, limit) {
-        let rows = [];
-        for(var i = offset; i < (offset + limit); i++) {
-            rows.push({_id: i, _label: 'Test ' + i});
-        }
-
-        return Observable.of(rows).delay(1000);
-    }
-}
+  export class VirtualTableDemo {
+    
+    private rowCountStream: Observable<number>;
+    private rowDataStream: Observable<{rows: any[], offset: number, limit: number}>;
+  
+      onRowCountRequest() {
+          console.log("on row count request");
+          this.rowCountStream = this.requestRowCount();
+      }
+  
+      onRowDataRequest(request) {
+          console.log("on row data request");
+          this.rowDataStream = this.requestRowData(request.offset, request.limit);
+      }
+  
+      onSort(data) {
+          console.log("sort data:", data);
+      }
+  
+      onRowClick(event) {
+          console.log("on row click", event);
+      }
+  
+      requestRowCount() {
+          return Observable.of(500).delay(1000);;
+      }
+  
+      requestRowData(offset, limit) {
+          let rows = [];
+          for(var i = offset; i < (offset + limit); i++) {
+              rows.push({_id: i, _label: 'Test ' + i});
+          }
+          return Observable.of({rows, offset, limit}).delay(1000);
+      }
+  }
   ]]>
 
 </pre>

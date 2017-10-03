@@ -44,7 +44,7 @@ System.config({
         '@angular-mdl/core': 'vendor/@angular-mdl/core',
         'rxjs': 'vendor/rxjs',
         'moment': 'vendor/moment',
-        'angular2-virtual-scroll': 'angular2-virtual-scroll'
+        'angular2-virtual-scroll': 'vendor/angular2-virtual-scroll'
     },
     packages: vendorPackages
 });
