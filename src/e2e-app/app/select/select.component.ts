@@ -32,7 +32,7 @@ export class SelectDemo {
     {id: 9, name: 'Martin Wallström'},
     {id: 10, name: 'Angela Sarafyan'},
     {id: 11, name: 'Robert Pattinson'},
-    {id: 12, name: 'Billy Bob Thornton'}
+    {id: 12, name: 'Billy Bob Thornton', disabled: true}
   ];
 
   countryCode: string = 'FR';
