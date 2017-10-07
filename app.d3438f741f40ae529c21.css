@@ -13009,6 +13009,10 @@ _:-ms-input-placeholder, :root .mdl-slider.mdl-slider.is-upgraded {
       color: rgb(33,150,243);
       background-color: rgb(224,224,224); }
 
+.mdl-select .mdl-option--disabled .mdl-list__item {
+  cursor: default;
+  opacity: .5; }
+
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
  *
@@ -13327,4 +13331,4 @@ table.docu {
     opacity: 0.8;
     font-size: 16px; }
 
-/*# sourceMappingURL=app.96884b5f6e68aec1b5ea.css.map*/
+/*# sourceMappingURL=app.d3438f741f40ae529c21.css.map*/
