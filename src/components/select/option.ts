@@ -35,7 +35,9 @@ export class MdlOptionComponent {
     } else {
       this.selected = this.value == value;
     }
-    this.changeDetectionRef.detectChanges();
+    if (!(<any>this.changeDetectionRef)['destroyed']) {
+        this.changeDetectionRef.detectChanges();
+    }
   }
 
   ngAfterViewInit() {
