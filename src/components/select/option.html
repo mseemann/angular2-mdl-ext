@@ -1,6 +1,6 @@
 <div
     class="mdl-list__item"
-    (click)="onSelect(value)"
+    (click)="select($event)"
     [class.is-active]="selected">
 
   <div *ngIf="multiple" class="mdl-list__item-secondary-action">
