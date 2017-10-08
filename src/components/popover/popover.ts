@@ -57,6 +57,11 @@ export interface IPositionCoordinates {
 
 @Injectable()
 export class PopupPositionService {
+    public updatePosition(forElement: HTMLElement, popoverElement: HTMLElement, position: string): void {
+        const coordinates = this.calculateCoordinates(forElement, popoverElement, position);
+        this.applyCoordinates(coordinates, popoverElement.style);
+    }
+
     public applyCoordinates(coordinates: IPositionCoordinates, elementStyle: CSSStyleDeclaration) {
         if (!coordinates) {
             return;
@@ -167,12 +172,16 @@ export class MdlPopoverComponent {
         const targetRect = (<HTMLElement>event.target).getBoundingClientRect();
         const viewHeight = window.innerHeight;
 
-        setTimeout(() => {
-            if (forElement && this.position) {
-                const forHtmlElement = this.getHtmlElement(forElement);
-                const coordinates = this.popupPositionService.calculateCoordinates(forHtmlElement, popoverElement, this.position);
-                this.popupPositionService.applyCoordinates(coordinates, popoverElement.style);
+        const positionUpdateRequired = forElement && this.position;
+        if (positionUpdateRequired) {
+            popoverElement.style.visibility = 'hidden';
+        }
 
+        setTimeout(() => {
+            if (positionUpdateRequired) {
+                const forHtmlElement = this.getHtmlElement(forElement);
+                this.popupPositionService.updatePosition(forHtmlElement, popoverElement, this.position);      
+                popoverElement.style.visibility = 'visible';
                 this.changeDetectionRef.markForCheck();
                 // since we have user specified directions maybe it's better to let user to decide when and where the popup should be directed at?
                 // my point: we should not use the following code with "auto dirrection up"
