@@ -50,7 +50,7 @@ const BOTTOM_RIGHT = 'bottom-right'; // Below the element, aligned to its right.
 const TOP_LEFT = 'top-left'; // Above the element, aligned to its left.
 const TOP_RIGHT = 'top-right'; // Above the element, aligned to its right.
 
-interface IPositionCoordinates {
+export interface IPositionCoordinates {
     left: number;
     top: number;
 }
@@ -65,13 +65,8 @@ export class PopupPositionService {
         elementStyle.right =
             elementStyle.bottom = '';
 
-        for (const propertyName in coordinates) {
-            if (!coordinates.hasOwnProperty(propertyName)) {
-                continue;
-            }
-            const value = coordinates[propertyName];
-            elementStyle[propertyName] = value ? value + 'px' : '';
-        }
+        elementStyle.left = coordinates.left + 'px';
+        elementStyle.top = coordinates.top + 'px';
     }
 
     public calculateCoordinates(forElement: HTMLElement, popoverElement: HTMLElement, position: string): IPositionCoordinates {
