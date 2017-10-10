@@ -78,8 +78,6 @@ describe('VirtualTableComponent', () => {
             }, 20); //wait for requestAnimationFrame
         });
     }));
-    
-    
 });
 
 @Component({
@@ -90,7 +88,7 @@ describe('VirtualTableComponent', () => {
     [rowDataStream]="rowDataStream" [rowCountStream]="rowCountStream" 
     (rowCountRequest)="onRowCountRequest()" (rowDataRequest)="onRowDataRequest($event)"
     (sort)="onSort($event)" (rowClick)="onRowClick($event)">
-      <mdl-column label="Index" sortable="true" field="_index" width="1%"></mdl-column>
+      <mdl-column label="Index" sortable field="_index" width="1%"></mdl-column>
       <mdl-column label="Description" field="_label" width="1%">
         <ng-template let-value><div style="text-align: right;">Title: {{value}}</div></ng-template>
       </mdl-column>
