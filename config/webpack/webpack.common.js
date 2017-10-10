@@ -29,9 +29,8 @@ module.exports = {
 				test: /.ts$/,
 				loader: 'string-replace-loader',
 				query: {
-					multiple: [
-						{search: new RegExp('moduleId: module.id,', 'g'), replace: ''}
-					]
+					search: new RegExp('moduleId: module.id,', 'g'), 
+					replace: ''
 				}
 			},
 			{
