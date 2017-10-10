@@ -18,12 +18,15 @@ import {
 } from '@angular/core';
 import {VirtualScrollComponent, ChangeEvent} from 'angular2-virtual-scroll';
 import {MdlVirtualTableColumnComponent} from './column.component';
-import {Observable, Subject} from 'rxjs';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 declare var IntersectionObserver: any;
 
 @Component({
+    moduleId: module.id,
     selector: 'mdl-virtual-table',
     changeDetection: ChangeDetectionStrategy.Default,
     template: `
@@ -76,12 +79,20 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
     private _isFlexHeight: boolean = false;
     @HostBinding('class.flex-height')
     @Input('flex-height')
-    get isFlexHeight() {
+    get isFlexHeight(): boolean {
         return this._isFlexHeight;
     }
-
     set isFlexHeight(value) {
         this._isFlexHeight = value != null && "" + value !== 'false';
+    }
+
+    private _isInitialLoadDisabled: boolean = false;
+    @Input('init-refresh-disabled')
+    get isInitialLoadDisabled(): boolean {
+        return this._isInitialLoadDisabled;
+    }
+    set isInitialLoadDisabled(value) {
+        this._isInitialLoadDisabled = value != null && "" + value !== 'false';
     }
 
     private _rowCount: number;
@@ -95,7 +106,7 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
     private requestRowDataSubject: Subject<any>;
     
     @Output() rowCountRequest: EventEmitter<any>;
-    @Output() rowDataRequest: EventEmitter<{offset: number, limit: number}>;
+    @Output() rowDataRequest: EventEmitter<{offset: number, limit: number, refresh?: boolean}>;
 
     rows: any[];
 
@@ -116,8 +127,10 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
       });
     }
 
-    ngOnInit() {		
+    ngOnInit() {	
+      if(!this.isInitialLoadDisabled)	{
         this.refresh(true);
+      }
     }
     
     ngAfterViewChecked() {    	
