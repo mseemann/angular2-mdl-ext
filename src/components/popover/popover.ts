@@ -62,7 +62,7 @@ export class PopupPositionService {
         this.applyCoordinates(coordinates, popoverElement.style);
     }
 
-    public applyCoordinates(coordinates: IPositionCoordinates, elementStyle: CSSStyleDeclaration) {
+    private applyCoordinates(coordinates: IPositionCoordinates, elementStyle: CSSStyleDeclaration) {
         if (!coordinates) {
             return;
         }
@@ -74,7 +74,7 @@ export class PopupPositionService {
         elementStyle.top = coordinates.top + 'px';
     }
 
-    public calculateCoordinates(forElement: HTMLElement, popoverElement: HTMLElement, position: string): IPositionCoordinates {
+    private calculateCoordinates(forElement: HTMLElement, popoverElement: HTMLElement, position: string): IPositionCoordinates {
         if (!forElement || !position) {
             return null;
         }

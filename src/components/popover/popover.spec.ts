@@ -13,7 +13,7 @@ describe('MdlPopover', () => {
             declarations: [TestComponent],
         });
 
-        TestBed.compileComponents().then( () => {
+        TestBed.compileComponents().then(() => {
             fixture = TestBed.createComponent(TestComponent);
             fixture.detectChanges();
         });
@@ -61,10 +61,10 @@ describe('MdlPopover', () => {
         let popoverComponentInstance = popoverComponent.componentInstance;
 
         expect(popoverComponentInstance.isVisible)
-          .toEqual(false, 'isVisible is not false');
+            .toEqual(false, 'isVisible is not false');
 
         expect(popoverNativeElement.classList.contains('is-visible'))
-          .toBe(false, 'did has css class is-visible');
+            .toBe(false, 'did has css class is-visible');
 
         spyOn(popoverComponentInstance, 'toggle').and.callThrough();
 
@@ -89,13 +89,13 @@ describe('MdlPopover', () => {
         expect(popoverComponentInstance.updateDirection).toHaveBeenCalled();
 
         expect(popoverComponentInstance.isVisible)
-          .toEqual(true, 'toggle did not update isVisible to true');
+            .toEqual(true, 'toggle did not update isVisible to true');
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
 
             expect(popoverNativeElement.classList.contains('is-visible'))
-              .toBe(true, 'did not has css class is-visible');
+                .toBe(true, 'did not has css class is-visible');
         });
     }));
 
@@ -109,10 +109,10 @@ describe('MdlPopover', () => {
         let anotherPopoverComponentInstance = fixture.debugElement.query(By.css('#anotherPopover')).componentInstance;
 
         expect(popoverComponentInstance.isVisible)
-          .toEqual(false, 'isVisible is not false');
+            .toEqual(false, 'isVisible is not false');
 
         expect(popoverNativeElement.classList.contains('is-visible'))
-          .toBe(false, 'did has css class is-visible');
+            .toBe(false, 'did has css class is-visible');
 
         spyOn(popoverComponentInstance, 'toggle').and.callThrough();
 
@@ -129,13 +129,13 @@ describe('MdlPopover', () => {
         expect(popoverComponentInstance.updateDirection).toHaveBeenCalled();
 
         expect(popoverComponentInstance.isVisible)
-          .toEqual(true, 'toggle did not update isVisible to true');
+            .toEqual(true, 'toggle did not update isVisible to true');
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
 
             expect(popoverNativeElement.classList.contains('is-visible'))
-              .toBe(true, 'did not has css class is-visible');
+                .toBe(true, 'did not has css class is-visible');
         });
 
         let hideAllPopoversSpy = spyOn(anotherPopoverComponentInstance, 'hideAllPopovers').and.callThrough();
@@ -149,12 +149,12 @@ describe('MdlPopover', () => {
         });
     }));
 
-    it('should use user specified popover position', async(() => { 
+    it('should use user specified popover position', async(() => {
         let popoverComponent = fixture.debugElement.query(By.css('#positionPopover'));
         let popoverNativeElement = popoverComponent.nativeElement;
         let popoverComponentInstance = popoverComponent.componentInstance;
 
-        let buttonNativeElement = fixture.debugElement.query(By.css('#positionPopoverButton')).nativeElement; 
+        let buttonNativeElement = fixture.debugElement.query(By.css('#positionPopoverButton')).nativeElement;
 
         expect(popoverComponentInstance.isVisible)
             .toEqual(false, 'isVisible is not false');
@@ -184,6 +184,16 @@ describe('MdlPopover', () => {
             expect(popoverNativeElement.classList.contains('is-visible'))
                 .toBe(true, 'did not has css class is-visible');
         });
+
+        spyOn(popoverComponentInstance, 'hide').and.callThrough();
+        popoverComponentInstance.hide();
+
+        const allOtherPositions = ['bottom-right', 'top-left', 'top-right', 'non-existent-one!'];
+        for (const position of allOtherPositions) {
+            popoverComponentInstance.position = position;
+            buttonNativeElement.click();
+            popoverComponentInstance.hide();
+        }
     }));
 });
 
@@ -200,4 +210,4 @@ describe('MdlPopover', () => {
       <mdl-popover id="positionPopover" #positionPopover mdl-popover-position="bottom-left">popover with position set</mdl-popover>
     `
 })
-class TestComponent {}
+class TestComponent { }
