@@ -149,7 +149,7 @@ describe('MdlPopover', () => {
         });
     }));
 
-    it('should use user specified popover position', async(() => {
+    it('should use user specified popover position', async(async () => {
         let popoverComponent = fixture.debugElement.query(By.css('#positionPopover'));
         let popoverNativeElement = popoverComponent.nativeElement;
         let popoverComponentInstance = popoverComponent.componentInstance;
@@ -180,19 +180,34 @@ describe('MdlPopover', () => {
             .toEqual(true, 'toggle did not update isVisible to true');
 
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(popoverNativeElement.classList.contains('is-visible'))
-                .toBe(true, 'did not has css class is-visible');
-        });
+        await fixture.whenStable();
+        expect(popoverNativeElement.classList.contains('is-visible'))
+            .toBe(true, 'did not has css class is-visible');
 
         spyOn(popoverComponentInstance, 'hide').and.callThrough();
         popoverComponentInstance.hide();
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(popoverNativeElement.classList.contains('is-visible'))
+            .toBe(false, 'has not css class is-visible');
 
         const allOtherPositions = ['bottom-right', 'top-left', 'top-right', 'non-existent-one!'];
         for (const position of allOtherPositions) {
             popoverComponentInstance.position = position;
             buttonNativeElement.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expect(popoverNativeElement.classList.contains('is-visible'))
+                .toBe(true, 'did not has css class is-visible');
+
             popoverComponentInstance.hide();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expect(popoverNativeElement.classList.contains('is-visible'))
+                .toBe(false, 'has not css class is-visible');
         }
     }));
 });
