@@ -4,10 +4,7 @@
     [class.is-active]="selected">
 
   <div *ngIf="multiple" class="mdl-list__item-secondary-action">
-    <div
-        class="mdl-checkbox is-upgraded"
-        [class.is-checked]="selected"
-        (click)="onSelect(value)">
+    <div class="mdl-checkbox is-upgraded" [class.is-checked]="selected">
       <input type="checkbox" class="mdl-checkbox__input">
       <span class="mdl-checkbox__label"></span>
       <span class="mdl-checkbox__focus-helper"></span>
