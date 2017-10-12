@@ -246,7 +246,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
             selectOptionComponent.onSelect = this.onSelect.bind(this);
 
             if (selectOptionComponent.value != null) {
-                this.textByValue[this.stringifyValue(selectOptionComponent.value)] = selectOptionComponent.text;
+                this.textByValue[this.stringifyValue(selectOptionComponent.value)] = selectOptionComponent.contentWrapper.nativeElement.textContent.trim();
             }
         });
     }
