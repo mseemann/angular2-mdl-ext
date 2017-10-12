@@ -25,7 +25,7 @@
     "@angular/core": "4.4.4",
     "@angular/forms": "4.4.4",
     "@angular/http": "4.4.4",
-    "@angular/platform-browser": "4.4.4",
+    "@angular/platform-browser": "4.4.5",
     "@angular/platform-browser-dynamic": "4.4.4",
     "@angular/router": "4.4.4",
     "@mseemann/prism": "0.0.1",
