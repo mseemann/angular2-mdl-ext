@@ -240,6 +240,51 @@ describe('MdlSelect', () => {
 
     });
 
+    describe('single, without model', () => {
+
+        let fixture: ComponentFixture<TestSingleComponentNoModel>;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [MdlSelectModule.forRoot()],
+                declarations: [TestSingleComponentNoModel],
+            });
+
+            TestBed.compileComponents().then( () => {
+                fixture = TestBed.createComponent(TestSingleComponentNoModel);
+                fixture.detectChanges();
+            });
+        }));
+
+        it('should select vlaue and display text', async(() => {
+
+            let selectComponentInstance = fixture.debugElement.query(By.directive(MdlSelectComponent)).componentInstance;
+
+            let noModelData = [
+              {value: 'first', text: 'Bryan Cranston'},
+              {value: 'second', text: 'Aaron Paul'},
+              {value: 'third', text: 'Bob Odenkirk'}
+            ];
+
+            selectComponentInstance.onSelect(noModelData[0].value);
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(selectComponentInstance.text)
+                  .toEqual( noModelData[0].text, 'text is not displayed');
+
+                  selectComponentInstance.onSelect(noModelData[1].value);
+
+                  fixture.detectChanges();
+                  fixture.whenStable().then(() => {
+                    expect(selectComponentInstance.text)
+                    .toEqual( noModelData[1].text, 'text is not displayed');
+                  });
+            });
+
+        }));
+    });
+
     describe('disabled', () => {
 
         let fixture: ComponentFixture<TestDisabledComponent>;
@@ -637,6 +682,20 @@ class TestSingleComponent {
         {id: 2, name: 'Aaron Paul'},
         {id: 3, name: 'Bob Odenkirk'},
     ];
+}
+
+@Component({
+    selector: 'test-single-component-no-model',
+    template: `
+        <mdl-select placeholder="{{label}}">
+          <mdl-option value="first">Bryan Cranston</mdl-option>
+          <mdl-option value="second">Aaron Paul</mdl-option>
+          <mdl-option value="third">Bob Odenkirk</mdl-option>
+        </mdl-select>
+    `
+})
+class TestSingleComponentNoModel {
+    placeholder: string = 'no model';
 }
 
 @Component({
