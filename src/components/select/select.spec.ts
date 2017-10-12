@@ -271,14 +271,14 @@ describe('MdlSelect', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(selectComponentInstance.text)
-                  .toEqual( noModelData[0].text, 'text is not displayed');
+                  .toEqual( noModelData[0].text);
 
                   selectComponentInstance.onSelect(noModelData[1].value);
 
                   fixture.detectChanges();
                   fixture.whenStable().then(() => {
                     expect(selectComponentInstance.text)
-                    .toEqual( noModelData[1].text, 'text is not displayed');
+                    .toEqual( noModelData[1].text);
                   });
             });
 
@@ -592,7 +592,7 @@ describe('MdlSelect', () => {
                     });
                 });
 
-                
+
             });
 
         }));
@@ -687,7 +687,7 @@ class TestSingleComponent {
 @Component({
     selector: 'test-single-component-no-model',
     template: `
-        <mdl-select placeholder="{{label}}">
+        <mdl-select placeholder="{{placeholder}}">
           <mdl-option value="first">Bryan Cranston</mdl-option>
           <mdl-option value="second">Aaron Paul</mdl-option>
           <mdl-option value="third">Bob Odenkirk</mdl-option>
@@ -731,4 +731,3 @@ class TestObjectComponent {
         {id: 3, name: 'Bob Odenkirk'},
     ];
 }
-
