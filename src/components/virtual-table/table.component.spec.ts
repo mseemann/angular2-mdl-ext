@@ -7,8 +7,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000000;
-
 describe('VirtualTableComponent', () => {
 
 
@@ -195,7 +193,23 @@ describe('VirtualTableComponent', () => {
                 done();
             }, 10); // IntersectionObserver delay
         });
-    }); 
+    });
+
+    it('should refresh table on refresh call', async(() => {
+        let testInstance = fixture.componentInstance;
+        let debugTableInstance = fixture.debugElement.query(By.directive(MdlVirtualTableComponent));
+        let componentInstance: MdlVirtualTableComponent = debugTableInstance.
+            componentInstance;
+
+        testInstance.initData(rows);
+        fixture.autoDetectChanges();
+        fixture.whenStable().then(() => {
+            
+            spyOn(testInstance, 'onRowDataRequest').and.callThrough();
+            componentInstance.refresh();
+            expect(testInstance.onRowDataRequest).toHaveBeenCalled();
+        });
+    }));
     
     
 });
@@ -316,6 +330,7 @@ class TestMdlVirtualTableComponentWithoutRowDataRequest extends TestMdlVirtualTa
     <div style="display: flex; flex-direction: column; max-height: 100vh">
     <mdl-virtual-table #table flex-height mdl-shadow="2" maxHeight="500px"
     [rowDataStream]="rowDataStream" [rowCountStream]="rowCountStream"
+    intersection-observer-disabled 
     (rowCountRequest)="onRowCountRequest()" (rowDataRequest)="onRowDataRequest($event)">
         <mdl-column label="Index" sortable field="_index" width="1%"></mdl-column>
         <mdl-column label="Description" field="_label" width="1%">
