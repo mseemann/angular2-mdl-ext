@@ -95,6 +95,15 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
         this._isInitialLoadDisabled = value != null && "" + value !== 'false';
     }
 
+    private _isIntersectionObserverDisabled: boolean = false;
+    @Input('intersection-observer-disabled')
+    get isIntersectionObserverDisabled(): boolean {
+        return this._isIntersectionObserverDisabled;
+    }
+    set isIntersectionObserverDisabled(value) {
+        this._isIntersectionObserverDisabled = value != null && "" + value !== 'false';
+    }
+
     private _rowCount: number;
     private _visibleRowOffset: number;
     private _nativeElementObserver: any;
@@ -133,8 +142,9 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
       }
     }
     
-    ngAfterViewChecked() {    	
-    	if(!this._nativeElementObserver && this.virutalScrollElement.nativeElement) {
+    ngAfterViewChecked() {
+      if(!this._nativeElementObserver && this.virutalScrollElement.nativeElement
+        && !this.isIntersectionObserverDisabled) {
         this._nativeElementObserver = new IntersectionObserver((entries: any[]) => {
         
           if(!(entries.shift().intersectionRatio > 0)) {
