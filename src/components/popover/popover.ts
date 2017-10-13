@@ -68,7 +68,7 @@ export class PopupPositionService {
         }
 
         elementStyle.right =
-            elementStyle.bottom = '';
+        elementStyle.bottom = '';
 
         elementStyle.left = coordinates.left + 'px';
         elementStyle.top = coordinates.top + 'px';
@@ -169,8 +169,6 @@ export class MdlPopoverComponent {
 
     private updateDirection(event: Event, forElement: any = null) {
         const popoverElement = this.elementRef.nativeElement;
-        const targetRect = (<HTMLElement>event.target).getBoundingClientRect();
-        const viewHeight = window.innerHeight;
 
         const positionUpdateRequired = forElement && this.position;
         if (positionUpdateRequired) {
@@ -180,7 +178,7 @@ export class MdlPopoverComponent {
         setTimeout(() => {
             if (positionUpdateRequired) {
                 const forHtmlElement = this.getHtmlElement(forElement);
-                this.popupPositionService.updatePosition(forHtmlElement, popoverElement, this.position);      
+                this.popupPositionService.updatePosition(forHtmlElement, popoverElement, this.position);
                 popoverElement.style.visibility = 'visible';
                 this.changeDetectionRef.markForCheck();
                 // since we have user specified directions maybe it's better to let user to decide when and where the popup should be directed at?
@@ -188,6 +186,8 @@ export class MdlPopoverComponent {
                 return;
             }
 
+            const targetRect = (<HTMLElement>event.target).getBoundingClientRect();
+            const viewHeight = window.innerHeight;
             const height = popoverElement.offsetHeight;
             if (height) {
                 const bottomSpaceAvailable = viewHeight - targetRect.bottom
