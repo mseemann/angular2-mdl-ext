@@ -49,4 +49,5 @@ to your polyfills.
 | Name | Type | Description |
 | --- | --- | --- |
 | `[value]` | any | Option value
+| `[disabled]` | boolean | Whether or not the option is disabled
 | `<content>` | string | Option label

@@ -90,4 +90,13 @@
       }
     }
   }
+
+  .mdl-option--disabled {
+    .mdl-list {
+      &__item {
+        cursor: default;
+        opacity: .5;
+      }
+    }
+  }
 }

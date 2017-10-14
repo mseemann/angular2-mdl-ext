@@ -4,7 +4,7 @@
 
 <form [formGroup]="form">
   <mdl-select formControlName="personId">
-    <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
+    <mdl-option *ngFor="let p of people" [value]="p.id" [disabled]="p.disabled">{{p.name}}</mdl-option>
   </mdl-select>
 </form>
 
@@ -12,7 +12,7 @@
   <![CDATA[
 <form [formGroup]="form">
   <mdl-select formControlName="personId">
-    <mdl-option *ngFor="let p of people" [value]="p.id">{{p.name}}</mdl-option>
+    <mdl-option *ngFor="let p of people" [value]="p.id" [disabled]="p.disabled">{{p.name}}</mdl-option>
   </mdl-select>
 </form>
    ]]>
@@ -130,6 +130,27 @@
 <mdl-select [(ngModel)]="countryCodes" [multiple]="true" disabled="true" placeholder="Select countries">
   <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
 </mdl-select>
+   ]]>
+</pre>
+
+
+<h5>Dynamically generated selects with *ngFor</h5>
+
+<div *ngFor="let countryCode of countryCodes; let i = index">
+  <mdl-select [(ngModel)]="countryCodes[i]" [placeholder]="'Select '+i">
+    <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+  </mdl-select>
+</div>
+
+<pre>countryCodes: {{ countryCodes | json }}</pre>
+
+<pre prism ngNonBindable>
+  <![CDATA[
+<div *ngFor="let countryCode of countryCodes; let i = index">
+  <mdl-select [(ngModel)]="countryCodes[i]" [placeholder]="'Select '+i">
+    <mdl-option *ngFor="let c of countries" [value]="c.code">{{c.name}}</mdl-option>
+  </mdl-select>
+</div>
    ]]>
 </pre>
 
