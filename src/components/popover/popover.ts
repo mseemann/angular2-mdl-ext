@@ -170,19 +170,14 @@ export class MdlPopoverComponent {
     private updateDirection(event: Event, forElement: any = null) {
         const popoverElement = this.elementRef.nativeElement;
 
-        const positionUpdateRequired = forElement && this.position;
-        if (positionUpdateRequired) {
-            popoverElement.style.visibility = 'hidden';
-        }
+        popoverElement.style.visibility = 'hidden';
 
         setTimeout(() => {
-            if (positionUpdateRequired) {
+            if (forElement && this.position) {
                 const forHtmlElement = this.getHtmlElement(forElement);
                 this.popupPositionService.updatePosition(forHtmlElement, popoverElement, this.position);
                 popoverElement.style.visibility = 'visible';
                 this.changeDetectionRef.markForCheck();
-                // since we have user specified directions maybe it's better to let user to decide when and where the popup should be directed at?
-                // my point: we should not use the following code with "auto dirrection up"
                 return;
             }
 
@@ -192,6 +187,7 @@ export class MdlPopoverComponent {
             if (height) {
                 const bottomSpaceAvailable = viewHeight - targetRect.bottom
                 this.directionUp = bottomSpaceAvailable < height;
+                popoverElement.style.visibility = 'visible';
                 this.changeDetectionRef.markForCheck();
             }
         });
