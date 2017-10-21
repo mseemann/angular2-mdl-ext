@@ -1,6 +1,5 @@
-@import "../../../node_modules/@angular-mdl/core/scss/variables";
-
-@import "../popover/popover";
+@import "~@angular-mdl/core/scss/variables";
+@import "../popover/variables";
 
 .mdl-select {
   &--floating-label {
