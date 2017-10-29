@@ -119,7 +119,6 @@ export class MdlPopoverComponent {
     @Output() onShow: EventEmitter<any> = new EventEmitter();
     @Output() onHide: EventEmitter<any> = new EventEmitter();
     @HostBinding('class.is-visible') public isVisible = false;
-    @HostBinding('class.direction-up') public directionUp = false;
     @HostListener('click', ['$event']) onClick(event: Event) {
         if (!this.hideOnClick) {
             event.stopPropagation();
@@ -167,30 +166,15 @@ export class MdlPopoverComponent {
         }
     }
 
-    private updateDirection(event: Event, forElement: any = null) {
-        const popoverElement = this.elementRef.nativeElement;
-
-        popoverElement.style.visibility = 'hidden';
-
-        setTimeout(() => {
-            if (forElement && this.position) {
-                const forHtmlElement = this.getHtmlElement(forElement);
-                this.popupPositionService.updatePosition(forHtmlElement, popoverElement, this.position);
-                popoverElement.style.visibility = 'visible';
-                this.changeDetectionRef.markForCheck();
-                return;
-            }
-
-            const targetRect = (<HTMLElement>event.target).getBoundingClientRect();
-            const viewHeight = window.innerHeight;
-            const height = popoverElement.offsetHeight;
-            if (height) {
-                const bottomSpaceAvailable = viewHeight - targetRect.bottom
-                this.directionUp = bottomSpaceAvailable < height;
-                popoverElement.style.visibility = 'visible';
-                this.changeDetectionRef.markForCheck();
-            }
-        });
+    private updateDirection(event: Event, forElement: any) {
+        if (forElement && this.position) {
+            const popoverElement = this.elementRef.nativeElement;
+            
+            const forHtmlElement = this.getHtmlElement(forElement);
+            this.popupPositionService.updatePosition(forHtmlElement, popoverElement, this.position);
+            this.changeDetectionRef.markForCheck();
+            return;
+        }
     }
 
     private getHtmlElement(forElement: any): HTMLElement {

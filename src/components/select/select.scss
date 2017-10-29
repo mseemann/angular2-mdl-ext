@@ -1,4 +1,6 @@
-@import "../popover/variables";
+@import "~@angular-mdl/core/scss/variables";
+$input-text-focus-border-width: 2px;
+$popover-direction-up-bottom-offset: $input-text-vertical-spacing + $input-text-focus-border-width;
 
 .mdl-select {
   &--floating-label {
@@ -25,8 +27,9 @@
     }
   }
 
-  .mdl-popover.mdl-popover--above {
-    &.direction-up {
+  .mdl-popover.direction-up {
+    bottom: $popover-direction-up-bottom-offset;
+    &.mdl-popover--above {
       bottom: $popover-direction-up-bottom-offset + $input-text-vertical-spacing + $input-text-font-size + $input-text-padding * 2;
     }
   }
