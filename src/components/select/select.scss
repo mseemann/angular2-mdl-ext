@@ -1,4 +1,5 @@
-@import "~@angular-mdl/core/scss/variables";
+// the path must be absolute becase gulp-scss is not able to use the webpack shorthand!
+@import "../../../node_modules/@angular-mdl/core/scss/variables";
 $input-text-focus-border-width: 2px;
 $popover-direction-up-bottom-offset: $input-text-vertical-spacing + $input-text-focus-border-width;
 
