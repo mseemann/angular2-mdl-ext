@@ -25,6 +25,7 @@
   <label class="mdl-textfield__label" [attr.for]="textfieldId">{{ label }}</label>
   <span class="mdl-textfield__error"></span>
   <mdl-popover #popover tabindex="-1"
+               [class.direction-up]="directionUp"
                [class.mdl-popover--above]="autocomplete"
                [hide-on-click]="!multiple"
                [style.minWidth.%]="100">

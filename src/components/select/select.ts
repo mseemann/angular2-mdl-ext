@@ -13,7 +13,9 @@ import {
     QueryList,
     ViewChild,
     ViewEncapsulation,
-    HostListener
+    HostListener,
+    HostBinding,
+    AfterViewInit
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -71,7 +73,7 @@ export class SearchableComponent {
     encapsulation: ViewEncapsulation.None,
     providers: [MDL_SELECT_VALUE_ACCESSOR]
 })
-export class MdlSelectComponent extends SearchableComponent implements ControlValueAccessor, AfterContentInit {
+export class MdlSelectComponent extends SearchableComponent implements ControlValueAccessor, AfterContentInit, AfterViewInit {
     @Input() ngModel: any;
     @Input() disabled: boolean = false;
     @Input() autocomplete: boolean = false;
@@ -86,6 +88,9 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     @ViewChild('selectInput') selectInput: ElementRef;
     @ViewChild(MdlPopoverComponent) public popoverComponent: MdlPopoverComponent;
     @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
+    private selectElement: HTMLElement;
+    private popoverElement: HTMLElement;
+    private directionUp = false;
     private _isFloatingLabel: boolean = false;
     textfieldId: string;
     text: string = '';
@@ -94,7 +99,8 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     private onTouched: any = Function.prototype;
     focused: boolean = false;
 
-    constructor(private changeDetectionRef: ChangeDetectorRef) {
+    constructor(private changeDetectionRef: ChangeDetectorRef,
+        private elementRef: ElementRef) {
         super();
         this.textfieldId = `mdl-textfield-${randomId()}`;
     }
@@ -108,6 +114,11 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         });
         this.popoverComponent.onShow.subscribe(() => this.onOpen());
         this.popoverComponent.onHide.subscribe(() => this.onClose());
+    }
+    
+    public ngAfterViewInit() {
+        this.selectElement = <HTMLElement>this.elementRef.nativeElement;
+        this.popoverElement = <HTMLElement>this.popoverComponent.elementRef.nativeElement;
     }
 
     @HostListener('keydown', ['$event'])
@@ -164,7 +175,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     }
 
     private getCurrentOption() {
-        return this.optionComponents ? this.optionComponents.toArray().find(option => option.selected) : null;
+        return this.optionComponents ? this.optionComponents.find(option => option.selected) : null;
     }
 
     public isDirty(): boolean {
@@ -182,12 +193,11 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     }
 
     private getAutoSelection(): any {
-        let optionsList = this.optionComponents.toArray();
-        const filteredOptions = optionsList.filter(option => {
+        const filteredOptions = this.optionComponents.filter(option => {
             return option.text.toLowerCase().startsWith(this.searchQuery);
         });
 
-        const selectedOption = optionsList.find(option => option.selected);
+        const selectedOption = this.optionComponents.find(option => option.selected);
 
         if (filteredOptions.length > 0) {
             const selectedOptionInFiltered = filteredOptions.indexOf(selectedOption) != -1;
@@ -210,13 +220,13 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
 
         if (optionForSelection) {
             const value = optionForSelection.value;
-            this.focusValue(value);
+            this.selectValue(value);
         }
 
         $event.preventDefault();
     }
 
-    private focusValue(value: any) {
+    private selectValue(value: any) {
         this.scrollToValue(value);
 
         if (this.optionComponents) {
@@ -261,7 +271,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
 
         if (this.optionComponents) {
             const _value = (!this.multiple && this.optionComponents.length === 1)
-                ? this.optionComponents.toArray()[0].value
+                ? this.optionComponents.first.value
                 : value;
 
             this.optionComponents.forEach((selectOptionComponent) => {
@@ -302,16 +312,34 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
 
     private onOpen() {
         if (!this.disabled) {
-            this.focused = true;
-            this.focusValue(this.ngModel);
+            this.popoverElement.style.visibility = 'hidden';
+
+            setTimeout(() => {
+                this.focused = true;
+                this.selectValue(this.ngModel);
+                this.tryToUpdateDirection();
+                this.popoverElement.style.visibility = 'visible';
+            });
+        }
+    }
+
+    private tryToUpdateDirection() {
+        const targetRect = this.selectElement.getBoundingClientRect();
+        const viewHeight = window.innerHeight;
+        const height = this.popoverElement.offsetHeight;
+        if (height) {
+            const bottomSpaceAvailable = viewHeight - targetRect.bottom
+            this.directionUp = bottomSpaceAvailable < height;
+            this.changeDetectionRef.markForCheck();
         }
     }
 
     private onClose() {
         if (!this.disabled) {
             this.focused = false;
-            this.focusValue(this.ngModel);
+            this.selectValue(this.ngModel);
             this.selectInput.nativeElement.value = this.text;
+            this.popoverElement.style.visibility = 'hidden';            
         }
     }
 
@@ -328,17 +356,14 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     private scrollToValue(value: any) {
         let popover: any = this.popoverComponent.elementRef.nativeElement;
         let list: any = popover.querySelector(".mdl-list");
-        let option: any = null;
 
-        this.optionComponents.forEach(o => {
-            // not great for long lists because break is not available
-            if (o.value == value) {
-                option = o.contentWrapper.nativeElement;
-            }
-        });
+        const optionComponent = this.optionComponents.find(o => o.value == value);
+        let optionElement: any = optionComponent 
+            ? optionComponent.contentWrapper.nativeElement 
+            : null;
 
-        if (option) {
-            const selectedItemElem = option.parentElement;
+        if (optionElement) {
+            const selectedItemElem = optionElement.parentElement;
             const computedScrollTop = selectedItemElem.offsetTop - (list.clientHeight / 2) + (selectedItemElem.clientHeight / 2);
             list.scrollTop =  Math.max(computedScrollTop, 0);
         }
