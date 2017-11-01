@@ -29,7 +29,7 @@
     "@angular/platform-browser-dynamic": "4.4.4",
     "@angular/router": "4.4.4",
     "@mseemann/prism": "0.0.1",
-    "angular2-virtual-scroll": "github:kmcs/angular2-virtual-scroll#b70c730",
+    "angular2-virtual-scroll": "github:kmcs/angular2-virtual-scroll#a83b922",
     "core-js": "2.5.1",
     "custom-event-polyfill": "^0.3.0",
     "match-sorter": "2.0.0",
