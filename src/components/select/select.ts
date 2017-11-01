@@ -90,7 +90,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
     private selectElement: HTMLElement;
     private popoverElement: HTMLElement;
-    private directionUp = false;
+    directionUp = false;
     private _isFloatingLabel: boolean = false;
     textfieldId: string;
     text: string = '';
