@@ -90,7 +90,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
     private selectElement: HTMLElement;
     private popoverElement: HTMLElement;
-    private directionUp = false;
+    directionUp = false;
     private _isFloatingLabel: boolean = false;
     textfieldId: string;
     text: string = '';
@@ -115,7 +115,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         this.popoverComponent.onShow.subscribe(() => this.onOpen());
         this.popoverComponent.onHide.subscribe(() => this.onClose());
     }
-    
+
     public ngAfterViewInit() {
         this.selectElement = <HTMLElement>this.elementRef.nativeElement;
         this.popoverElement = <HTMLElement>this.popoverComponent.elementRef.nativeElement;
@@ -339,7 +339,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
             this.focused = false;
             this.selectValue(this.ngModel);
             this.selectInput.nativeElement.value = this.text;
-            this.popoverElement.style.visibility = 'hidden';            
+            this.popoverElement.style.visibility = 'hidden';
         }
     }
 
@@ -358,8 +358,8 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         let list: any = popover.querySelector(".mdl-list");
 
         const optionComponent = this.optionComponents.find(o => o.value == value);
-        let optionElement: any = optionComponent 
-            ? optionComponent.contentWrapper.nativeElement 
+        let optionElement: any = optionComponent
+            ? optionComponent.contentWrapper.nativeElement
             : null;
 
         if (optionElement) {
