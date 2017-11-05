@@ -84,6 +84,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     @Input() placeholder: string = '';
     @Input() multiple: boolean = false;
     @Output() change: EventEmitter<any> = new EventEmitter(true);
+    @Output() blur: EventEmitter<any> = new EventEmitter(true);
     @Output() inputChange: EventEmitter<any> = new EventEmitter(true);
     @ViewChild('selectInput') selectInput: ElementRef;
     @ViewChild(MdlPopoverComponent) public popoverComponent: MdlPopoverComponent;
@@ -339,7 +340,8 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
             this.focused = false;
             this.selectValue(this.ngModel);
             this.selectInput.nativeElement.value = this.text;
-            this.popoverElement.style.visibility = 'hidden';            
+            this.popoverElement.style.visibility = 'hidden';
+            this.blur.emit(this.ngModel);
         }
     }
 
