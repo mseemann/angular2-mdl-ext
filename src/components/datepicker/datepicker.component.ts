@@ -94,7 +94,7 @@ export class DatePickerDialogComponent {
     // caveat year switch
     // 52 - 5
     // 48 - 1
-    // console.log(startWeek, endWeek);
+    //console.log(startWeek, endWeek);
 
     this.monthGridDays = [];
     let week = startWeek;
@@ -104,15 +104,16 @@ export class DatePickerDialogComponent {
     do {
       let firstDayInWeek = startDateOfMonth.add(1, 'week');
       week = firstDayInWeek.week();
-      this.monthGridDays.push(this.createMonthRow(this.mCurrentMonth.clone(), week));
+      this.monthGridDays.push(this.createMonthRow(firstDayInWeek.clone(), week));
     } while (week != endWeek);
   }
 
   private createMonthRow(mDate: any, week: number) {
+    const startWeek = mDate.week(week).startOf('week');
     return {
       week: week,
       days: Array(7).fill(0).map((n, i) => {
-        const mDay = mDate.week(week).startOf('week').clone().add(n + i, 'day');
+        const mDay = startWeek.clone().add(i, 'day');
         return {
           day: mDay,
           isCurrentMonth: this.isCurrentMonth(mDay)
