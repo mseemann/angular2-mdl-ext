@@ -61,7 +61,7 @@
     "gulp-clean-css": "3.9.2",
     "gulp-print": "2.0.1",
     "gulp-sass": "3.1.0",
-    "gulp-string-replace": "0.4.0",
+    "gulp-string-replace": "1.0.0",
     "gulp-typescript": "3.2.3",
     "handlebars-loader": "1.6.0",
     "html-loader": "0.5.1",
