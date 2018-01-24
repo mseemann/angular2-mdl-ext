@@ -41,7 +41,7 @@
     "@angular/compiler-cli": "4.4.6",
     "@angular/platform-server": "4.4.6",
     "@types/chai": "3.5.0",
-    "@types/core-js": "0.9.45",
+    "@types/core-js": "0.9.46",
     "@types/gulp": "4.0.3",
     "@types/jasmine": "2.8.4",
     "@types/merge2": "1.1.1",
