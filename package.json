@@ -56,7 +56,7 @@
     "extract-text-webpack-plugin": "3.0.1",
     "glob": "7.1.2",
     "gulp": "3.9.1",
-    "gulp-autoprefixer": "4.1.0",
+    "gulp-autoprefixer": "5.0.0",
     "gulp-clean": "0.4.0",
     "gulp-clean-css": "3.9.2",
     "gulp-print": "4.0.2",
