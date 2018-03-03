@@ -83,7 +83,7 @@
     "remap-istanbul": "0.10.0",
     "rimraf": "2.6.2",
     "run-sequence": "2.2.1",
-    "sass-loader": "6.0.6",
+    "sass-loader": "6.0.7",
     "string-replace-loader": "2.0.0",
     "style-loader": "0.20.2",
     "ts-helpers": "1.1.2",
