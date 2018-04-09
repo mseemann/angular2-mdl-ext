@@ -2,7 +2,10 @@
 import { CURRENT_DATE, DATEPICKER_CONFIG, DatePickerDialogComponent } from './datepicker.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { MdlButtonModule, MdlDialogReference, MdlIconModule, MdlRippleModule } from '@angular-mdl/core';
+import {
+  MdlButtonModule, MdlDialogModule, MdlDialogReference, MdlIconModule,
+  MdlRippleModule
+} from '@angular-mdl/core';
 import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment';
 
@@ -26,7 +29,8 @@ describe('DatePickerDialogComponent', () => {
                 CommonModule,
                 MdlButtonModule,
                 MdlIconModule,
-                MdlRippleModule
+                MdlRippleModule,
+                MdlDialogModule.forRoot()
             ],
             declarations: [DatePickerDialogComponent],
             providers: [

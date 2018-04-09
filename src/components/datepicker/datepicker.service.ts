@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { MdlDialogReference } from '@angular-mdl/core';
+import { MdlDialogOutletModule, MdlDialogReference } from '@angular-mdl/core';
 import { CURRENT_DATE, DATEPICKER_CONFIG, DatePickerDialogComponent } from './datepicker.component';
 import { NgModule } from '@angular/core';
 import { MdlButtonModule, MdlDialogModule, MdlDialogService, MdlIconModule, MdlRippleModule } from '@angular-mdl/core';
@@ -49,14 +49,14 @@ export class MdlDatePickerService {
     MdlButtonModule,
     MdlIconModule,
     MdlRippleModule,
-    MdlDialogModule
+    MdlDialogModule,
+    MdlDialogOutletModule
   ],
   exports: [],
   declarations: [ DatePickerDialogComponent ],
   entryComponents: [DatePickerDialogComponent],
   providers: [
-    MdlDatePickerService,
-    MdlDialogService
+    MdlDatePickerService
   ]
 })
 export class MdlDatePickerModule {
