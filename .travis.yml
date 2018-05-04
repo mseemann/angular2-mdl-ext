@@ -4,6 +4,7 @@ dist: trusty
 
 node_js:
   - '7.10.0'
+  - '10'
 
 branches:
   except:
