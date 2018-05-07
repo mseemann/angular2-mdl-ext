@@ -30,7 +30,7 @@
     "@angular/platform-browser-dynamic": "5.2.9",
     "@angular/router": "5.2.9",
     "@mseemann/prism": "0.0.1",
-    "core-js": "2.5.5",
+    "core-js": "2.5.6",
     "custom-event-polyfill": "^0.3.0",
     "match-sorter": "2.2.1",
     "moment": "^2.22.0",
