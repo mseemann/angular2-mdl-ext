@@ -194,9 +194,11 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     }
 
     private getAutoSelection(): any {
-        const filteredOptions = this.optionComponents.filter(option => {
-            return option.text.toLowerCase().startsWith(this.searchQuery);
-        });
+        const filteredOptions = this.optionComponents
+            .filter(({ disabled }) => !disabled)
+            .filter(option => {
+                return option.text.toLowerCase().startsWith(this.searchQuery);
+            });
 
         const selectedOption = this.optionComponents.find(option => option.selected);
 
@@ -212,7 +214,7 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     }
 
     private onArrow($event: KeyboardEvent, offset: number) {
-        const arr = this.optionComponents.toArray(),
+        const arr = this.optionComponents.toArray().filter(({ disabled }) => !disabled),
             selectedOption = arr.find(option => option.selected),
             selectedOptionIndex = arr.indexOf(selectedOption),
             optionForSelection = selectedOption !== null

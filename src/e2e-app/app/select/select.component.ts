@@ -27,7 +27,7 @@ export class SelectDemo {
     {id: 4, name: 'Dean Norris'},
     {id: 5, name: 'Jonathan Banks'},
     {id: 6, name: 'Seal Henry Olusegun Olumide Adeola Samuel'},
-    {id: 7, name: 'Rami Malek'},
+    {id: 7, name: 'Rami Malek', disabled: true},
     {id: 8, name: 'Christian Slater'},
     {id: 9, name: 'Martin Wallström'},
     {id: 10, name: 'Angela Sarafyan'},
