@@ -4631,7 +4631,7 @@ input.mdl-button[type="submit"] {
   font-size: 16px;
   line-height: normal;
   width: 100%;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0);
   padding: 8px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
@@ -13052,4 +13052,4 @@ table.docu {
     opacity: 0.8;
     font-size: 16px; }
 
-/*# sourceMappingURL=app.4fb1c92b1e263463d383.css.map*/
+/*# sourceMappingURL=app.5a9c99cb83d897951784.css.map*/
