@@ -50,7 +50,7 @@
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "5.1.1",
     "codeclimate-test-reporter": "0.5.0",
-    "copy-webpack-plugin": "4.2.1",
+    "copy-webpack-plugin": "4.5.2",
     "coveralls": "3.0.1",
     "cross-env": "5.2.0",
     "css-loader": "0.28.6",
