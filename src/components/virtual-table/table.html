@@ -1,0 +1,58 @@
+<div *ngIf="_useList" class="wrapper" #tableWrapper [class.flex-height]="isFlexHeight">
+    <div class="list-header">
+        <button mdl-button #btn2="mdlButton" (click)="m1.toggle($event, btn2)" class="list-sort-button" mdl-ripple>
+            <mdl-icon>sort</mdl-icon>
+        </button>
+        <mdl-menu #m1="mdlMenu" mdl-menu-position="bottom-right">
+            <div class="menu-item-label">Sortieren nach</div>
+            <div *ngFor="let col of columns">
+                <mdl-menu-item mdl-ripple (click)="toggleSortByColumn(col)" *ngIf="col.sortable" class="sortable" [class.asc]="col.sortDirection === 'asc'"
+                    [class.desc]="col.sortDirection === 'desc'">
+                    {{col.label}}
+                </mdl-menu-item>
+            </div>
+        </mdl-menu>
+    </div>
+    <virtual-scroll #scroll [childHeight]="responsiveList.itemHeight" [bufferAmount]="10" (update)="rows = $event" [style.maxHeight]="maxHeight"
+        [style.minHeight]="minHeight" [items]="values" (change)="onListChange($event)" (start)="onListChange($event)" (end)="onListChange($event)">
+        <div #container class="list">
+            <div class="list-item" (click)="onListItemClick($event, row, _visibleRowOffset + i)" [style.height]="responsiveList.styledItemHeight"
+                *ngFor="let row of rows; let i = index">
+                <ng-container *ngTemplateOutlet="responsiveList.itemTemplate; 
+           context: {$implicit: row ? row : {}, selection: rowSelectionById}"></ng-container>
+            </div>
+        </div>
+    </virtual-scroll>
+</div>
+<div *ngIf="!_useList" #tableWrapper class="wrapper mdl-data-table mdl-js-data-table mdl-data-table--selectable" [class.flex-height]="isFlexHeight">
+    <div class="scrollbar-space">
+        <div class="table-header">
+            <div class="table-row">
+                <div class="header-cell" *ngFor="let col of columns" [style.width]="col.width ? col.width : '1%'" [class.sortable]="col.sortable"
+                    [class.asc]="col.sortDirection === 'asc'" [class.desc]="col.sortDirection === 'desc'" (click)="toggleSortByColumn(col)">
+                    <mdl-checkbox #selectAllCheckbox *ngIf="col.rowSelection" (change)="onSelectAllRows($event)">
+                        {{col.label}}
+                    </mdl-checkbox>
+                    <span *ngIf="!col.rowSelection">{{col.label}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <virtual-scroll #scroll [childHeight]="rowHeight" [bufferAmount]="10" (update)="rows = $event" [style.maxHeight]="maxHeight"
+        [style.minHeight]="minHeight" [items]="values" (change)="onListChange($event)" (start)="onListChange($event)" (end)="onListChange($event)">
+        <div #container class="table">
+            <div class="table-row" *ngFor="let row of rows; let i = index" (click)="onRowClick($event, row, _visibleRowOffset + i)">
+                <div class="table-cell" *ngFor="let col of columns" [style.width]="col.width ? col.width : '1%'">
+                    <ng-container *ngTemplateOutlet="col.rowSelection ? selectionCellTemplate : (col.cellTemplate ? col.cellTemplate : defaultCellTemplate); 
+              context: {$implicit: row ? row[col.field] : '', row: row, index: (_visibleRowOffset + i), first: (_visibleRowOffset + i) === 0, last: (_visibleRowOffset + i +1) === _rowCount, selected: _rowSelectionByIndex[(_visibleRowOffset + i)]}"></ng-container>
+                </div>
+            </div>
+        </div>
+    </virtual-scroll>
+    <ng-template #defaultCellTemplate let-value>
+        <span>{{value}}</span>
+    </ng-template>
+    <ng-template #selectionCellTemplate let-row="row" let-index>
+        <mdl-checkbox (change)="onChangeRowSelection($event, index)" [value]="_rowSelectionByIndex[index]"></mdl-checkbox>
+    </ng-template>
+</div>

@@ -15,6 +15,13 @@ export class MdlVirtualTableColumnComponent {
         return this._sortable;
     }
     _sortable: boolean = false;
+    @Input('row-selection-enabled') set rowSelection(v: boolean) {
+        this._rowSelection = v !== null && "" + v !== 'false';
+    }
+    get rowSelection(): boolean {
+        return this._rowSelection;
+    }
+    _rowSelection: boolean = false;
 
     sortDirection: string;
     @ContentChild(TemplateRef) cellTemplate: TemplateRef<any>;

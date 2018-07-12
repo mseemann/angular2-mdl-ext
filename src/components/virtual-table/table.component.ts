@@ -6,7 +6,9 @@ import {
     ChangeDetectionStrategy,
     ViewChild,
     ContentChildren,
+    ContentChild,
     EventEmitter,
+    HostListener,
     OnInit,
     OnChanges,
     OnDestroy,
@@ -22,6 +24,9 @@ import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/operator/distinctUntilChanged';
+import { MdlVirtualTableListComponent } from './list.component';
+import { RowDataResponseInterface } from './index';
+import { MdlCheckboxComponent } from '@angular-mdl/core';
 
 declare var IntersectionObserver: any;
 
@@ -29,36 +34,14 @@ declare var IntersectionObserver: any;
     moduleId: module.id,
     selector: 'mdl-virtual-table',
     changeDetection: ChangeDetectionStrategy.Default,
-    template: `
-  <div #tableWrapper class="table-container mdl-data-table mdl-js-data-table mdl-data-table--selectable" [class.flex-height]="isFlexHeight">
-	<div class="scrollbar-space">
-	  <div class="table-header">
-	   <div class="table-row">
-		  <div class="header-cell" *ngFor="let col of columns" [style.width]="col.width ? col.width : '1%'"
-			[class.sortable]="col.sortable" [class.asc]="col.sortDirection === 'asc'" [class.desc]="col.sortDirection === 'desc'" (click)="toggleSortByColumn(col)">
-			{{col.label}}</div>
-		</div>
-		</div>
-    </div>
-    <virtual-scroll #scroll [bufferAmount]="10" (update)="rows = $event" [style.maxHeight]="maxHeight" 
-    [style.minHeight]="minHeight" [items]="values" (change)="onListChange($event)" 
-    (start)="onListChange($event)" 
-    (end)="onListChange($event)">
-      <div #container class="table">
-           <div class="table-row" *ngFor="let row of rows; let i = index" (click)="onRowClick($event, row, _visibleRowOffset + i)">
-            <div class="table-cell" *ngFor="let col of columns" [style.width]="col.width ? col.width : '1%'">
-              <ng-container *ngTemplateOutlet="col.cellTemplate ? col.cellTemplate : defaultCellTemplate; context: {$implicit: row ? row[col.field] : '', row: row}"></ng-container>
-            </div>
-          </div>
-      </div>
-    </virtual-scroll>
-    <ng-template #defaultCellTemplate let-value><span>{{value}}</span></ng-template>
-    </div>
-  `,
+    templateUrl: 'table.html',
     styleUrls: ['table.component.scss']
 })
+
 export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChecked, OnDestroy {
     values: any[];
+
+    @HostBinding('class.flex-height')
 
     @ViewChild(VirtualScrollComponent)
     private virtualScroll: VirtualScrollComponent;
@@ -66,18 +49,21 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
     @ViewChild('tableWrapper') 
     private virutalScrollElement: ElementRef;
 
+    @ViewChild('selectAllCheckbox')
+    private selectAllCheckbox: MdlCheckboxComponent;
+
     @ContentChildren(MdlVirtualTableColumnComponent)
     columns: QueryList<MdlVirtualTableColumnComponent>;
-    private lastLoadedElementHash: string;
 
-    @Input() rowCountStream: Observable<number>;
-    @Input() rowDataStream: Observable<{rows: any[], offset: number, limit: number}>;
+    @ContentChild(MdlVirtualTableListComponent)
+    responsiveList: MdlVirtualTableListComponent;
 
-    @Input() maxHeight: string = '100vh';
-    @Input() minHeight: string;
-
-    private _isFlexHeight: boolean = false;
-    @HostBinding('class.flex-height')
+    @Input('row-count-stream') rowCountStream: Observable<number>;
+    @Input('row-data-stream') rowDataStream: Observable<RowDataResponseInterface>;
+    @Input('row-height') rowHeight: number = 48;
+    @Input('max-height') maxHeight: string = '100vh';
+    @Input('min-height') minHeight: string;
+    
     @Input('flex-height')
     get isFlexHeight(): boolean {
         return this._isFlexHeight;
@@ -85,8 +71,7 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
     set isFlexHeight(value) {
         this._isFlexHeight = value != null && "" + value !== 'false';
     }
-
-    private _isInitialLoadDisabled: boolean = false;
+    
     @Input('init-refresh-disabled')
     get isInitialLoadDisabled(): boolean {
         return this._isInitialLoadDisabled;
@@ -95,7 +80,6 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
         this._isInitialLoadDisabled = value != null && "" + value !== 'false';
     }
 
-    private _isIntersectionObserverDisabled: boolean = false;
     @Input('intersection-observer-disabled')
     get isIntersectionObserverDisabled(): boolean {
         return this._isIntersectionObserverDisabled;
@@ -104,32 +88,42 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
         this._isIntersectionObserverDisabled = value != null && "" + value !== 'false';
     }
 
+    get selection():number[] {
+        return Object.keys(this._rowSelectionByIndex).map((index) => parseInt(index)).sort();
+    }
+
+    @Output() sort: EventEmitter<any>;
+    @Output('row-click') rowClick: EventEmitter<any>;
+    @Output('row-selection-change') rowSelection: EventEmitter<number[]>;    
+    @Output('row-count-request') rowCountRequest: EventEmitter<any>;
+    @Output('row-data-request') rowDataRequest: EventEmitter<{offset: number, limit: number, refresh?: boolean}>;
+
+    public rows: any[];
+
+    private _rowSelectionByIndex: {[index: number]: boolean} = {};
+    private _isInitialLoadDisabled: boolean = false;
+    private _lastLoadedElementHash: string;
+    private _useList: boolean = false;
+    private _isIntersectionObserverDisabled: boolean = false;
+    private _isFlexHeight: boolean = false;
     private _rowCount: number;
     private _visibleRowOffset: number;
     private _nativeElementObserver: any;
-
-    @Output() sort: EventEmitter<any>;
-    @Output() rowClick: EventEmitter<any>;
-    
-    private requestRowCountSubject: Subject<any>;
-    private requestRowDataSubject: Subject<any>;
-    
-    @Output() rowCountRequest: EventEmitter<any>;
-    @Output() rowDataRequest: EventEmitter<{offset: number, limit: number, refresh?: boolean}>;
-
-    rows: any[];
+    private _requestRowCountSubject: Subject<any>;
+    private _requestRowDataSubject: Subject<any>;
 
     constructor(private cdr: ChangeDetectorRef) {
       this.sort = new EventEmitter<any>();
       this.rowClick = new EventEmitter<any>();
+      this.rowSelection = new EventEmitter<any>();
       this.rowCountRequest = new EventEmitter();
       this.rowDataRequest = new EventEmitter();
-      this.requestRowCountSubject = new Subject<any>();
-      this.requestRowDataSubject = new Subject<any>();
-		  this.requestRowCountSubject.asObservable().subscribe(() => {
+      this._requestRowCountSubject = new Subject<any>();
+      this._requestRowDataSubject = new Subject<any>();
+		  this._requestRowCountSubject.asObservable().subscribe(() => {
         this.rowCountRequest.emit();
       });
-		  this.requestRowDataSubject.asObservable().distinctUntilChanged((x: any, y: any) => {
+		  this._requestRowDataSubject.asObservable().distinctUntilChanged((x: any, y: any) => {
 			  return (x.offset === y.offset && x.limit === y.limit) && !x.refresh && !y.refresh;
 		  }).subscribe((result) => {
         this.rowDataRequest.emit(result);
@@ -140,10 +134,16 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
       if(!this.isInitialLoadDisabled)	{
         this.refresh(true);
       }
+      this.checkUseList();
+    }
+
+    checkUseList() {
+      this._useList = this.responsiveList && window.innerWidth <= this.responsiveList.breakpointMaxWidth;
+      this.cdr.detectChanges();
     }
     
     ngAfterViewChecked() {
-      if(!this._nativeElementObserver && this.virutalScrollElement.nativeElement
+      if(!this._nativeElementObserver && this.virutalScrollElement && this.virutalScrollElement.nativeElement
         && !this.isIntersectionObserverDisabled) {
         this._nativeElementObserver = new IntersectionObserver((entries: any[]) => {
         
@@ -173,7 +173,7 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
     
     ngOnChanges(changes: SimpleChanges) {
 		    if((<any>changes).rowDataStream && (<any>changes).rowDataStream.currentValue) {
-          let lastRowDataSubscription = this.rowDataStream.subscribe((result) => {
+          let lastRowDataSubscription = this.rowDataStream.subscribe((result: RowDataResponseInterface) => {
             this._visibleRowOffset = result.offset;
             this._rowCount = this._rowCount || result.rows.length;
             let values = new Array(this._rowCount);
@@ -188,7 +188,7 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
           });
         }
         if((<any>changes).rowCountStream && (<any>changes).rowCountStream.currentValue) {
-          this.rowCountStream.subscribe((count) => {
+          this.rowCountStream.subscribe((count: number) => {
             this._rowCount = count;
             this.values = new Array(count);
             this.virtualScroll.previousStart = undefined;
@@ -200,15 +200,51 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
 		
     }
 
+    onSelectAllRows(selected: boolean) {
+      if(selected) {
+        for(var i = 0; i < this._rowCount; i++) {
+          this._rowSelectionByIndex[i] = true;
+        }
+      } else {
+        this._rowSelectionByIndex = {};
+      }
+      this.rowSelection.emit(Object.keys(this._rowSelectionByIndex).map((index) => parseInt(index)).sort());
+    }
+
+    onChangeRowSelection(selected: boolean, index: number) {
+      if (typeof(selected) === 'undefined') {
+        return;
+      }
+      if (this._rowSelectionByIndex[index] === selected) {
+        return;
+      }
+      if (selected === false) {
+        delete this._rowSelectionByIndex[index];
+      } else {
+        this._rowSelectionByIndex[index] = selected;
+      }
+      let selection = Object.keys(this._rowSelectionByIndex).map((index) => parseInt(index)).sort();
+      this.selectAllCheckbox.writeValue(selection.length === this._rowCount);
+      this.rowSelection.emit(selection);
+    }
+
     onListChange(event: ChangeEvent) {
       let limit = event.end - event.start;
-      this.requestRowDataSubject.next({offset: event.start, limit});
+      this._requestRowDataSubject.next({offset: event.start, limit});
+    }
+
+    onListItemClick(event: MouseEvent, row: any, index: number) {
+      this.responsiveList.itemClick.emit({event, row, index});
     }
 
     onRowClick(event: MouseEvent, row: any, index: number) {
         this.rowClick.emit({event, row, index});
     }
 
+    @HostListener('window:resize', [])
+    onWindowResize() {
+      this.checkUseList();
+    }
 
     toggleSortByColumn(col: MdlVirtualTableColumnComponent) {
         if (!col.sortable) {
@@ -229,19 +265,27 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
       }
 
       if(withRowCount) {
-        this.requestRowCountSubject.next();
+        this._requestRowCountSubject.next();
+        this.cdr.detectChanges();
       }
       
+      /* istanbul ignore if */
+      if (!this.virtualScroll) {
+        return;
+      }
+
       if(typeof(this.virtualScroll.previousStart) === 'number' 
         && typeof(this.virtualScroll.previousEnd) === 'number') {
-        this.requestRowDataSubject.next({
+        this._requestRowDataSubject.next({
           refresh: true,
           offset: this.virtualScroll.previousStart,
           limit: this.virtualScroll.previousEnd - this.virtualScroll.previousStart
         });
         this.virtualScroll.previousEnd = undefined;
         this.virtualScroll.previousStart = undefined;
+        
       }
       this.virtualScroll.refresh();
+      
     }
 }

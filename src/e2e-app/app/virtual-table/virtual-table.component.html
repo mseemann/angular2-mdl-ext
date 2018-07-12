@@ -9,32 +9,50 @@
   </div>
 
     <mdl-virtual-table flex-height mdl-shadow="2" maxHeight="100%" 
-    [rowDataStream]="rowDataStream" [rowCountStream]="rowCountStream" 
-    (rowCountRequest)="onRowCountRequest()" (rowDataRequest)="onRowDataRequest($event)"
-    (sort)="onSort($event)" (rowClick)="onRowClick($event)">
+    [row-data-stream]="rowDataStream" [row-count-stream]="rowCountStream" 
+    (row-count-request)="onRowCountRequest()" (row-data-request)="onRowDataRequest($event)"
+    (sort)="onSort($event)" (row-click)="onRowClick($event)" (row-selection-change)="onRowSelectionChange($event)">
+      <mdl-column label="" field="_id" row-selection-enabled></mdl-column>
       <mdl-column label="ID" sortable="true" field="_id" width="1%"></mdl-column>
-      <mdl-column label="Description" field="_label" width="1%">
-        <ng-template let-value><div style="text-align: right;">Title: {{value}}</div></ng-template>
+      <mdl-column label="Description" sortable field="_label" width="1%">
+        <ng-template let-value let-row="row">
+          <div style="text-align: right;" *ngIf="row">Title: {{value}}</div>
+        </ng-template>
       </mdl-column>
+      <mdl-virtual-table-list (item-click)="onListItemClick($event)" item-height="51" breakpoint-max-width="480">
+        <ng-template let-row>
+          <strong>{{row?._id}}</strong><br>
+          {{row?._label}}
+        </ng-template>
+      </mdl-virtual-table-list>
     </mdl-virtual-table>
 
 </div>
 
-<pre prism>
+<pre prism ngNonBindable>
   <![CDATA[
   <mdl-virtual-table flex-height mdl-shadow="2" maxHeight="100%" 
-  [rowDataStream]="rowDataStream" [rowCountStream]="rowCountStream" 
-  (rowCountRequest)="onRowCountRequest()" (rowDataRequest)="onRowDataRequest($event)"
-  (sort)="onSort($event)" (rowClick)="onRowClick($event)">
+  [row-data-stream]="rowDataStream" [row-count-stream]="rowCountStream" 
+  (row-count-request)="onRowCountRequest()" (row-data-request)="onRowDataRequest($event)"
+  (sort)="onSort($event)" (row-click)="onRowClick($event)" (row-selection-change)="onRowSelectionChange($event)">
+    <mdl-column label="" field="_id" row-selection-enabled></mdl-column>
     <mdl-column label="ID" sortable="true" field="_id" width="1%"></mdl-column>
-    <mdl-column label="Description" field="_label" width="1%">
-      <ng-template let-value><div style="text-align: right;">Title: {{value}}</div></ng-template>
+    <mdl-column label="Description" sortable field="_label" width="1%">
+      <ng-template let-value let-row="row">
+        <div style="text-align: right;" *ngIf="row">Title: {{value}}</div>
+      </ng-template>
     </mdl-column>
+    <mdl-virtual-table-list (item-click)="onListItemClick($event)" item-height="51" breakpoint-max-width="480">
+      <ng-template let-row>
+        <strong>{{row?._id}}</strong><br>
+        {{row?._label}}
+      </ng-template>
+    </mdl-virtual-table-list>
   </mdl-virtual-table>
   ]]>
 </pre>
 
-<pre prism>
+<pre prism lang="typescript">
   <![CDATA[
   export class VirtualTableDemo {
     
@@ -57,6 +75,14 @@
   
       onRowClick(event) {
           console.log("on row click", event);
+      }
+
+      onListItemClick(event) {
+          console.log("on list item click", event);
+      }
+
+      onRowSelectionChange(event) {
+          console.log("change row selection", event);
       }
   
       requestRowCount() {

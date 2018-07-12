@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import { RowDataResponseInterface } from '../../../components/virtual-table/index';
 
 @Component({
   selector: 'virtual-table-demo',
@@ -33,11 +34,19 @@ export class VirtualTableDemo {
         console.log("on row click", event);
     }
 
-    requestRowCount() {
+    onListItemClick(event) {
+        console.log("on list item click", event);
+    }
+
+    onRowSelectionChange(event) {
+        console.log("change row selection", event);
+    }
+
+    requestRowCount(): Observable<number> {
         return Observable.of(500).delay(1000);;
     }
 
-    requestRowData(offset, limit) {
+    requestRowData(offset, limit): Observable<RowDataResponseInterface> {
         let rows = [];
         for(var i = offset; i < (offset + limit); i++) {
             rows.push({_id: i, _label: 'Test ' + i});
