@@ -1,10 +1,8 @@
 # @angular-mdl/*
 Additional components for @angular-mdl/core that are not part of material design lite
 
-> **`master` supports angular 4. If you are looking for an angular 2 compatible version please refer to this branch: https://github.com/mseemann/angular2-mdl-ext/tree/angular2**
-
-* current angular version: 4
-* current angular-mdl version: 4
+* current angular version: 5
+* current angular-mdl version: 5
 
 [![Build Status](https://travis-ci.org/mseemann/angular2-mdl-ext.svg?branch=master)](https://travis-ci.org/mseemann/angular2-mdl-ext)
 [![Coverage Status](https://coveralls.io/repos/github/mseemann/angular2-mdl-ext/badge.svg?branch=master)](https://coveralls.io/github/mseemann/angular2-mdl-ext?branch=master)
@@ -23,11 +21,6 @@ Additional components for @angular-mdl/core that are not part of material design
 | select | [tb](https://github.com/tb) | a select box | [![npm version](https://badge.fury.io/js/%40angular-mdl%2Fselect.svg)](https://www.npmjs.com/package/@angular-mdl/select)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/select) | experimental | [demo](http://mseemann.io/angular2-mdl-ext/select)
 | virtual-table | [kmcs](https://github.com/kmcs) | a virtual table | [![npm version](https://badge.fury.io/js/%40angular-mdl%2Fvirtual-table.svg)](https://www.npmjs.com/package/@angular-mdl/virtual-table)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/virtual-table) | proof of concept | [demo](http://mseemann.io/angular2-mdl-ext/virtual-table)
 
-Status means:
-
-* proof of concept (0.0.x) - under development
-* experimental (0.x.x) - under development, but already usable
-* stable (^1.x.x) - basic feature set is complete and tests coverage is good
 
 These components support AOT and TreeShaking!
 

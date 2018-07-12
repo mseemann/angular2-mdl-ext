@@ -2,10 +2,12 @@
 import { CURRENT_DATE, DATEPICKER_CONFIG, DatePickerDialogComponent } from './datepicker.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { MdlButtonModule, MdlDialogReference, MdlIconModule, MdlRippleModule } from '@angular-mdl/core';
+import {
+  MdlButtonModule, MdlDialogModule, MdlDialogReference, MdlIconModule,
+  MdlRippleModule
+} from '@angular-mdl/core';
 import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment';
-
 
 class MdlDialogMockReference {
 
@@ -27,7 +29,8 @@ describe('DatePickerDialogComponent', () => {
                 CommonModule,
                 MdlButtonModule,
                 MdlIconModule,
-                MdlRippleModule
+                MdlRippleModule,
+                MdlDialogModule.forRoot()
             ],
             declarations: [DatePickerDialogComponent],
             providers: [
@@ -104,6 +107,15 @@ describe('DatePickerDialogComponent', () => {
     }));
 
     it('should create an array with all days for the current month', async(() => {
+
+        // LOOKS LIKE THE DEMO APP
+        moment.updateLocale('en', {
+            week : {
+                dow: 1,
+                doy : 4
+            }
+        });
+
         fixture.componentInstance.mDate = moment('2017-04-10');
         fixture.componentInstance.mCurrentMonth = moment('2017-04-01');
 
@@ -111,20 +123,42 @@ describe('DatePickerDialogComponent', () => {
 
         // the first date should be 2017/3/25 - e.g. not the current month and not the actual date
         let day1 = gridWithDays[0].days[0];
-        expect(day1.day.isSame(moment('2017-03-26'), 'day')).toBeTruthy('should be the 2017-03-26');
+        expect(day1.day.isSame(moment('2017-03-27'), 'day')).toBeTruthy('should be the 2017-03-27');
         expect(fixture.componentInstance.isActualDate(day1.day)).toBeFalsy('first day is not the actual');
         expect(day1.isCurrentMonth).toBeFalsy('first day is not in the current month');
 
         // the third week the 2snd day ist 2017-04-10
-        let dayActual = gridWithDays[2].days[1];
+        let dayActual = gridWithDays[2].days[0];
         expect(dayActual.day.isSame(moment('2017-04-10'), 'day')).toBeTruthy('should be 2017-04-10');
         expect(fixture.componentInstance.isActualDate(dayActual.day)).toBeTruthy('the 10. is the actual day');
         expect(dayActual.isCurrentMonth).toBeTruthy('the 10 is in the current month');
 
-        let lastDayOfTheMonth = gridWithDays[5].days[0];
+        let lastDayOfTheMonth = gridWithDays[4].days[6];
         expect(lastDayOfTheMonth.day.isSame(moment('2017-04-30'), 'day')).toBeTruthy('should be 2017-04-30');
         expect(fixture.componentInstance.isActualDate(lastDayOfTheMonth.day)).toBeFalsy('30. is not the actual day');
         expect(lastDayOfTheMonth.isCurrentMonth).toBeTruthy('the 30 is in the current month');
+    }));
+
+
+    it('should create an array with all days for the december 2018', async(() => {
+
+        // LOOKS LIKE THE DEMO APP
+        moment.updateLocale('en', {
+            week : {
+                dow: 1,
+                doy : 4
+            }
+        });
+
+        fixture.componentInstance.mCurrentMonth = moment('2018-12-01');
+
+        let gridWithDays = fixture.componentInstance.monthGridDays;
+
+        let day1 = gridWithDays[0].days[0];
+        expect(day1.day.isSame(moment('2018-11-26'), 'day')).toBeTruthy('should be the 2018-11-26');
+
+        let lastDayOfTheMonth = gridWithDays[5].days[0];
+        expect(lastDayOfTheMonth.day.isSame(moment('2018-12-31'), 'day')).toBeTruthy('should be 2018-12-31');
     }));
     /**
  [

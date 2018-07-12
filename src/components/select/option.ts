@@ -41,7 +41,6 @@ export class MdlOptionComponent {
   }
 
   public updateSelected(value: any) {
-    if (this.disabled) return;
     if (this.multiple) {
       this.selected = (value.map((v: any) => this.stringifyValue(v)).indexOf(this.stringValue) != -1);
     } else {

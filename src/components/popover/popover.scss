@@ -1,11 +1,8 @@
-@import "../../../node_modules/@angular-mdl/core/scss/variables";
-$input-text-focus-border-width: 2px;
-$popover-direction-up-bottom-offset: $input-text-vertical-spacing + $input-text-focus-border-width;
-
 .mdl-popover {
   background: #fff;
   border: none;
-  display: none;
+  display: block;
+  visibility: hidden;
   margin: 0;
   overflow: visible;
   padding: 0;
@@ -13,10 +10,7 @@ $popover-direction-up-bottom-offset: $input-text-vertical-spacing + $input-text-
 
   &.is-visible,
   &.is-animating {
-    display: block;
+    visibility: visible;
     z-index: 999;
-  }
-  &.direction-up {
-    bottom: $popover-direction-up-bottom-offset;
   }
 }

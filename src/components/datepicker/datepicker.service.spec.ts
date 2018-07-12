@@ -3,7 +3,10 @@ import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MdlDatePickerModule } from './index';
 import { CommonModule } from '@angular/common';
-import { MdlButtonModule, MdlDialogOutletModule, MdlIconModule, MdlRippleModule } from '@angular-mdl/core';
+import {
+  MdlButtonModule, MdlDialogModule, MdlDialogOutletModule, MdlIconModule,
+  MdlRippleModule
+} from '@angular-mdl/core';
 import { MdlDatePickerService } from './datepicker.service';
 import * as moment from 'moment'
 
@@ -18,6 +21,7 @@ describe('DatePickerService', () => {
         MdlIconModule,
         MdlRippleModule,
         MdlDatePickerModule,
+        MdlDialogModule.forRoot(),
         MdlDialogOutletModule
       ],
       declarations: [ MdlTestComponent ]
