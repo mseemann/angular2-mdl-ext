@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
 import { RowDataResponseInterface } from '../../../components/virtual-table/index';
 
 @Component({
