@@ -16,7 +16,8 @@ gulp.task(':build:test:vendor', () => {
         'systemjs/dist',
         'zone.js/dist',
         'moment',
-        'angular2-virtual-scroll'
+        'angular2-virtual-scroll',
+        "@tweenjs/tween.js"
     ];
 
     return gulpMerge(
