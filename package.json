@@ -19,7 +19,7 @@
     "url": "git+https://github.com/mseemann/angular2-mdl-ext.git"
   },
   "dependencies": {
-    "@angular-mdl/core": "5.0.0",
+    "@angular-mdl/core": "6.0.0",
     "@angular/animations": "5.2.9",
     "@angular/common": "5.2.9",
     "@angular/compiler": "5.2.9",
