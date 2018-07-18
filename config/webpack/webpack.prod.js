@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 var commonConfig = require('./webpack.common.js');
 var util = require('./util');
 
@@ -16,10 +17,25 @@ module.exports = webpackMerge(commonConfig, {
 		filename: '[name].[hash].js',
 		chunkFilename: '[id].[hash].chunk.js'
 	},
+	
 	//
 	// htmlLoader: {
 	// 	minimize: false // workaround for ng2
 	// },
+
+	optimization: {
+		minimizer: [
+			new UglifyJsPlugin({
+				cache: true,
+				parallel: true,
+				uglifyOptions: {
+				  compress: true,
+				  ecma: 5,
+				  mangle: true
+				}
+			})
+		]
+	},
 
 	plugins: [
 		new CopyWebpackPlugin([{ from: util.root('src', 'e2e-app', '404.html') }], {copyUnmodified: true}),
@@ -28,7 +44,6 @@ module.exports = webpackMerge(commonConfig, {
 			minimize: false,
 			debug: false
 		}),
-		new webpack.optimize.UglifyJsPlugin(),
 		new ExtractTextPlugin('[name].[hash].css'),
 		new webpack.DefinePlugin({
 			'process.env': {

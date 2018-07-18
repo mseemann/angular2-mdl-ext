@@ -1,0 +1,29 @@
+{
+  "name": "@angular-mdl/virtual-table",
+  "version": "0.0.1",
+  "description": "Angular Material Design Lite - Virtual Table Component",
+  "main": "./index.umd.js",
+  "module": "./index.js",
+  "typings": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mseemann/angular2-mdl-ext.git"
+  },
+  "keywords": [
+    "angular2",
+    "angular4",
+    "angular",
+    "material design lite",
+    "virtual table"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mseemann/angular2-mdl-ext/issues"
+  },
+  "homepage": "https://github.com/mseemann/angular2-mdl-ext#readme",
+  "peerDependencies": {
+    "@angular-mdl/core": ">=4.0.0",
+    "angular2-virtual-scroll": "github:kmcs/angular2-virtual-scroll#a83b922",
+    "@tweenjs/tween.js": "17.2.0"
+  }
+}

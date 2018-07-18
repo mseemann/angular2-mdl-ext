@@ -1,0 +1,118 @@
+<div style="display: flex; flex-direction: column; min-height: 300px; max-height: calc(100vh - 104px); padding: 20px; 0">
+  <div>
+<h4>THE VIRTUAL TABLE</h4>
+
+<p>Light weight data table with smooth virtual scrolling.</p>
+
+<h5>Table</h5>
+
+  </div>
+
+    <mdl-virtual-table flex-height mdl-shadow="2" maxHeight="100%" 
+    [row-data-stream]="rowDataStream" [row-count-stream]="rowCountStream" 
+    (row-count-request)="onRowCountRequest()" (row-data-request)="onRowDataRequest($event)"
+    (sort)="onSort($event)" (row-click)="onRowClick($event)" (row-selection-change)="onRowSelectionChange($event)">
+      <mdl-column label="" field="_id" select-all-enabled row-selection-enabled></mdl-column>
+      <mdl-column label="ID" sortable="true" field="_id" width="1%"></mdl-column>
+      <mdl-column label="Description" sortable field="_label" width="1%">
+        <ng-template let-value let-row="row">
+          <div style="text-align: right;" *ngIf="row">Title: {{value}}</div>
+        </ng-template>
+      </mdl-column>
+      <mdl-virtual-table-list (item-click)="onListItemClick($event)" item-height="51" breakpoint-max-width="480">
+        <ng-template let-row>
+          <strong>{{row?._id}}</strong><br>
+          {{row?._label}}
+        </ng-template>
+      </mdl-virtual-table-list>
+    </mdl-virtual-table>
+
+</div>
+
+<pre prism ngNonBindable>
+  <![CDATA[
+  <mdl-virtual-table flex-height mdl-shadow="2" maxHeight="100%" 
+  [row-data-stream]="rowDataStream" [row-count-stream]="rowCountStream" 
+  (row-count-request)="onRowCountRequest()" (row-data-request)="onRowDataRequest($event)"
+  (sort)="onSort($event)" (row-click)="onRowClick($event)" (row-selection-change)="onRowSelectionChange($event)">
+    <mdl-column label="" field="_id" select-all-enabled row-selection-enabled></mdl-column>
+    <mdl-column label="ID" sortable="true" field="_id" width="1%"></mdl-column>
+    <mdl-column label="Description" sortable field="_label" width="1%">
+      <ng-template let-value let-row="row">
+        <div style="text-align: right;" *ngIf="row">Title: {{value}}</div>
+      </ng-template>
+    </mdl-column>
+    <mdl-virtual-table-list (item-click)="onListItemClick($event)" item-height="51" breakpoint-max-width="480">
+      <ng-template let-row>
+        <strong>{{row?._id}}</strong><br>
+        {{row?._label}}
+      </ng-template>
+    </mdl-virtual-table-list>
+  </mdl-virtual-table>
+  ]]>
+</pre>
+
+<pre prism lang="typescript">
+  <![CDATA[
+  export class VirtualTableDemo {
+    
+    private rowCountStream: Observable<number>;
+    private rowDataStream: Observable<{rows: any[], offset: number, limit: number}>;
+  
+      onRowCountRequest() {
+          console.log("on row count request");
+          this.rowCountStream = this.requestRowCount();
+      }
+  
+      onRowDataRequest(request) {
+          console.log("on row data request");
+          this.rowDataStream = this.requestRowData(request.offset, request.limit);
+      }
+  
+      onSort(data) {
+          console.log("sort data:", data);
+      }
+  
+      onRowClick(event) {
+          console.log("on row click", event);
+      }
+
+      onListItemClick(event) {
+          console.log("on list item click", event);
+      }
+
+      onRowSelectionChange(event) {
+          console.log("change row selection", event);
+      }
+  
+      requestRowCount() {
+          return Observable.of(500).delay(1000);;
+      }
+  
+      requestRowData(offset, limit) {
+          let rows = [];
+          for(var i = offset; i < (offset + limit); i++) {
+              rows.push({_id: i, _label: 'Test ' + i});
+          }
+          return Observable.of({rows, offset, limit}).delay(1000);
+      }
+  }
+  ]]>
+
+</pre>
+
+
+<h5>Selection</h5>
+
+<p>Just add the option <em>row-selection-enabled</em> to your column. Optional you can 
+also add <em>select-all-enabled</em> if you want a select all checkbox on the column header.
+</p>
+
+<p>
+You receive each change on the <em>row-selection-change</em>-Event. 
+The data you receive is selection and rejection with list of selected rows and also the rows 
+that are not selected. <strong>If the selection list contains a element <em>__all__</em> the user has selected 
+all rows, expect the list from rejection!</strong><br>This is because normal you could only select rows that 
+are visible and already rendered, but in case of the select all option you don't want do 
+load your complete table to know the selected row items.
+</p>

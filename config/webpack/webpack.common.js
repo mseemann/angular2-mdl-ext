@@ -28,10 +28,9 @@ module.exports = {
 				enforce: 'pre',
 				test: /.ts$/,
 				loader: 'string-replace-loader',
-				options: {
-					search: 'moduleId: module.id,',
-					replace: '',
-					flags: 'g'
+				query: {
+					search: new RegExp('moduleId: module.id,', 'g'), 
+					replace: ''
 				}
 			},
 			{
@@ -66,7 +65,14 @@ module.exports = {
 				test: /\.scss$/,
 				exclude: [util.root('src', 'e2e-app', 'app'), util.root('src', 'components')],
 				use: ExtractTextPlugin.extract({
-					use: ["css-loader", "postcss-loader", "sass-loader"],
+					use: ["css-loader",  {
+						loader: 'postcss-loader',
+						options: {
+						  ident: 'embedded',
+						  plugins: function() { return []; },
+						  sourceMap: true
+						}
+					  }, "sass-loader"],
 					// use style-loader in development
 					fallback: "style-loader"
 				})
@@ -74,7 +80,14 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				include: [util.root('src', 'e2e-app', 'app'), util.root('src', 'components')],
-				loaders: ['raw-loader', 'postcss-loader', 'sass-loader']
+				loaders: ['raw-loader', {
+					loader: 'postcss-loader',
+					options: {
+					  ident: 'embedded',
+					  plugins: function() { return []; },
+					  sourceMap: true
+					}
+				  }, 'sass-loader']
 			},
 			{
 				test: /\.hbs$/,
@@ -90,9 +103,6 @@ module.exports = {
 			/@angular(\\|\/)core(\\|\/)esm5/,
 			util.root('src') // location of your src
 		),
-		new webpack.optimize.CommonsChunkPlugin({
-			name: ['app', 'vendor', 'polyfills']
-		}),
 		new webpack.LoaderOptionsPlugin({
 			options: {
 				postcss: function () {

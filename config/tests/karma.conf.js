@@ -2,12 +2,13 @@ module.exports = function (config) {
 
   config.set({
     basePath: '../..',
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'viewport'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-coverage'),
-      require('karma-spec-reporter')
+      require('karma-spec-reporter'),
+      require('karma-viewport')
     ],
     customLaunchers: {
       // chrome setup for travis CI using chromium
@@ -59,6 +60,24 @@ module.exports = function (config) {
     logLevel: config.LOG_ERROR,
     autoWatch: true,
     browsers: ['Chrome'],
-    singleRun: false
+    singleRun: false,
+    viewport: {
+      breakpoints: [
+        {
+          name: 'mobile',
+          size: {
+            width: 320,
+            height: 480
+          }
+        },
+        {
+          name: 'desktop',
+          size: {
+            width: 1440,
+            height: 900
+          }
+        }
+      ]
+    }
   });
 };

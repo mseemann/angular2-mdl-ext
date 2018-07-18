@@ -19,6 +19,7 @@ Additional components for @angular-mdl/core that are not part of material design
 | fab-menu | [leojpod](https://github.com/leojpod) | a fab menu component | [![npm version](https://badge.fury.io/js/@angular-mdl%2Ffab-menu.svg)](https://www.npmjs.com/package/@angular-mdl/fab-menu)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/fab-menu) | experimental | [demo](http://mseemann.io/angular2-mdl-ext/fab-menu)
 | popover | [tb](https://github.com/tb) | popover with arbitrary content | [![npm version](https://badge.fury.io/js/%40angular-mdl%2Fpopover.svg)](https://www.npmjs.com/package/@angular-mdl/popover)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/popover) | experimental | [demo](http://mseemann.io/angular2-mdl-ext/popover)
 | select | [tb](https://github.com/tb) | a select box | [![npm version](https://badge.fury.io/js/%40angular-mdl%2Fselect.svg)](https://www.npmjs.com/package/@angular-mdl/select)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/select) | experimental | [demo](http://mseemann.io/angular2-mdl-ext/select)
+| virtual-table | [kmcs](https://github.com/kmcs) | a virtual table | [![npm version](https://badge.fury.io/js/%40angular-mdl%2Fvirtual-table.svg)](https://www.npmjs.com/package/@angular-mdl/virtual-table)| [readme](https://github.com/mseemann/angular2-mdl-ext/tree/master/src/components/virtual-table) | proof of concept | [demo](http://mseemann.io/angular2-mdl-ext/virtual-table)
 
 
 These components support AOT and TreeShaking!
