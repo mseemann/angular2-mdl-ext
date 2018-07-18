@@ -30,6 +30,7 @@ describe('VirtualTableComponent', () => {
                 TestMdlVirtualTableComponentWithoutRowCountRequest,
                 TestMdlVirtualTableComponentWithoutRowDataRequest,
                 TestMdlVirtualTableComponentWithRowSelection,
+                TestMdlVirtualTableComponentWithRowSelectionAll,    
                 TestMdlVirtualTableComponentWithResponsiveList
             ],
             providers: [
@@ -81,7 +82,7 @@ describe('VirtualTableComponent', () => {
             setTimeout(() => {
                 expect(componentInstance.values[500]).toBe(rows[500], 'Row index 500 should be loaded');
                 done();
-            }, 20); //wait for requestAnimationFrame
+            }, 120); //wait for requestAnimationFrame
         });
     }));
 
@@ -159,7 +160,6 @@ describe('VirtualTableComponent', () => {
         });
     }));
 
-
     it('should load with auto initial load data', fakeAsync(() => {
         let fixtureAutoInit: ComponentFixture<TestMdlVirtualTableComponentWithAutoInit>;
         TestBed.compileComponents().then(() => {
@@ -217,11 +217,11 @@ describe('VirtualTableComponent', () => {
     }));
 
 
-    it('should emit select rows', ((done) => {
+    it('should be able to select single row and all rows', ((done) => {
         fixture.destroy();
-        let fixtureSelection: ComponentFixture<TestMdlVirtualTableComponentWithRowSelection>;
+        let fixtureSelection: ComponentFixture<TestMdlVirtualTableComponentWithRowSelectionAll>;
         TestBed.compileComponents().then(() => {
-            fixtureSelection = TestBed.createComponent(TestMdlVirtualTableComponentWithRowSelection);
+            fixtureSelection = TestBed.createComponent(TestMdlVirtualTableComponentWithRowSelectionAll);
             fixtureSelection.detectChanges();
 
             expect(fixtureSelection).toBeDefined();
@@ -243,7 +243,7 @@ describe('VirtualTableComponent', () => {
                 selectionCheckbox.click();
                 
                 expect(testInstance.onRowSelection).toHaveBeenCalled();
-                expect(componentInstance.selection).toEqual([1]);
+                expect(componentInstance.selection).toEqual(['1']);
                 
                 selectionCheckbox = debugTableInstance.nativeElement.querySelector("div.table div.table-row:first-child + .table-row .mdl-checkbox");
                 selectionCheckbox.click();
@@ -251,7 +251,7 @@ describe('VirtualTableComponent', () => {
                 expect(componentInstance.selection).toEqual([]);
 
                 spyOnRowSelection.calls.reset();
-                componentInstance.onChangeRowSelection(undefined, 1);
+                componentInstance.onChangeRowSelection(undefined, '1');
                 expect(testInstance.onRowSelection).not.toHaveBeenCalled();
                 
                 let selectAllCheckbox = debugTableInstance.nativeElement.querySelector("div.table-header div.table-row .header-cell .mdl-checkbox");
@@ -274,9 +274,25 @@ describe('VirtualTableComponent', () => {
                         scrollElement.scrollTop = (fixedRowHeight + 1) * scrollIndex;
                         componentVirtualScroll.refresh();
                         setTimeout(() => {
-                            expect(componentInstance.selection.length).toBe(componentInstance.values.length, "Could not select all visible rows!");
+                            // selection should contain all row ids + __all__ element
+                            expect(componentInstance.selection.length).toBe(componentInstance.values.length+1, "Could not select all visible rows!");
 
-                            selectAllCheckbox.click();
+                            selectionCheckbox = debugTableInstance.nativeElement.querySelector("div.table div.table-row:first-child + .table-row .mdl-checkbox");
+                            selectionCheckbox.click();
+
+                            expect(componentInstance.selection).toContain('__all__');
+                            expect(componentInstance.rejection).toContain('80');
+
+                            selectionCheckbox = debugTableInstance.nativeElement.querySelector("div.table div.table-row:first-child + .table-row + .table-row .mdl-checkbox");
+                            selectionCheckbox.click();
+
+                            expect(componentInstance.rejection.length).toBe(2);
+
+                            selectionCheckbox = debugTableInstance.nativeElement.querySelector("div.table div.table-row:first-child + .table-row .mdl-checkbox");
+                            selectionCheckbox.click();
+
+                            selectAllCheckbox.click(); //select all
+                            selectAllCheckbox.click(); //unselect all
                             expect(componentInstance.selection.length).toBe(0, "Could not unselect all visible rows!");
                             done();
                         }, 120);
@@ -289,6 +305,33 @@ describe('VirtualTableComponent', () => {
 
         });
 
+    }));
+
+    it('should select single row without all option', ((done) => {
+        let fixtureSelection: ComponentFixture<TestMdlVirtualTableComponentWithRowSelection>;
+        TestBed.compileComponents().then(() => {
+            fixtureSelection = TestBed.createComponent(TestMdlVirtualTableComponentWithRowSelection);
+            fixtureSelection.detectChanges();
+
+            expect(fixtureSelection).toBeDefined();
+
+            let testInstance = fixtureSelection.componentInstance;
+            let debugTableInstance = fixtureSelection.debugElement.query(By.directive(MdlVirtualTableComponent));
+            let componentInstance: MdlVirtualTableComponent = debugTableInstance.
+                componentInstance;
+
+            testInstance.initData(rows.slice(0, 100));
+            fixtureSelection.autoDetectChanges();
+            fixtureSelection.whenStable().then(() => {
+                let spyOnRowSelection = spyOn(testInstance, 'onRowSelection').and.callThrough();
+                let selectionCheckbox = debugTableInstance.nativeElement.querySelector("div.table div.table-row:first-child + .table-row .mdl-checkbox");
+                selectionCheckbox.click();
+                
+                expect(testInstance.onRowSelection).toHaveBeenCalled();
+                expect(componentInstance.selection).toEqual(['1']);
+                done();
+            });
+        });
     }));
 
     it('should show list instead of table if window size reaches the breakpoint', async(() => {
@@ -475,6 +518,29 @@ class TestMdlVirtualTableComponentWithResponsiveList extends TestMdlVirtualTable
 
     }
 }
+
+@Component({
+    template: `
+    <div style="display: flex; flex-direction: column; max-height: 100vh">
+    <mdl-virtual-table #table flex-height mdl-shadow="2" max-height="500px"
+    [row-data-stream]="rowDataStream" [row-count-stream]="rowCountStream"
+    init-refresh-disabled 
+    intersection-observer-disabled (row-selection-change)="onRowSelection($event)"
+    (row-count-request)="onRowCountRequest()" (row-data-request)="onRowDataRequest($event)">
+        <mdl-column select-all-enabled row-selection-enabled field="_index"></mdl-column>
+        <mdl-column label="Index" sortable field="_index" width="1%"></mdl-column>
+        <mdl-column label="Description" field="_label" width="1%">
+        <ng-template let-value><div style="text-align: right;">Title: {{value}}</div></ng-template>
+        </mdl-column>
+    </mdl-virtual-table>
+    </div>
+`
+})
+class TestMdlVirtualTableComponentWithRowSelectionAll extends TestMdlVirtualTableComponent {
+    onRowSelection(event: number[]) {
+
+    }
+} 
 
 @Component({
     template: `

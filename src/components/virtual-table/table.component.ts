@@ -88,19 +88,28 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
         this._isIntersectionObserverDisabled = value != null && "" + value !== 'false';
     }
 
-    get selection():number[] {
-        return Object.keys(this._rowSelectionByIndex).map((index) => parseInt(index)).sort();
+    get selection():string[] {
+      return Object.keys(this._rowSelectionByKey)
+        .filter((key) => this._rowSelectionByKey[key] === true && key !== ''
+        || key === '__all__' && this._rowSelectionByKey[key] !== false)
+        .sort();
+    }
+
+    get rejection(): string[] {
+      return Object.keys(this._rowSelectionByKey)
+        .filter((key) => this._rowSelectionByKey[key] === false && key !== '__all__')
+        .sort();
     }
 
     @Output() sort: EventEmitter<any>;
     @Output('row-click') rowClick: EventEmitter<any>;
-    @Output('row-selection-change') rowSelection: EventEmitter<number[]>;    
+    @Output('row-selection-change') rowSelection: EventEmitter<{selection: string[], rejection: string[]}>;    
     @Output('row-count-request') rowCountRequest: EventEmitter<any>;
     @Output('row-data-request') rowDataRequest: EventEmitter<{offset: number, limit: number, refresh?: boolean}>;
 
     public rows: any[];
 
-    private _rowSelectionByIndex: {[index: number]: boolean} = {};
+    private _rowSelectionByKey: {[key: string]: boolean|string} = {};
     private _isInitialLoadDisabled: boolean = false;
     private _lastLoadedElementHash: string;
     private _useList: boolean = false;
@@ -170,17 +179,22 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
         this._nativeElementObserver.disconnect();
       }
     }
-    
+
     ngOnChanges(changes: SimpleChanges) {
 		    if((<any>changes).rowDataStream && (<any>changes).rowDataStream.currentValue) {
+          let selectionColumn = this.columns.find((col: MdlVirtualTableColumnComponent) => col.rowSelectionEnabled);
           let lastRowDataSubscription = this.rowDataStream.subscribe((result: RowDataResponseInterface) => {
             this._visibleRowOffset = result.offset;
             this._rowCount = this._rowCount || result.rows.length;
             let values = new Array(this._rowCount);
             for (var i = result.offset; i < (result.rows.length + result.offset); i++) {
               values[i] = result.rows[i - result.offset];
+              if (this._rowSelectionByKey['__all__'] && this._rowSelectionByKey[values[i][selectionColumn.field]] !== false) {
+                this._rowSelectionByKey[values[i][selectionColumn.field]] = true;
+              }
             }
             this.values = values;
+            
             this.virtualScroll.previousStart = undefined;
             this.virtualScroll.previousEnd = undefined;
             this.virtualScroll.refresh();
@@ -196,36 +210,57 @@ export class MdlVirtualTableComponent implements OnInit, OnChanges, AfterViewChe
             this.virtualScroll.refresh();
             this.cdr.markForCheck();
           });
-        }
-		
+        }		
     }
 
     onSelectAllRows(selected: boolean) {
-      if(selected) {
-        for(var i = 0; i < this._rowCount; i++) {
-          this._rowSelectionByIndex[i] = true;
+      for( let key in this._rowSelectionByKey) {
+        if(selected) {
+          this._rowSelectionByKey[key] = true;
+        } else {
+          delete this._rowSelectionByKey[key];
         }
-      } else {
-        this._rowSelectionByIndex = {};
       }
-      this.rowSelection.emit(Object.keys(this._rowSelectionByIndex).map((index) => parseInt(index)).sort());
+      if (selected) {
+        let selectionColumn = this.columns.find((col: MdlVirtualTableColumnComponent) => col.rowSelectionEnabled);
+        this.values.forEach((row) => {
+          this._rowSelectionByKey[row[selectionColumn.field]] = true;
+        });
+      }
+      this._rowSelectionByKey['__all__'] = selected;
+      this.rowSelection.emit({selection: this.selection, rejection: this.rejection});
+      this.cdr.detectChanges();
+      
     }
 
-    onChangeRowSelection(selected: boolean, index: number) {
+    onChangeRowSelection(selected: boolean, key: string) {
       if (typeof(selected) === 'undefined') {
         return;
       }
-      if (this._rowSelectionByIndex[index] === selected) {
+      if (this._rowSelectionByKey[key] === selected) {
         return;
       }
+      
       if (selected === false) {
-        delete this._rowSelectionByIndex[index];
+        if (this._rowSelectionByKey['__all__'] === true) {
+          this._rowSelectionByKey['__all__'] = 'auto';
+        }
+        this._rowSelectionByKey[key] = false;
       } else {
-        this._rowSelectionByIndex[index] = selected;
+        this._rowSelectionByKey[key] = selected;
       }
-      let selection = Object.keys(this._rowSelectionByIndex).map((index) => parseInt(index)).sort();
-      this.selectAllCheckbox.writeValue(selection.length === this._rowCount);
-      this.rowSelection.emit(selection);
+      
+
+      let rawSelection = Object.keys(this._rowSelectionByKey);
+      let selection = rawSelection.filter((key => this._rowSelectionByKey[key])).sort();
+      if (selected && this._rowSelectionByKey['__all__'] === 'auto') {
+        this._rowSelectionByKey['__all__'] = rawSelection.length === selection.length || 'auto';
+      }
+      
+      if (this.selectAllCheckbox) {
+        this.selectAllCheckbox.writeValue(this._rowSelectionByKey['__all__'] === true);
+      }
+      this.rowSelection.emit({selection: this.selection, rejection: this.rejection});
     }
 
     onListChange(event: ChangeEvent) {

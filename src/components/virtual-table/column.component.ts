@@ -14,14 +14,23 @@ export class MdlVirtualTableColumnComponent {
     get sortable(): boolean {
         return this._sortable;
     }
-    _sortable: boolean = false;
+    
     @Input('row-selection-enabled') set rowSelection(v: boolean) {
         this._rowSelection = v !== null && "" + v !== 'false';
     }
-    get rowSelection(): boolean {
+    get rowSelectionEnabled(): boolean {
         return this._rowSelection;
     }
-    _rowSelection: boolean = false;
+    @Input('select-all-enabled') set selectAllEnabled(v: boolean) {
+        this._selectAllEnabled = v !== null && "" + v !== 'false';
+    }
+    get selectAllEnabled(): boolean {
+        return this._selectAllEnabled;
+    }
+
+    private _sortable: boolean = false;
+    private _rowSelection: boolean = false;
+    private _selectAllEnabled: boolean = false;
 
     sortDirection: string;
     @ContentChild(TemplateRef) cellTemplate: TemplateRef<any>;
