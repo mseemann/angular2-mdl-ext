@@ -1,6 +1,6 @@
 {
   "name": "@angular-mdl/fab-menu",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Angular Material Design Lite - Fab menu Component",
   "main": "./index.umd.js",
   "module": "./index.js",

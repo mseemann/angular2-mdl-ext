@@ -1,8 +1,8 @@
 # @angular-mdl/*
 Additional components for @angular-mdl/core that are not part of material design lite
 
-* current angular version: 5
-* current angular-mdl version: 5
+* current angular version: 6
+* current angular-mdl version: 6
 
 [![Build Status](https://travis-ci.org/mseemann/angular2-mdl-ext.svg?branch=master)](https://travis-ci.org/mseemann/angular2-mdl-ext)
 [![Coverage Status](https://coveralls.io/repos/github/mseemann/angular2-mdl-ext/badge.svg?branch=master)](https://coveralls.io/github/mseemann/angular2-mdl-ext?branch=master)
