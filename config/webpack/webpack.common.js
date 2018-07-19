@@ -2,7 +2,21 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var util = require('./util');
-var autoprefixer = require('autoprefixer');
+var path = require('path');
+
+const CSS_LOADERS = [
+    'raw-loader',
+    {
+        loader: 'postcss-loader',
+        options: {
+            sourceMap: true,
+            config: {
+                path: path.resolve(__dirname, './postcss.config.js'),
+            },
+        },
+    },
+    'sass-loader'
+];
 
 module.exports = {
 	entry: {
@@ -66,7 +80,7 @@ module.exports = {
 				test: /\.scss$/,
 				exclude: [util.root('src', 'e2e-app', 'app'), util.root('src', 'components')],
 				use: ExtractTextPlugin.extract({
-					use: ["css-loader", "postcss-loader", "sass-loader"],
+					use: CSS_LOADERS,
 					// use style-loader in development
 					fallback: "style-loader"
 				})
@@ -74,7 +88,7 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				include: [util.root('src', 'e2e-app', 'app'), util.root('src', 'components')],
-				loaders: ['raw-loader', 'postcss-loader', 'sass-loader']
+				loaders: CSS_LOADERS
 			},
 			{
 				test: /\.hbs$/,
@@ -82,24 +96,19 @@ module.exports = {
 			}
 		]
 	},
+    optimization: {
+		splitChunks: {
+			// ['app', 'vendor', 'polyfills']
+		}
+	},
 	plugins: [
 		// avoid: WARNING in ./~/@angular/core/@angular/core.es5.js
 		// 3702:272-293 Critical dependency: the request of a dependency is an expression
 		new webpack.ContextReplacementPlugin(
 			// The (\\|\/) piece accounts for path separators in *nix and Windows
-			/@angular(\\|\/)core(\\|\/)esm5/,
+			/@angular(\\|\/)core(\\|\/)fesm5/,
 			util.root('src') // location of your src
 		),
-		new webpack.optimize.CommonsChunkPlugin({
-			name: ['app', 'vendor', 'polyfills']
-		}),
-		new webpack.LoaderOptionsPlugin({
-			options: {
-				postcss: function () {
-					return [autoprefixer];
-				}
-			}
-		}),
 		new HtmlWebpackPlugin({
 			template: '!!handlebars-loader!src/e2e-app/index.hbs',
 			baseUrl: process.env.NODE_ENV == 'production' ? '/angular2-mdl-ext/' : '/',

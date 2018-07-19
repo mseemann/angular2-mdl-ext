@@ -22,7 +22,6 @@ import { CommonModule } from '@angular/common';
 import { MdlPopoverModule, MdlPopoverComponent } from '../popover/index';
 import { MdlOptionComponent } from './option';
 import { Key, isKey, isCharacterKey, keyboardEventKey } from './keyboard';
-import 'rxjs/operator/debounceTime';
 
 const uniq = (array: any[]) => Array.from(new Set(array));
 

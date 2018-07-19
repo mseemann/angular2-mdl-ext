@@ -28,9 +28,11 @@ angularPackages.forEach(name => {
 
 vendorPackages[`@angular/platform-browser/animations`] = { main: `../bundles/platform-browser-animations.umd.js` };
 vendorPackages[`@angular/animations/browser`] = { main: `../bundles/animations-browser.umd.js` };
-vendorPackages[`@angular-mdl/core`] = { main: `bundle/core.js` };
+vendorPackages[`@angular-mdl/core`] = { main: `bundle/core.js`};
 
-vendorPackages['rxjs'] = { main: 'index.js' };
+vendorPackages['rxjs'] = { main: 'index.js'};
+vendorPackages['rxjs/operators'] = { main: 'index.js' };
+
 vendorPackages['moment'] = { main: 'min/moment.min.js'};
 
 /** Type declaration for ambient System. */

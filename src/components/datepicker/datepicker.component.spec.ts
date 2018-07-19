@@ -6,7 +6,7 @@ import {
   MdlButtonModule, MdlDialogModule, MdlDialogReference, MdlIconModule,
   MdlRippleModule
 } from '@angular-mdl/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import * as moment from 'moment';
 
 class MdlDialogMockReference {

@@ -4,7 +4,6 @@ import * as path from 'path';
 import { PROJECT_ROOT } from '../constants';
 const runSequence = require('run-sequence');
 import gulpMerge = require('merge2');
-import WritableStream = NodeJS.WritableStream;
 
 gulp.task(':build:test:vendor', () => {
 
@@ -23,7 +22,7 @@ gulp.task(':build:test:vendor', () => {
             const inputs = path.join(root, '**/*.+(js|js.map)');
             const destFolder = path.join('dist/vendor', root);
             const dest = gulp.dest(destFolder);
-            return gulp.src(path.join('node_modules', inputs)).pipe( <WritableStream> dest);
+            return gulp.src(path.join('node_modules', inputs)).pipe( dest);
         }));
 });
 
