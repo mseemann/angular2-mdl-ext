@@ -31,7 +31,7 @@
     "@angular/router": "6.0.9",
     "@mseemann/prism": "0.0.1",
     "core-js": "2.5.7",
-    "custom-event-polyfill": "^0.3.0",
+    "custom-event-polyfill": "^1.0.0",
     "match-sorter": "2.2.1",
     "moment": "^2.22.0",
     "rxjs": "6.2.2",
