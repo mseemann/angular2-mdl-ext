@@ -32,7 +32,7 @@
     "@mseemann/prism": "0.0.1",
     "core-js": "2.5.7",
     "custom-event-polyfill": "^1.0.0",
-    "match-sorter": "2.2.1",
+    "match-sorter": "2.3.0",
     "moment": "^2.22.0",
     "rxjs": "6.2.2",
     "systemjs": "0.21.4",
