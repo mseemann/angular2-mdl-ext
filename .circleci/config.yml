@@ -23,4 +23,4 @@ jobs:
 
       - run: yarn test
         # create a build - should test the tooling to create dist build
-      - run: yarn build:dist
+      - run: yarn build-dist
