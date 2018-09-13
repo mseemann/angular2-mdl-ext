@@ -82,7 +82,7 @@
     "node-sass": "4.9.3",
     "postcss-loader": "3.0.0",
     "raw-loader": "0.5.1",
-    "remap-istanbul": "0.11.1",
+    "remap-istanbul": "0.12.0",
     "rimraf": "2.6.2",
     "run-sequence": "2.2.1",
     "sass-loader": "7.1.0",
