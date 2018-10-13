@@ -63,7 +63,7 @@
     "gulp-print": "2.0.1",
     "gulp-sass": "3.1.0",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-string-replace": "1.1.1",
+    "gulp-string-replace": "1.1.2",
     "gulp-typescript": "^4.0.2",
     "handlebars-loader": "^1.7.0",
     "html-loader": "^0.5.5",

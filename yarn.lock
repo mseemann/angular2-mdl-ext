@@ -2880,9 +2880,9 @@ gulp-sourcemaps@^2.6.4:
     strip-bom-string "1.X"
     through2 "2.X"
 
-gulp-string-replace@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/gulp-string-replace/-/gulp-string-replace-1.1.1.tgz#f4f4c75068ce0efbd014715f9efc37e66ab7bb03"
+gulp-string-replace@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/gulp-string-replace/-/gulp-string-replace-1.1.2.tgz#26e646ae1201954d07cce9172ed25efbcd01d171"
   dependencies:
     chalk "^2.4.1"
     extend "^3.0.1"
