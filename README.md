@@ -1,6 +1,6 @@
-all packages from this project have been moved to https://github.com/mseemann/angular2-mdl. The npm package names are the same.
+All packages from this project have been moved to https://github.com/mseemann/angular2-mdl. The npm package names are the same.
 
-**This project is deprecated.**
+**This project is deprecated and is in read only mode.**
 
 # @angular-mdl/*
 Additional components for @angular-mdl/core that are not part of material design lite
