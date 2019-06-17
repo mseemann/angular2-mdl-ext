@@ -8,7 +8,8 @@ import {
 } from '@angular/router';
 import {
   FormGroup,
-  FormControl
+  FormControl,
+  Validators
 } from '@angular/forms';
 
 @Component({
@@ -20,6 +21,8 @@ export class SelectDemo {
   form: FormGroup;
 
   personId: FormControl = new FormControl(1);
+  colorId: FormControl = new FormControl('',Validators.required);
+  
   people: any[] = [
     {id: 1, name: 'Bryan Cranston'},
     {id: 2, name: 'Aaron Paul'},
@@ -91,7 +94,8 @@ export class SelectDemo {
 
   ngOnInit() {
     this.form = new FormGroup({
-      personId: this.personId
+      personId: this.personId,
+      colorId:this.colorId
     });
 
     this.arrayForm = new FormGroup({
@@ -114,6 +118,11 @@ export class SelectDemo {
     this.personId.valueChanges
       .subscribe((value: any) => {
         console.log('personId.valueChanges', value);
+      });
+
+      this.colorId.valueChanges
+      .subscribe((value: any) => {
+        console.log('colorId.valueChanges', value);
       });
   }
 

@@ -8,15 +8,33 @@
   </mdl-select>
 </form>
 
-<pre prism ngNonBindable>
-  <![CDATA[
-<form [formGroup]="form">
-  <mdl-select formControlName="personId">
-    <mdl-option *ngFor="let p of people" [value]="p.id" [disabled]="p.disabled">{{p.name}}</mdl-option>
-  </mdl-select>
-</form>
-   ]]>
-</pre>
+  <pre prism ngNonBindable>
+    <![CDATA[
+  <form [formGroup]="form">
+    <mdl-select formControlName="personId">
+      <mdl-option *ngFor="let p of people" [value]="p.id" [disabled]="p.disabled">{{p.name}}</mdl-option>
+    </mdl-select>
+  </form>
+     ]]>
+  </pre>
+
+  <h6>with required validation</h6>
+
+  <form [formGroup]="form">
+    <mdl-select formControlName="colorId" error-msg="Required field!" validate>
+      <mdl-option *ngFor="let c of colors" [value]="c.code">{{c.name}}</mdl-option>
+    </mdl-select>
+  </form>
+
+  <pre prism ngNonBindable>
+    <![CDATA[
+    <form [formGroup]="form">
+      <mdl-select formControlName="colorId" error-msg="Required field!" validate>
+        <mdl-option *ngFor="let c of colors" [value]="c.code">{{c.name}}</mdl-option>
+      </mdl-select>
+    </form>
+     ]]>
+  </pre>
 
 <h5>autocomplete example</h5>
 

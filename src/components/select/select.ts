@@ -88,6 +88,11 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
     @ViewChild('selectInput') selectInput: ElementRef;
     @ViewChild(MdlPopoverComponent) public popoverComponent: MdlPopoverComponent;
     @ContentChildren(MdlOptionComponent) public optionComponents: QueryList<MdlOptionComponent>;
+    @Input('error-msg') public errorMessage: any = {};
+    @Input('validate')
+    get isValidate() { return this._isValidate; }
+    set isValidate(value) { this._isValidate = toBoolean(value); }
+    private _isValidate: boolean = false;
     private selectElement: HTMLElement;
     private popoverElement: HTMLElement;
     directionUp = false;

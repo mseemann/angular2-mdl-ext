@@ -2,7 +2,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { MdlSelectModule, MdlSelectComponent } from './select';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Key } from './keyboard';
 
 // based on @angular/cdk
@@ -308,6 +308,47 @@ describe('MdlSelect', () => {
             fixture.whenStable().then(() => {
                 expect(selectComponent.disabled)
                   .toBe(true, 'select field should be disabled');
+            });
+        }))
+    })
+
+    describe('required', () => {
+
+        let fixture: ComponentFixture<TestRequiredComponent>;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [MdlSelectModule.forRoot(), ReactiveFormsModule],
+                declarations: [TestRequiredComponent]
+            });
+
+            TestBed.compileComponents().then( () => {
+                fixture = TestBed.createComponent(TestRequiredComponent);
+                fixture.detectChanges();
+            });
+        }));
+
+        it('should create the component and validate required field', async(() => {
+            let testInstance = fixture.componentInstance;
+
+            fixture.whenStable().then(() => {
+                expect(testInstance.colorId.valid)
+                  .toBe(false, 'should verify if field is invalid');
+            });
+        }))
+
+        it('should verify invalid class', async(() => {
+            let testInstance = fixture.componentInstance;
+            
+            let selectComponent = fixture.debugElement.query(By.directive(MdlSelectComponent));
+
+            let selectNativeElement = selectComponent.nativeElement;
+            
+            testInstance.colorId.setValue('');
+            
+            fixture.whenStable().then(() => {
+                  expect(selectNativeElement.classList.contains('ng-invalid'))
+                  .toBe(true, 'did not have css class ng-invalid')
             });
         }))
     })
@@ -647,6 +688,34 @@ class TestDisabledComponent {
     });
   }
 }
+
+
+@Component({
+    selector: 'test-required-component',
+    template: `
+      <form [formGroup]="form">
+        <mdl-select formControlName="colorId" error-msg="Required field!" validate>
+            <mdl-option *ngFor="let c of colors" [value]="c.code">{{c.name}}</mdl-option>
+        </mdl-select>
+      </form>
+    `
+  })
+  
+  class TestRequiredComponent {
+    form: FormGroup;
+    colorId: FormControl = new FormControl('',Validators.required);
+    colors: any = [
+        { name: "Red", code: "r" },
+        { name: "Green", code: "g" },
+        { name: "Blue", code: "b" }
+    ];
+  
+    constructor() {
+      this.form = new FormGroup({
+        colorId: this.colorId
+      });
+    }
+  }
 
 @Component({
     selector: 'test-single-component',
