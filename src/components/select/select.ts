@@ -269,7 +269,9 @@ export class MdlSelectComponent extends SearchableComponent implements ControlVa
         } else {
             this.text = this.textByValue[this.stringifyValue(value)]||'';
         }
-        this.changeDetectionRef.detectChanges();
+        if (!(<any>this.changeDetectionRef)['destroyed']) {
+            this.changeDetectionRef.detectChanges();
+        }
 
         if (this.optionComponents) {
             const _value = (!this.multiple && this.optionComponents.length === 1)
