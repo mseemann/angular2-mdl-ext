@@ -140,8 +140,8 @@ export class MdlExpansionPanelComponent implements AfterContentInit {
     this._toggle(true);
   }
 
-  collapse() {
-    this._toggle(false);
+  collapse(emitOnChange?: boolean) {
+    this._toggle(false, emitOnChange);
   }
 
   disableToggle() {
@@ -152,11 +152,11 @@ export class MdlExpansionPanelComponent implements AfterContentInit {
     this.disabled = false;
   }
 
-  private _toggle(isExpanded: boolean) {
+  private _toggle(isExpanded: boolean, emitOnChange: boolean = true) {
     this.isExpanded = isExpanded;
     this.content.isExpanded = `${isExpanded}`;
     this.header.isExpanded = isExpanded;
-    this.onChange.emit(isExpanded);
+    if (emitOnChange) this.onChange.emit(isExpanded);
   }
 }
 
@@ -169,6 +169,7 @@ export class MdlExpansionPanelComponent implements AfterContentInit {
 })
 export class MdlExpansionPanelGroupComponent implements AfterContentInit {
   @ContentChildren(MdlExpansionPanelComponent) panels: QueryList<MdlExpansionPanelComponent>;
+  @Output('mdl-panel-active-changed') selectedPanelEmitter = new EventEmitter();
   expandedIndex: number = -1;
 
   ngAfterContentInit() {
@@ -199,13 +200,14 @@ export class MdlExpansionPanelGroupComponent implements AfterContentInit {
       panel.onChange.subscribe((isExpanded: boolean) => {
         if (isExpanded) {
           if (i !== this.expandedIndex && this.expandedIndex >= 0) {
-            this.panels.toArray()[this.expandedIndex].collapse();
+            this.panels.toArray()[this.expandedIndex].collapse(false);
           }
           this.expandedIndex = i;
         }
         if (!isExpanded && i === this.expandedIndex) {
           this.expandedIndex = -1;
         }
+        this.selectedPanelEmitter.emit({ index: this.expandedIndex});
       });
     });
   }
