@@ -23,6 +23,7 @@ $gutter-horizontal: 24px;
     padding: 0px $gutter-horizontal;
     align-items: center;
     line-height: 48px;
+    transition: line-height 250ms ease-in;
     @include divider();
     &--list-content {
       flex-grow: 1;
@@ -76,6 +77,7 @@ $gutter-horizontal: 24px;
   display: block;
   .mdl-expansion-panel {
     margin: 0px;
+    transition: margin 250ms ease-in;
     &:focus {
       background-color: unquote("rgb(#{$palette-grey-200})");
       .mdl-expansion-panel__header--expand-icon {
